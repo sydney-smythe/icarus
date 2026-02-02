@@ -43,6 +43,8 @@ var wall_run_timer : float = 0.0  # when > 0, applies wall run protocol
 var is_wall_running : bool = false
 var current_wall_run_grav_mod : float  # is the agent that acts on gravity, the other one dictates this one's starting value
 var can_wall_run : bool = true
+var wall_run_normal : Vector3
+var wall_run_min_speed : float = 3.8
 ## How fast do we run?
 @export var sprint_speed : float = 9.2
 ## How fast are we when crouching?
@@ -83,6 +85,7 @@ var is_crouching : bool = false
 var is_sprinting : bool = false
 var is_moving : bool = false
 var is_sliding : bool = false
+var control_strength : float = 1.0
 
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
@@ -154,6 +157,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	
+	if is_on_floor() or not is_on_wall():
+		is_wall_running = false
+	
+	if not is_wall_running:
+		wall_run_timer = 0.0
+	
 	if not can_wall_jump and is_on_floor():
 		can_wall_jump = true
 	
@@ -174,6 +183,8 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if is_sliding:
+		#if is_on_floor():
+			#print('Current floor slope: ' + str(get_floor_angle()))
 		if not Input.is_action_pressed(input_crouch) or move_speed <= crouch_speed or not is_moving:
 			move_speed = crouch_speed
 			if 'sliding' in active_actions:
@@ -181,13 +192,33 @@ func _physics_process(delta: float) -> void:
 			is_crouching = true
 			is_sliding = false
 			is_sprinting = false
+			
 		else:
-			move_speed -= sliding_speed_loss * delta
+			
+			var floor_dot = 0
+			#print('is on ground? ' + str(is_on_floor()))
+			if is_on_floor():
+				#print('floor normal: ' + str(get_slide_collision(0).get_normal()))
+				#get_slide_collision(0).get_normal()
+				#print('set')
+				floor_dot = -global_transform.basis.z.dot(get_floor_normal())
+			if not is_on_floor() or get_floor_angle() < 0.45:
+				move_speed -= sliding_speed_loss * delta
+			elif get_floor_angle() > 0.45:
+				#print('floor dot: ' + str(floor_dot))
+				if floor_dot <= 0:
+					move_speed -= sliding_speed_loss * 4 * delta # slow slide faster if going uphill
+				if floor_dot > 0 and move_speed < sliding_speed:  # regain max slide speed if going downwards
+					move_speed += sliding_speed_loss * delta
+			if move_speed > sliding_speed:
+				move_speed = sliding_speed
 			
 			
 	if is_wall_running:
 		if wall_run_timer <= 0:
 			is_wall_running = false
+			current_wall_run_grav_mod = wall_run_grav_mod
+			
 	# Apply gravity to velocity
 	if has_gravity:
 		if not is_on_floor() and not is_wall_running:
@@ -200,12 +231,19 @@ func _physics_process(delta: float) -> void:
 		var wall_collision_normal = get_slide_collision(1).get_normal()
 		var wall_side_vector = Vector2(wall_collision_normal.x, wall_collision_normal.z)
 		if can_wall_run or prev_wall_run_jump_side != wall_side_vector:
-			wall_run_timer = wall_run_length
-			current_wall_run_grav_mod = wall_run_grav_mod
-			velocity.y = 0
-			can_wall_run = false
-			is_wall_running = true
-			prev_wall_run_jump_side = wall_side_vector
+			# check to make sure the player is somewhat orthogonal to the wall
+			var wall_normal = get_wall_normal()
+			var forward_dir = -global_transform.basis.z
+			var wall_dot = forward_dir.dot(wall_normal)
+			if wall_dot < 0.5 and wall_dot > -0.5:
+				wall_run_timer = wall_run_length
+				current_wall_run_grav_mod = wall_run_grav_mod
+				velocity.y = 0
+				can_wall_run = false
+				is_wall_running = true
+				prev_wall_run_jump_side = wall_side_vector
+				wall_run_normal = Vector3(-wall_collision_normal.x, wall_collision_normal.y, -wall_collision_normal.z)
+			
 
 	# Apply jumping
 	if can_jump:
@@ -258,23 +296,25 @@ func _physics_process(delta: float) -> void:
 	# Modify speed based on crouching
 	if can_crouch and Input.is_action_pressed(input_crouch):
 		# if sprinting currently: slide, then go into crouch
-		swap_collider(true)
-		if is_sprinting:
-			is_sliding = true
-			is_sprinting = false
-			can_sprint = false
-			adjust_camera_to_crouching()
-			move_speed = sliding_speed
-			if 'sliding' not in active_actions:
-				active_actions.append('sliding')
+		if is_sprinting and is_on_floor():
+			if -global_transform.basis.z.dot(get_floor_normal()) >= 0:  # cannot start slide if going uphill
+				swap_collider(true)
+				is_sliding = true
+				is_sprinting = false
+				can_sprint = false
+				adjust_camera_to_crouching()
+				move_speed = sliding_speed
+				if 'sliding' not in active_actions:
+					active_actions.append('sliding')
 		elif not is_sprinting and not is_sliding: # if not sprinting, default crouch
+			swap_collider(true)
 			can_sprint = false
 			is_crouching = true
 			move_speed = crouch_speed
 			adjust_camera_to_crouching()
 			adjust_to_crouching_fov()
 			if 'crouch' not in active_actions:
-				active_actions.append('crouch')
+				active_actions.append('crouch')	
 	else:
 		# if you try to uncrouch whilst under a surface that you could not enter while standing, don't uncrouch
 		ray_cast_3d.force_raycast_update()
@@ -293,6 +333,11 @@ func _physics_process(delta: float) -> void:
 
 	# Apply desired movement to velocity
 	if can_move:
+		if not is_sliding:
+			control_strength = 1.0
+		else:
+			control_strength = 0.07
+		#print('control str: ' + str(control_strength))
 		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
 		#if not is_on_floor():
 			#input_dir = Vector2(input_dir[0] * 0.01, input_dir[1])
@@ -333,7 +378,8 @@ func _physics_process(delta: float) -> void:
 		var move_dir := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		
 		# calculate how much control the player has during wall jump
-		var control_strength = 1.0
+		#var control_strength = 1.0
+		
 		if wall_jump_timer > 0:
 			# gradually restore control as timer runs out
 			var time_ratio = wall_jump_timer / wall_jump_momentum_time
@@ -371,8 +417,13 @@ func _physics_process(delta: float) -> void:
 		
 	# decrease wall run timer
 	if wall_run_timer > 0:
+		apply_force(1, wall_run_normal)
 		wall_run_timer -= delta
+		current_wall_run_grav_mod += wall_run_decay * delta
 	# Use velocity to actually move
+	if is_wall_running:
+		if abs(velocity.x) + abs(velocity.z) < wall_run_min_speed:
+			is_wall_running = false
 	move_and_slide()
 
 
@@ -466,3 +517,7 @@ func swap_collider(now_crouching : bool):
 		collider = standing_collider
 		crouching_collider.set_deferred("disabled", true)
 		standing_collider.set_deferred("disabled", false)
+		
+func apply_force(strength : float, direction : Vector3, sustained : bool = false, length : float = 0.0):
+	velocity += direction * strength
+	

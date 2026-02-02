@@ -1,18 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://vljm1q5kram"]
+[gd_scene format=3 uid="uid://vljm1q5kram"]
 
 [ext_resource type="PackedScene" uid="uid://b4vhcqs03o8au" path="res://Scenes/Maps/temp_map_1.tscn" id="1_01eyc"]
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/Characters/proto_controller/proto_controller.tscn" id="2_xwcdb"]
 [ext_resource type="Script" uid="uid://bc2pr8dfsy7aj" path="res://Scripts/UI/debug_action_label.gd" id="3_7kuvc"]
 [ext_resource type="Script" uid="uid://bspk326i1ftpt" path="res://Scripts/UI/debug_move_speed.gd" id="4_wqe6a"]
+[ext_resource type="Script" uid="uid://c1ap4nbbxsd03" path="res://Scripts/UI/debug_velocity_vector.gd" id="5_teslb"]
 
-[node name="Game Manager" type="Node3D"]
+[node name="Game Manager" type="Node3D" unique_id=901033503]
 
-[node name="ProtoController" parent="." instance=ExtResource("2_xwcdb")]
+[node name="ProtoController" parent="." unique_id=1516342901 instance=ExtResource("2_xwcdb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9493284, 0.89900434, 0)
+floor_snap_length = 0.12
 
-[node name="temp map 1" parent="." instance=ExtResource("1_01eyc")]
+[node name="temp map 1" parent="." unique_id=1382259760 instance=ExtResource("1_01eyc")]
 
-[node name="Debug Action Label" type="Label" parent="."]
+[node name="Debug Action Label" type="Label" parent="." unique_id=1486481273]
 modulate = Color(1, 0.019607844, 0.019607844, 1)
 offset_left = 14.0
 offset_top = 14.0
@@ -22,7 +24,7 @@ theme_override_font_sizes/font_size = 19
 text = "Active actions: "
 script = ExtResource("3_7kuvc")
 
-[node name="Debug Move Speed" type="Label" parent="."]
+[node name="Debug Move Speed" type="Label" parent="." unique_id=1184388205]
 modulate = Color(1, 0.019607844, 0.019607844, 1)
 offset_left = 884.0
 offset_top = 12.0
@@ -32,3 +34,14 @@ theme_override_font_sizes/font_size = 19
 text = "Move Speed:"
 horizontal_alignment = 2
 script = ExtResource("4_wqe6a")
+
+[node name="Debug Velocity Vector" type="Label" parent="." unique_id=1259884104]
+modulate = Color(1, 0.019607844, 0.019607844, 1)
+offset_left = 730.0
+offset_top = 598.0
+offset_right = 972.0
+offset_bottom = 651.0
+theme_override_font_sizes/font_size = 19
+text = "Vel. Vec:"
+horizontal_alignment = 2
+script = ExtResource("5_teslb")
