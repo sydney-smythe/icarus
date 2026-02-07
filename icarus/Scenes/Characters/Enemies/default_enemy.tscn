@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c8x7hvb250pby"]
+
+[ext_resource type="Script" uid="uid://4v5v8skfsiib" path="res://Scripts/Enemies/enemy_movement.gd" id="1_pccc1"]
+[ext_resource type="Script" uid="uid://d0w33o1lgscde" path="res://Scripts/Enemies/enemy_state_manager.gd" id="2_k8rbe"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qi27n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pccc1"]
+albedo_color = Color(0.08313275, 0.5175231, 0.6477978, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_k8rbe"]
+material = SubResource("StandardMaterial3D_pccc1")
+
+[node name="Default Enemy" type="RigidBody3D" unique_id=465478192]
+script = ExtResource("1_pccc1")
+
+[node name="State Manager" type="Node3D" parent="." unique_id=388658154]
+script = ExtResource("2_k8rbe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1805778876]
+shape = SubResource("SphereShape3D_qi27n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=136384021]
+mesh = SubResource("SphereMesh_k8rbe")

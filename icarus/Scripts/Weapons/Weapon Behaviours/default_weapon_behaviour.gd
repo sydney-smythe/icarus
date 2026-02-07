@@ -7,6 +7,11 @@ var player
 var head
 var camera
 @export var recoil_strength : float = 4.0
+@export var damage : int = 1
+enum Attack_types {HITSCAN, PROJECTILE}
+@export var attack_type : Attack_types = Attack_types.HITSCAN
+@export_group("Projectile Information")
+@export var projectile : PackedScene
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,9 +31,23 @@ func late_ready():
 func primary_fire():
 	print('fire - primary')
 	player.apply_force(recoil_strength, camera.global_transform.basis.z.normalized())
-	#print(str(camera.global_transform.basis.z.normalized()))
-	
-	# strength : float, direction : Vector3, sustained : bool = false, duration : float = 0.0
+	if attack_type == Attack_types.HITSCAN:
+		fire_ray()
 
 func secondary_fire():
 	print('fire - secondary')
+	
+func fire_ray(range : float = 50.0):
+	var space_state = get_world_3d().direct_space_state
+	var origin_point = camera.global_transform.origin
+	var end_point = origin_point + -camera.global_transform.basis.z * range
+	var query = PhysicsRayQueryParameters3D.create(origin_point, end_point)
+	query.exclude = [self]
+	var collision = space_state.intersect_ray(query)
+	if collision:
+		print('collision at position: ' + str(collision.position))
+		print('collision object: ' + str(collision.collider.name))
+		
+	else:
+		print('no collision occured')
+	DrawLine3d.DrawLine(origin_point, end_point, Color(1,0,0), 15)
