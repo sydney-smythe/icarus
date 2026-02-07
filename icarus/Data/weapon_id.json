@@ -1,0 +1,4 @@
+{
+	"EXAMPLE": ["FILE PATH", "WEAPON NAME", "WEAPON TYPE"],
+	"0": ["res://Scenes/Weapons/default_weapon.tscn", "Default Weapon", "Medium"]
+}

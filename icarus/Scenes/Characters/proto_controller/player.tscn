@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://bs72ogkvdd7d6"]
+
+[ext_resource type="Script" uid="uid://cqb2oidf1iin6" path="res://Scripts/Character/Movement/proto_controller.gd" id="1_rlwtg"]
+[ext_resource type="Texture2D" uid="uid://nshvql1wtwr0" path="res://Temp Visuals/UI/temp_crosshair.png" id="2_2egnu"]
+[ext_resource type="Script" uid="uid://c53lghcmyip3c" path="res://Scripts/Equipment/equipment_manager.gd" id="3_j5cwe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
+albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ucva2"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iof21"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rlwtg"]
+radius = 0.4
+height = 1.2
+
+[node name="Player" type="CharacterBody3D" unique_id=140928765]
+script = ExtResource("1_rlwtg")
+can_sprint = true
+can_freefly = true
+input_left = "move_left"
+input_right = "move_right"
+input_forward = "move_forward"
+input_back = "move_backward"
+input_jump = "jump"
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1749329324]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+material_override = SubResource("StandardMaterial3D_iof21")
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_ucva2")
+
+[node name="Standing Collider" type="CollisionShape3D" parent="." unique_id=637673491]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_iof21")
+
+[node name="Crouching Collider" type="CollisionShape3D" parent="." unique_id=544538683]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("CapsuleShape3D_rlwtg")
+
+[node name="Head" type="Node3D" parent="." unique_id=1202042018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=275272256]
+
+[node name="UI Manager" type="Node" parent="Head/Camera3D" unique_id=1855927317]
+
+[node name="TextureRect" type="TextureRect" parent="Head/Camera3D/UI Manager" unique_id=312839773]
+anchors_preset = -1
+anchor_left = 0.49600002
+anchor_top = 0.492
+anchor_right = 0.49600002
+anchor_bottom = 0.492
+offset_left = -72.39203
+offset_top = -70.81601
+offset_right = 427.60797
+offset_bottom = 429.184
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.29, 0.29)
+texture = ExtResource("2_2egnu")
+
+[node name="Equipment Manager" type="Node3D" parent="Head/Camera3D" unique_id=788196802]
+script = ExtResource("3_j5cwe")
+inventory_size = null
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1294015872]
+transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 0.8, 0)
+enabled = false
+debug_shape_thickness = 3

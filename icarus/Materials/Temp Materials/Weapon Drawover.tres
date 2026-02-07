@@ -1,0 +1,5 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dth5muwl33j61"]
+
+[resource]
+use_z_clip_scale = true
+z_clip_scale = 0.2

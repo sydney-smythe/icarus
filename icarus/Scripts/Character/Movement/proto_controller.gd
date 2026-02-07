@@ -1,3 +1,4 @@
+
 # ProtoController v1.0 by Brackeys
 # CC0 License
 # Intended for rapid prototyping of first-person games.
@@ -54,6 +55,13 @@ var wall_run_min_speed : float = 3.8
 ## How fast do we freefly?
 @export var freefly_speed : float = 25.0
 @export var gravity_modifier : float = 2.0
+
+## Movement physics parameters
+@export_group("Movement Physics")
+@export var acceleration : float = 50.0  # how quickly we accelerate toward target speed
+@export var friction : float = 40.0  # how quickly we slow down when not moving
+@export var air_friction : float = 2.0  # friction while airborne
+@export var slide_friction : float = 3.0  # reduced friction while sliding
 
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
@@ -118,6 +126,8 @@ var can_wall_jump = true
 var prev_wall_jump_side : Vector2  # for wall jumping
 var prev_wall_run_jump_side : Vector2
 
+var forcer_vector : Vector3 = Vector3(0,0,0)
+
 func _ready() -> void:
 	check_input_mappings()
 	look_rotation.y = rotation.y
@@ -156,7 +166,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				active_actions.erase('freeflying')
 
 func _physics_process(delta: float) -> void:
-	
 	if is_on_floor() or not is_on_wall():
 		is_wall_running = false
 	
@@ -183,8 +192,6 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if is_sliding:
-		#if is_on_floor():
-			#print('Current floor slope: ' + str(get_floor_angle()))
 		if not Input.is_action_pressed(input_crouch) or move_speed <= crouch_speed or not is_moving:
 			move_speed = crouch_speed
 			if 'sliding' in active_actions:
@@ -194,18 +201,12 @@ func _physics_process(delta: float) -> void:
 			is_sprinting = false
 			
 		else:
-			
 			var floor_dot = 0
-			#print('is on ground? ' + str(is_on_floor()))
 			if is_on_floor():
-				#print('floor normal: ' + str(get_slide_collision(0).get_normal()))
-				#get_slide_collision(0).get_normal()
-				#print('set')
 				floor_dot = -global_transform.basis.z.dot(get_floor_normal())
 			if not is_on_floor() or get_floor_angle() < 0.45:
 				move_speed -= sliding_speed_loss * delta
 			elif get_floor_angle() > 0.45:
-				#print('floor dot: ' + str(floor_dot))
 				if floor_dot <= 0:
 					move_speed -= sliding_speed_loss * 4 * delta # slow slide faster if going uphill
 				if floor_dot > 0 and move_speed < sliding_speed:  # regain max slide speed if going downwards
@@ -226,7 +227,7 @@ func _physics_process(delta: float) -> void:
 		elif is_wall_running:
 			velocity += get_gravity() * gravity_modifier * delta * current_wall_run_grav_mod
 
-	if is_on_wall_only() and get_slide_collision_count() > 1:
+	if (is_on_wall_only() and get_slide_collision_count() > 1) and abs(velocity.x) + abs(velocity.z) > 4 and Input.is_action_pressed('move_forward'):
 		
 		var wall_collision_normal = get_slide_collision(1).get_normal()
 		var wall_side_vector = Vector2(wall_collision_normal.x, wall_collision_normal.z)
@@ -296,17 +297,18 @@ func _physics_process(delta: float) -> void:
 	# Modify speed based on crouching
 	if can_crouch and Input.is_action_pressed(input_crouch):
 		# if sprinting currently: slide, then go into crouch
-		if is_sprinting and is_on_floor():
-			if -global_transform.basis.z.dot(get_floor_normal()) >= 0:  # cannot start slide if going uphill
-				swap_collider(true)
-				is_sliding = true
-				is_sprinting = false
-				can_sprint = false
-				adjust_camera_to_crouching()
-				move_speed = sliding_speed
-				if 'sliding' not in active_actions:
-					active_actions.append('sliding')
-		elif not is_sprinting and not is_sliding: # if not sprinting, default crouch
+		if is_sprinting and ((is_on_floor() and -global_transform.basis.z.dot(get_floor_normal()) >= 0) or not is_on_floor()):
+			# cannot start slide if going uphill
+			apply_force(0.2, Vector3(0,-1,0), true, 0.2)
+			swap_collider(true)
+			is_sliding = true
+			is_sprinting = false
+			can_sprint = false
+			adjust_camera_to_crouching()
+			move_speed = sliding_speed
+			if 'sliding' not in active_actions:
+				active_actions.append('sliding')
+		elif not is_sliding: # if not sprinting, default crouch
 			swap_collider(true)
 			can_sprint = false
 			is_crouching = true
@@ -331,18 +333,17 @@ func _physics_process(delta: float) -> void:
 			if 'crouch' in active_actions:
 					active_actions.erase('crouch')	
 
-	# Apply desired movement to velocity
+	# Apply desired movement to velocity (REWORKED SECTION)
 	if can_move:
+		# Determine control strength based on state
 		if not is_sliding:
 			control_strength = 1.0
 		else:
 			control_strength = 0.07
-		#print('control str: ' + str(control_strength))
+		
 		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
-		#if not is_on_floor():
-			#input_dir = Vector2(input_dir[0] * 0.01, input_dir[1])
-		#print(str(input_dir))
-		# capture the current movement inputs for UI
+		
+		# Update active actions for UI
 		if input_dir[1] > 0:
 			if 'move forward' in active_actions:
 				active_actions.erase('move forward')
@@ -377,39 +378,71 @@ func _physics_process(delta: float) -> void:
 		
 		var move_dir := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		
-		# calculate how much control the player has during wall jump
-		#var control_strength = 1.0
-		
+		# Adjust control during wall jump
 		if wall_jump_timer > 0:
-			# gradually restore control as timer runs out
 			var time_ratio = wall_jump_timer / wall_jump_momentum_time
 			control_strength = lerp(1.0, wall_jump_air_control, time_ratio)
+		
+		# Reduce control in air
 		if not is_on_floor():
 			control_strength *= air_strafe_mobility
 		
+		# PHYSICS-BASED MOVEMENT: Add acceleration instead of setting velocity
 		if move_dir:
 			is_moving = true
-			# apply movement with reduced control during wall jump
-			var target_velocity_x = move_dir.x * move_speed 
-			var target_velocity_z = move_dir.z * move_speed
 			
-			#print('adj move speed: ' + str(move_speed * control_strength))
-			velocity.x = move_toward(velocity.x, target_velocity_x, move_speed * control_strength)
-			velocity.z = move_toward(velocity.z, target_velocity_z, move_speed * control_strength)
+			# Calculate target velocity
+			var target_velocity = move_dir * move_speed
+			
+			# Add acceleration toward target velocity (only affects horizontal movement)
+			var velocity_horizontal = Vector3(velocity.x, 0, velocity.z)
+			var acceleration_force = (target_velocity - velocity_horizontal) * acceleration * control_strength * delta
+			
+			velocity.x += acceleration_force.x
+			velocity.z += acceleration_force.z
 		else:
 			is_moving = false
-			# only apply friction when not in wall jump momentum
-			if wall_jump_timer <= 0:
-				velocity.x = move_toward(velocity.x, 0, move_speed)
-				velocity.z = move_toward(velocity.z, 0, move_speed)
-			else:
-				# apply minimal friction during wall jump
-				velocity.x = move_toward(velocity.x, 0, move_speed * 0.1)
-				velocity.z = move_toward(velocity.z, 0, move_speed * 0.1)
+			
+			# Apply friction when not actively moving
+			var current_friction = friction
+			
+			# Adjust friction based on state
+			if not is_on_floor():
+				current_friction = air_friction
+			elif is_sliding:
+				current_friction = slide_friction
+			
+			# During wall jump, apply minimal friction
+			if wall_jump_timer > 0:
+				current_friction *= 0.1
+			
+			# Apply friction to horizontal velocity only
+			var horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
+			var friction_amount = current_friction * delta
+			
+			# Only apply friction if there's horizontal movement
+			if horizontal_velocity.length() > 0.01:
+				var friction_vector = horizontal_velocity.normalized() * friction_amount
+				
+				# Don't overshoot and reverse direction
+				if friction_vector.length() > horizontal_velocity.length():
+					velocity.x = 0
+					velocity.z = 0
+				else:
+					velocity.x -= friction_vector.x
+					velocity.z -= friction_vector.z
 	else:
 		is_moving = false
-		velocity.x = 0
-		velocity.y = 0
+		# When movement is disabled, still allow external forces but apply strong friction
+		var horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
+		if horizontal_velocity.length() > 0.01:
+			var friction_vector = horizontal_velocity.normalized() * friction * 2.0 * delta
+			if friction_vector.length() > horizontal_velocity.length():
+				velocity.x = 0
+				velocity.z = 0
+			else:
+				velocity.x -= friction_vector.x
+				velocity.z -= friction_vector.z
 	
 	# decrease wall jump timer
 	if wall_jump_timer > 0:
@@ -420,11 +453,16 @@ func _physics_process(delta: float) -> void:
 		apply_force(1, wall_run_normal)
 		wall_run_timer -= delta
 		current_wall_run_grav_mod += wall_run_decay * delta
+	
 	# Use velocity to actually move
 	if is_wall_running:
 		if abs(velocity.x) + abs(velocity.z) < wall_run_min_speed:
 			is_wall_running = false
+	
+	# Apply external forces
+	velocity += forcer_vector
 	move_and_slide()
+	forcer_vector = Vector3(0,0,0)
 
 
 ## Rotate us to look around.
@@ -518,6 +556,13 @@ func swap_collider(now_crouching : bool):
 		crouching_collider.set_deferred("disabled", true)
 		standing_collider.set_deferred("disabled", false)
 		
-func apply_force(strength : float, direction : Vector3, sustained : bool = false, length : float = 0.0):
-	velocity += direction * strength
-	
+func apply_force(strength : float, direction : Vector3, sustained : bool = false, duration : float = 0.0):
+	if sustained:
+		var force_object = preload("res://Scenes/Physics/forcer.tscn").instantiate()
+		force_object.force_strength = strength
+		force_object.force_direction = direction
+		force_object.is_sustained = sustained
+		force_object.duration = duration
+		get_tree().current_scene.add_child(force_object)
+	else:
+		forcer_vector += direction * strength

@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://dkvbfeohtoit0"]
+
+[ext_resource type="Script" uid="uid://cc24lt6cjylk1" path="res://Scripts/Weapons/weapon_manager.gd" id="1_vynfx"]
+[ext_resource type="Script" uid="uid://b12ei004bv6pu" path="res://Scripts/Weapons/Weapon Behaviours/default_weapon_behaviour.gd" id="2_nwkwr"]
+[ext_resource type="Material" uid="uid://dth5muwl33j61" path="res://Materials/Temp Materials/Weapon Drawover.tres" id="3_ao240"]
+[ext_resource type="Script" uid="uid://covx4saijl6gl" path="res://Scripts/Weapons/animation_manager.gd" id="3_t12gy"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_knc57"]
+material = ExtResource("3_ao240")
+
+[node name="Default Weapon" type="Node3D" unique_id=153835434]
+
+[node name="Weapon Manager" type="Node3D" parent="." unique_id=1182113624]
+script = ExtResource("1_vynfx")
+
+[node name="Behaviour Manager" type="Node3D" parent="Weapon Manager" unique_id=1534131358]
+script = ExtResource("2_nwkwr")
+
+[node name="Animation Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=450035929]
+script = ExtResource("3_t12gy")
+
+[node name="Model" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=5478577]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=37554842]
+transform = Transform3D(-3.0224896e-08, 1, 0, -0.6914651, -4.371139e-08, 0, 0, 0, 0.7821668, 0, 0, 0)
+mesh = SubResource("CylinderMesh_knc57")
+skeleton = NodePath("../../../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=1792561025]
+transform = Transform3D(0.68595415, 0, 0, 0, 0.61521083, 0, 0, 0, 0.55023, 0.5938804, -0.6100663, 0)
+mesh = SubResource("CylinderMesh_knc57")
+skeleton = NodePath("../../../../..")
+
+[node name="Audio Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=729461471]
