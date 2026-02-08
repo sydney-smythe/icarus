@@ -16,6 +16,7 @@
 script = ExtResource("1_n8t8x")
 
 [node name="Player" parent="." unique_id=1516342901 instance=ExtResource("2_xwcdb")]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9493284, 0.89900434, 0)
 floor_snap_length = 0.12
 

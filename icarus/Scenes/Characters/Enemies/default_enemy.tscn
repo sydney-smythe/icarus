@@ -11,7 +11,7 @@ albedo_color = Color(0.08313275, 0.5175231, 0.6477978, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_k8rbe"]
 material = SubResource("StandardMaterial3D_pccc1")
 
-[node name="Default Enemy" type="RigidBody3D" unique_id=465478192]
+[node name="Default Enemy" type="RigidBody3D" unique_id=465478192 groups=["Weapon Targets"]]
 script = ExtResource("1_pccc1")
 
 [node name="State Manager" type="Node3D" parent="." unique_id=388658154]

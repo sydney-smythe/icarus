@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bgf45ahtixemx"]
+
+[ext_resource type="Script" uid="uid://bp3yghub76126" path="res://Scripts/Weapons/Weapon Projectiles/weapon_projectile.gd" id="1_3vcv2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v00h6"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_v00h6"]
+
+[node name="Default Projectile" type="Area3D" unique_id=2072364202]
+script = ExtResource("1_3vcv2")
+rotation_offset = Vector3(-90, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=448727068]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_v00h6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1182685957]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_v00h6")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

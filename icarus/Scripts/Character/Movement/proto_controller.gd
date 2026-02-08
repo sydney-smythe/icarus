@@ -227,7 +227,7 @@ func _physics_process(delta: float) -> void:
 		elif is_wall_running:
 			velocity += get_gravity() * gravity_modifier * delta * current_wall_run_grav_mod
 
-	if (is_on_wall_only() and get_slide_collision_count() > 1) and abs(velocity.x) + abs(velocity.z) > 4 and Input.is_action_pressed('move_forward'):
+	if (is_on_wall_only() and get_slide_collision_count() > 1) and Input.is_action_pressed('move_forward') and is_sprinting and velocity.y <= 0:
 		
 		var wall_collision_normal = get_slide_collision(1).get_normal()
 		var wall_side_vector = Vector2(wall_collision_normal.x, wall_collision_normal.z)
@@ -566,3 +566,6 @@ func apply_force(strength : float, direction : Vector3, sustained : bool = false
 		get_tree().current_scene.add_child(force_object)
 	else:
 		forcer_vector += direction * strength
+		
+func hit_by_weapon(damage : int):  # REQUIREMENT OF WEAPON TARGETS GROUP
+	print('player recieved damage: ' + str(damage))

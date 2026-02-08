@@ -2,10 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cqb2oidf1iin6" path="res://Scripts/Character/Movement/proto_controller.gd" id="1_rlwtg"]
 [ext_resource type="Texture2D" uid="uid://nshvql1wtwr0" path="res://Temp Visuals/UI/temp_crosshair.png" id="2_2egnu"]
+[ext_resource type="Texture2D" uid="uid://gy8njhtsabwg" path="res://Temp Visuals/Entities/The Boss_0.png" id="2_j5cwe"]
 [ext_resource type="Script" uid="uid://c53lghcmyip3c" path="res://Scripts/Equipment/equipment_manager.gd" id="3_j5cwe"]
+[ext_resource type="PackedScene" uid="uid://botfabbr5v703" path="res://Temp Visuals/Entities/The Boss.fbx" id="3_xgce8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
+albedo_texture = ExtResource("2_j5cwe")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ucva2"]
 radius = 0.4
@@ -19,7 +22,7 @@ height = 1.8
 radius = 0.4
 height = 1.2
 
-[node name="Player" type="CharacterBody3D" unique_id=140928765]
+[node name="Player" type="CharacterBody3D" unique_id=140928765 groups=["Ignore Weapon"]]
 script = ExtResource("1_rlwtg")
 can_sprint = true
 can_freefly = true
@@ -31,9 +34,12 @@ input_jump = "jump"
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1749329324]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_iof21")
-cast_shadow = 0
 mesh = SubResource("CapsuleMesh_ucva2")
+
+[node name="The Boss" parent="." unique_id=1519820135 instance=ExtResource("3_xgce8")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0.291286)
 
 [node name="Standing Collider" type="CollisionShape3D" parent="." unique_id=637673491]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)

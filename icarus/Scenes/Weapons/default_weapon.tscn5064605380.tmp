@@ -4,8 +4,7 @@
 [ext_resource type="Script" uid="uid://b12ei004bv6pu" path="res://Scripts/Weapons/Weapon Behaviours/default_weapon_behaviour.gd" id="2_nwkwr"]
 [ext_resource type="PackedScene" uid="uid://bgf45ahtixemx" path="res://Scenes/Weapon Projectiles/default_projectile.tscn" id="3_78gpb"]
 [ext_resource type="Material" uid="uid://dth5muwl33j61" path="res://Materials/Temp Materials/Weapon Drawover.tres" id="3_ao240"]
-[ext_resource type="Script" uid="uid://covx4saijl6gl" path="res://Scripts/Weapons/weapon_animation_manager.gd" id="3_t12gy"]
-[ext_resource type="PackedScene" uid="uid://bnd4v6k62i4lx" path="res://Temp Visuals/Items/fn309.blend" id="5_lg5g5"]
+[ext_resource type="Script" uid="uid://covx4saijl6gl" path="res://Scripts/Weapons/animation_manager.gd" id="3_t12gy"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_knc57"]
 material = ExtResource("3_ao240")
@@ -21,15 +20,8 @@ projectile = ExtResource("3_78gpb")
 
 [node name="Animation Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=450035929]
 script = ExtResource("3_t12gy")
-model_scale = 0.2
-model_position_offest = Vector3(0.38, -0.2, -0.5)
-model_rotation_offest = Vector3(0, 90, 0)
-
-[node name="fn309" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=1056128544 instance=ExtResource("5_lg5g5")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, -0.35042092, 0)
 
 [node name="Model" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=5478577]
-visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=37554842]
 transform = Transform3D(-3.0224896e-08, 1, 0, -0.6914651, -4.371139e-08, 0, 0, 0, 0.7821668, 0, 0, 0)
