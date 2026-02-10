@@ -1,12 +1,11 @@
 [gd_scene format=3 uid="uid://vljm1q5kram"]
 
-[ext_resource type="PackedScene" uid="uid://b4vhcqs03o8au" path="res://Scenes/Maps/temp_map_1.tscn" id="1_01eyc"]
 [ext_resource type="Script" uid="uid://b6xjfy7xptsy5" path="res://Scripts/System/data_manager.gd" id="1_n8t8x"]
+[ext_resource type="PackedScene" uid="uid://dd3w624uqyeoi" path="res://Scenes/Maps/demo_map_01.tscn" id="2_n8t8x"]
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/Characters/proto_controller/player.tscn" id="2_xwcdb"]
-[ext_resource type="Script" uid="uid://bc2pr8dfsy7aj" path="res://Scripts/UI/debug_action_label.gd" id="3_7kuvc"]
-[ext_resource type="Script" uid="uid://bspk326i1ftpt" path="res://Scripts/UI/debug_move_speed.gd" id="4_wqe6a"]
-[ext_resource type="Script" uid="uid://c1ap4nbbxsd03" path="res://Scripts/UI/debug_velocity_vector.gd" id="5_teslb"]
+[ext_resource type="PackedScene" uid="uid://c740upcymk5ps" path="res://Scenes/UI/debug_ui.tscn" id="6_n8t8x"]
 [ext_resource type="PackedScene" uid="uid://c8x7hvb250pby" path="res://Scenes/Characters/Enemies/default_enemy.tscn" id="7_ob72n"]
+[ext_resource type="AudioStream" uid="uid://buejnxt5r58we" path="res://Temp Audio/drone.mp3" id="8_vyj3o"]
 
 [node name="Game Manager" type="Node3D" unique_id=901033503]
 
@@ -15,44 +14,30 @@
 [node name="Data Manager" type="Node3D" parent="Sub Managers" unique_id=1796835999]
 script = ExtResource("1_n8t8x")
 
+[node name="Stage Manager" type="Node3D" parent="." unique_id=465460131]
+
+[node name="demo map 01" parent="Stage Manager" unique_id=1820104611 instance=ExtResource("2_n8t8x")]
+
+[node name="UI Manager" type="Control" parent="." unique_id=1365812415]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Debug UI" parent="UI Manager" unique_id=2046165957 instance=ExtResource("6_n8t8x")]
+layout_mode = 1
+
 [node name="Player" parent="." unique_id=1516342901 instance=ExtResource("2_xwcdb")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9493284, 0.89900434, 0)
 floor_snap_length = 0.12
 
-[node name="temp map 1" parent="." unique_id=1382259760 instance=ExtResource("1_01eyc")]
-
-[node name="Debug Action Label" type="Label" parent="." unique_id=1486481273]
-modulate = Color(1, 0.019607844, 0.019607844, 1)
-offset_left = 14.0
-offset_top = 14.0
-offset_right = 256.0
-offset_bottom = 67.0
-theme_override_font_sizes/font_size = 19
-text = "Active actions: "
-script = ExtResource("3_7kuvc")
-
-[node name="Debug Move Speed" type="Label" parent="." unique_id=1184388205]
-modulate = Color(1, 0.019607844, 0.019607844, 1)
-offset_left = 884.0
-offset_top = 12.0
-offset_right = 1126.0
-offset_bottom = 65.0
-theme_override_font_sizes/font_size = 19
-text = "Move Speed:"
-horizontal_alignment = 2
-script = ExtResource("4_wqe6a")
-
-[node name="Debug Velocity Vector" type="Label" parent="." unique_id=1259884104]
-modulate = Color(1, 0.019607844, 0.019607844, 1)
-offset_left = 730.0
-offset_top = 598.0
-offset_right = 972.0
-offset_bottom = 651.0
-theme_override_font_sizes/font_size = 19
-text = "Vel. Vec:"
-horizontal_alignment = 2
-script = ExtResource("5_teslb")
-
 [node name="Default Enemy" parent="." unique_id=465478192 instance=ExtResource("7_ob72n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.471613, 1.0529795, 3.9332533)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6336308, 1.6529795, 3.9332533)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1768096775]
+stream = ExtResource("8_vyj3o")
+bus = &"Music"

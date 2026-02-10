@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gy8njhtsabwg"
-path="res://.godot/imported/The Boss_0.png-5eb0a0f96b49716259919b098b6bb3fc.ctex"
+uid="uid://cs6bh41ftvfr0"
+path="res://.godot/imported/temp-blend-model_Boss_specular.png-cd2252c72ab66c7332c89d9809c5a353.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Temp Visuals/Entities/The Boss_0.png"
-dest_files=["res://.godot/imported/The Boss_0.png-5eb0a0f96b49716259919b098b6bb3fc.ctex"]
+source_file="res://Temp Visuals/Entities/temp-blend-model_Boss_specular.png"
+dest_files=["res://.godot/imported/temp-blend-model_Boss_specular.png-cd2252c72ab66c7332c89d9809c5a353.ctex"]
 
 [params]
 

@@ -102,7 +102,9 @@ var control_strength : float = 1.0
 @onready var crouching_collider: CollisionShape3D = $"Crouching Collider"
 @onready var ray_cast_3d: RayCast3D = $RayCast3D
 var collider  # active collider
-
+@onready var model = $Model
+@onready var model_animation_player = $"Model/AnimationPlayer"
+@onready var audio_manager: Node3D = $"Audio Manager"
 
 @export_group("Camera Adjustments")
 # head position (used to move the camera while crouched / uncrouched)
@@ -127,6 +129,13 @@ var prev_wall_jump_side : Vector2  # for wall jumping
 var prev_wall_run_jump_side : Vector2
 
 var forcer_vector : Vector3 = Vector3(0,0,0)
+
+@export_group('Essence')
+@export var essence : int = 100
+# curves: X axis is how much health you have (%, 0.0-1.0), Y axis is multiplier for something
+@export var essence_grav_curve: Curve
+@export var essence_speed_curve: Curve
+@export var essence_force_curve: Curve
 
 func _ready() -> void:
 	check_input_mappings()
@@ -166,6 +175,16 @@ func _unhandled_input(event: InputEvent) -> void:
 				active_actions.erase('freeflying')
 
 func _physics_process(delta: float) -> void:
+	#handle animations
+	if not is_moving:
+		model_animation_player.play("idle")
+	elif is_sprinting:
+		model_animation_player.play("run")
+		#audio_manager.play_movement_audio()
+	elif is_moving and not is_sprinting:
+		model_animation_player.play("walk")
+		#audio_manager.play_movement_audio()
+	
 	if is_on_floor() or not is_on_wall():
 		is_wall_running = false
 	
@@ -223,9 +242,9 @@ func _physics_process(delta: float) -> void:
 	# Apply gravity to velocity
 	if has_gravity:
 		if not is_on_floor() and not is_wall_running:
-			velocity += get_gravity() * gravity_modifier * delta
+			velocity += get_gravity() * gravity_modifier * delta * essence_grav_curve.sample(float(essence)/100)
 		elif is_wall_running:
-			velocity += get_gravity() * gravity_modifier * delta * current_wall_run_grav_mod
+			velocity += get_gravity() * gravity_modifier * delta * current_wall_run_grav_mod * essence_grav_curve.sample(float(essence)/100)
 
 	if (is_on_wall_only() and get_slide_collision_count() > 1) and Input.is_action_pressed('move_forward') and is_sprinting and velocity.y <= 0:
 		
@@ -296,6 +315,8 @@ func _physics_process(delta: float) -> void:
 				
 	# Modify speed based on crouching
 	if can_crouch and Input.is_action_pressed(input_crouch):
+		# DEBUG!! hurt player
+		essence -= 1
 		# if sprinting currently: slide, then go into crouch
 		if is_sprinting and ((is_on_floor() and -global_transform.basis.z.dot(get_floor_normal()) >= 0) or not is_on_floor()):
 			# cannot start slide if going uphill
@@ -392,7 +413,7 @@ func _physics_process(delta: float) -> void:
 			is_moving = true
 			
 			# Calculate target velocity
-			var target_velocity = move_dir * move_speed
+			var target_velocity = move_dir * move_speed * essence_speed_curve.sample(float(essence)/100)
 			
 			# Add acceleration toward target velocity (only affects horizontal movement)
 			var velocity_horizontal = Vector3(velocity.x, 0, velocity.z)
@@ -563,9 +584,10 @@ func apply_force(strength : float, direction : Vector3, sustained : bool = false
 		force_object.force_direction = direction
 		force_object.is_sustained = sustained
 		force_object.duration = duration
-		get_tree().current_scene.add_child(force_object)
+		add_child(force_object)
 	else:
-		forcer_vector += direction * strength
+		forcer_vector += direction * strength * essence_force_curve.sample(float(essence) / 100)
 		
 func hit_by_weapon(damage : int):  # REQUIREMENT OF WEAPON TARGETS GROUP
 	print('player recieved damage: ' + str(damage))
+	essence -= damage

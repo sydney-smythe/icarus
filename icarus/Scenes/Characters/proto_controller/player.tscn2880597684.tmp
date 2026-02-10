@@ -7,20 +7,6 @@
 [ext_resource type="Script" uid="uid://7sure81t4del" path="res://Scripts/Character/player_audio_manager.gd" id="5_4cql4"]
 [ext_resource type="AudioStream" uid="uid://bntipp0lusu36" path="res://Temp Audio/temp-footstep.ogg" id="5_xgce8"]
 
-[sub_resource type="Curve" id="Curve_4cql4"]
-_data = [Vector2(0, 0.7), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Curve" id="Curve_7v1lc"]
-_limits = [0.0, 2.0, 0.0, 1.0]
-_data = [Vector2(0, 1.2540727), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Curve" id="Curve_egnfr"]
-_limits = [0.0, 2.0, 0.0, 1.0]
-_data = [Vector2(0, 1.6), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j5cwe"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
@@ -48,9 +34,6 @@ input_right = "move_right"
 input_forward = "move_forward"
 input_back = "move_backward"
 input_jump = "jump"
-essence_grav_curve = SubResource("Curve_4cql4")
-essence_speed_curve = SubResource("Curve_7v1lc")
-essence_force_curve = SubResource("Curve_egnfr")
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1749329324]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -59,7 +42,7 @@ material_override = SubResource("StandardMaterial3D_iof21")
 mesh = SubResource("CapsuleMesh_ucva2")
 
 [node name="Model" parent="." unique_id=758620597 instance=ExtResource("3_xgce8")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0.43504924)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0.39806944)
 
 [node name="Standing Collider" type="CollisionShape3D" parent="." unique_id=637673491]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -104,5 +87,4 @@ script = ExtResource("5_4cql4")
 
 [node name="Footsteps" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=907902068]
 stream = ExtResource("5_xgce8")
-volume_db = 65.074
 bus = &"SFX"

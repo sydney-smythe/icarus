@@ -2,23 +2,21 @@
 
 [ext_resource type="Script" uid="uid://4v5v8skfsiib" path="res://Scripts/Enemies/enemy_movement.gd" id="1_pccc1"]
 [ext_resource type="Script" uid="uid://d0w33o1lgscde" path="res://Scripts/Enemies/enemy_state_manager.gd" id="2_k8rbe"]
+[ext_resource type="PackedScene" uid="uid://dw6ekp4nbf3a7" path="res://Scenes/Characters/proto_controller/temp_blend_model.tscn" id="3_i2kpe"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_qi27n"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i2kpe"]
+radius = 0.4
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pccc1"]
-albedo_color = Color(0.08313275, 0.5175231, 0.6477978, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_k8rbe"]
-material = SubResource("StandardMaterial3D_pccc1")
-
-[node name="Default Enemy" type="RigidBody3D" unique_id=465478192 groups=["Weapon Targets"]]
+[node name="Default Enemy" type="CharacterBody3D" unique_id=473507800 groups=["Weapon Targets"]]
 script = ExtResource("1_pccc1")
 
 [node name="State Manager" type="Node3D" parent="." unique_id=388658154]
 script = ExtResource("2_k8rbe")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1805778876]
-shape = SubResource("SphereShape3D_qi27n")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0562742, 0)
+shape = SubResource("CapsuleShape3D_i2kpe")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=136384021]
-mesh = SubResource("SphereMesh_k8rbe")
+[node name="Model" type="Node3D" parent="." unique_id=269631758]
+
+[node name="temp-blend-model" parent="Model" unique_id=758620597 instance=ExtResource("3_i2kpe")]

@@ -2,20 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gy8njhtsabwg"
-path="res://.godot/imported/The Boss_0.png-5eb0a0f96b49716259919b098b6bb3fc.ctex"
+uid="uid://cy7m12m7qm5to"
+path.s3tc="res://.godot/imported/brick-wall-1916752_1280_jpg.png-ce6dd45183ec79e39b3699a2aed340ec.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://Temp Visuals/Entities/The Boss_0.png"
-dest_files=["res://.godot/imported/The Boss_0.png-5eb0a0f96b49716259919b098b6bb3fc.ctex"]
+source_file="res://Temp Visuals/Environment/brick-wall-1916752_1280_jpg.png"
+dest_files=["res://.godot/imported/brick-wall-1916752_1280_jpg.png-ce6dd45183ec79e39b3699a2aed340ec.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +24,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -37,4 +38,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

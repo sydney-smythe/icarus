@@ -17,6 +17,7 @@ glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_evjba"]
 albedo_texture = ExtResource("1_sru4l")
+uv1_scale = Vector3(2, 2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o8s5h"]
 albedo_texture = ExtResource("1_sru4l")

@@ -13,7 +13,8 @@ enum Attack_types {HITSCAN, PROJECTILE}
 @export_group("Projectile Information")
 @export var projectile : PackedScene
 @export var projectile_speed : float = 0.5
-
+@onready var animation_manager = $"Animation Manager"
+@onready var audio_manager: Node3D = $"Audio Manager"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	call_deferred('late_ready')
@@ -31,6 +32,8 @@ func late_ready():
 	
 func primary_fire():
 	print('fire - primary')
+	animation_manager.play_primary_fire()
+	audio_manager.play_primary_audio()
 	player.apply_force(recoil_strength, camera.global_transform.basis.z.normalized())
 	if attack_type == Attack_types.HITSCAN:
 		fire_ray()

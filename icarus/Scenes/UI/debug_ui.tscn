@@ -1,0 +1,141 @@
+[gd_scene format=3 uid="uid://c740upcymk5ps"]
+
+[ext_resource type="Script" uid="uid://cpcmcnk8nrcgr" path="res://Scripts/UI/debug_ui.gd" id="1_87ksd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87ksd"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Debug UI" type="Control" unique_id=2046165957]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_filter = 2
+script = ExtResource("1_87ksd")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1135252886]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -522.66504
+offset_bottom = 125.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 166
+theme_override_constants/margin_top = 41
+theme_override_constants/margin_right = 53
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=888375127]
+custom_minimum_size = Vector2(303.665, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_87ksd")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=713016694]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer" unique_id=1501058494]
+custom_minimum_size = Vector2(325.655, 0)
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Game Info" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=649815220]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Debug Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Game Info" unique_id=986141160]
+layout_mode = 2
+size_flags_vertical = 1
+text = "DEBUG MENU    (F2 to close)"
+horizontal_alignment = 1
+
+[node name="Version Information" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Game Info" unique_id=177819635]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Project ICARUS    Build 001   v.0.1.208 
+Playtest 01-Naples"
+horizontal_alignment = 1
+
+[node name="Engine Info" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1009475858]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="FPS Count" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Engine Info" unique_id=2070430885]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4491495, 0.770701, 0.7246074, 1)
+text = "FPS:"
+
+[node name="State Info" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=178717969]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Current Level" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/State Info" unique_id=1694899832]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7539762, 0.70520955, 0.5260158, 1)
+text = "Current Stage:"
+
+[node name="Player Info" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1755549854]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Actions Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=1565254328]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.69242996, 0.6779741, 0.9622832, 1)
+text = "Active Actions: "
+
+[node name="Move Speed" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=563917559]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8769369, 0.53171027, 0.48197937, 1)
+text = "Move Speed:"
+
+[node name="Velocity Vector" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=407619289]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8769369, 0.53171027, 0.48197937, 1)
+text = "Velocity:"
+
+[node name="Camera Rotation" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=947222022]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8769369, 0.53171027, 0.48197937, 1)
+text = "Cam:"
+
+[node name="Essence Info" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1879539497]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Essence" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=1467225229]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
+text = "Essence: "
+
+[node name="Grav Mult" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=70729807]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
+text = "Essence Grav Mult: "
+
+[node name="Force Mult" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=1745510883]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
+text = "Essence Force Mult: "
+
+[node name="Speed Mult" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=267056210]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
+text = "Essence Speed Mult:"
