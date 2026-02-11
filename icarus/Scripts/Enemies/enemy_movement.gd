@@ -34,7 +34,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	
 	# for now: temp move
-	input_dir = Vector3(1,0,0)
+	input_dir = Vector3(0,0,0)
 	rotate_look()
 	#handle animations
 	if not is_moving:
@@ -104,7 +104,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				velocity.x -= friction_vector.x
 				velocity.z -= friction_vector.z
-				
+	
 	velocity += forcer_vector
 	move_and_slide()
 	forcer_vector = Vector3(0,0,0)

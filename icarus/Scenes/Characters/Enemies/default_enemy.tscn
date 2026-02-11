@@ -7,7 +7,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i2kpe"]
 radius = 0.4
 
-[node name="Default Enemy" type="CharacterBody3D" unique_id=473507800 groups=["Weapon Targets"]]
+[node name="Default Enemy" type="CharacterBody3D" unique_id=473507800 groups=["Is Forceable", "Weapon Targets"]]
 script = ExtResource("1_pccc1")
 
 [node name="State Manager" type="Node3D" parent="." unique_id=388658154]

@@ -316,7 +316,7 @@ func _physics_process(delta: float) -> void:
 	# Modify speed based on crouching
 	if can_crouch and Input.is_action_pressed(input_crouch):
 		# DEBUG!! hurt player
-		essence -= 1
+		#essence -= 1
 		# if sprinting currently: slide, then go into crouch
 		if is_sprinting and ((is_on_floor() and -global_transform.basis.z.dot(get_floor_normal()) >= 0) or not is_on_floor()):
 			# cannot start slide if going uphill

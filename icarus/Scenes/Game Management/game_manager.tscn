@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b6xjfy7xptsy5" path="res://Scripts/System/data_manager.gd" id="1_n8t8x"]
 [ext_resource type="PackedScene" uid="uid://dd3w624uqyeoi" path="res://Scenes/Maps/demo_map_01.tscn" id="2_n8t8x"]
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/Characters/proto_controller/player.tscn" id="2_xwcdb"]
+[ext_resource type="PackedScene" uid="uid://hl5qyawevdr" path="res://Scenes/UI/hud.tscn" id="4_ob72n"]
 [ext_resource type="PackedScene" uid="uid://c740upcymk5ps" path="res://Scenes/UI/debug_ui.tscn" id="6_n8t8x"]
 [ext_resource type="PackedScene" uid="uid://c8x7hvb250pby" path="res://Scenes/Characters/Enemies/default_enemy.tscn" id="7_ob72n"]
 [ext_resource type="AudioStream" uid="uid://buejnxt5r58we" path="res://Temp Audio/drone.mp3" id="8_vyj3o"]
@@ -28,6 +29,9 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Debug UI" parent="UI Manager" unique_id=2046165957 instance=ExtResource("6_n8t8x")]
+layout_mode = 1
+
+[node name="HUD" parent="UI Manager" unique_id=1064581951 instance=ExtResource("4_ob72n")]
 layout_mode = 1
 
 [node name="Player" parent="." unique_id=1516342901 instance=ExtResource("2_xwcdb")]

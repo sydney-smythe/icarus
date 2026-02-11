@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://nshvql1wtwr0" path="res://Temp Visuals/UI/temp_crosshair.png" id="2_2egnu"]
 [ext_resource type="Script" uid="uid://c53lghcmyip3c" path="res://Scripts/Equipment/equipment_manager.gd" id="3_j5cwe"]
 [ext_resource type="PackedScene" uid="uid://dw6ekp4nbf3a7" path="res://Scenes/Characters/proto_controller/temp_blend_model.tscn" id="3_xgce8"]
+[ext_resource type="Script" uid="uid://c4k1rxxxmqinn" path="res://Scripts/Character/essence_blast.gd" id="4_7v1lc"]
 [ext_resource type="Script" uid="uid://7sure81t4del" path="res://Scripts/Character/player_audio_manager.gd" id="5_4cql4"]
 [ext_resource type="AudioStream" uid="uid://bntipp0lusu36" path="res://Temp Audio/temp-footstep.ogg" id="5_xgce8"]
 
@@ -39,7 +40,14 @@ height = 1.8
 radius = 0.4
 height = 1.2
 
-[node name="Player" type="CharacterBody3D" unique_id=140928765 groups=["Ignore Weapon"]]
+[sub_resource type="Curve" id="Curve_d7csw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7047354, 0.6089152), -0.90544105, -0.90544105, 0, 0, Vector2(0.8913648, 0.37434804), -1.4468942, -1.4468942, 0, 0, Vector2(1, 0.10004747), -1.6746244, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4cql4"]
+size = Vector3(1.4520874, 4.039551, 1.7353516)
+
+[node name="Player" type="CharacterBody3D" unique_id=140928765 groups=["Ignore Weapon", "Is Forceable"]]
 script = ExtResource("1_rlwtg")
 can_sprint = true
 can_freefly = true
@@ -60,6 +68,7 @@ mesh = SubResource("CapsuleMesh_ucva2")
 
 [node name="Model" parent="." unique_id=758620597 instance=ExtResource("3_xgce8")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0.43504924)
+visible = false
 
 [node name="Standing Collider" type="CollisionShape3D" parent="." unique_id=637673491]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -90,6 +99,16 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.29, 0.29)
 texture = ExtResource("2_2egnu")
+
+[node name="Essence Blast" type="Area3D" parent="Head/Camera3D" unique_id=1994323815]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 0, 0.025982857, -1.2880154)
+script = ExtResource("4_7v1lc")
+strength_distance_curve = SubResource("Curve_d7csw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Camera3D/Essence Blast" unique_id=1571626263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011688232, 0.68027925, -0.7390375)
+shape = SubResource("BoxShape3D_4cql4")
+debug_color = Color(0.68150795, 0.43798593, 0.65781826, 0.41960785)
 
 [node name="Equipment Manager" type="Node3D" parent="Head/Camera3D" unique_id=788196802]
 script = ExtResource("3_j5cwe")

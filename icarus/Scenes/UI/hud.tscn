@@ -1,5 +1,19 @@
 [gd_scene format=3 uid="uid://hl5qyawevdr"]
 
+[ext_resource type="Script" uid="uid://cc7s8iwfg2chd" path="res://Scripts/UI/hud_ui.gd" id="1_sprlj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wkk6c"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 5
+
 [node name="HUD" type="Control" unique_id=1064581951]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +21,76 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_sprlj")
+
+[node name="Essence Info" type="MarginContainer" parent="." unique_id=1562264629]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PanelContainer" type="PanelContainer" parent="Essence Info" unique_id=274638304]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wkk6c")
+
+[node name="MarginContainer" type="MarginContainer" parent="Essence Info/PanelContainer" unique_id=1413446647]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="Essence" type="Label" parent="Essence Info/PanelContainer/MarginContainer" unique_id=1805064284]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "ESSENCE: 100"
+horizontal_alignment = 1
+
+[node name="Weapon Info" type="MarginContainer" parent="." unique_id=1602298886]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -83.27083
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PanelContainer" type="PanelContainer" parent="Weapon Info" unique_id=1714551241]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wkk6c")
+
+[node name="MarginContainer" type="MarginContainer" parent="Weapon Info/PanelContainer" unique_id=1691518172]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Weapon Info/PanelContainer/MarginContainer" unique_id=310401973]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Weapon Name" type="Label" parent="Weapon Info/PanelContainer/MarginContainer/VBoxContainer" unique_id=647994536]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "Weapon Name"
+horizontal_alignment = 1
+
+[node name="Ammo" type="Label" parent="Weapon Info/PanelContainer/MarginContainer/VBoxContainer" unique_id=1938560598]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "30"
+horizontal_alignment = 2
