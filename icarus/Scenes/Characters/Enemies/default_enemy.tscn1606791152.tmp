@@ -16,16 +16,16 @@ attack_range = 3.0
 script = ExtResource("2_k8rbe")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1805778876]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.0562742, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0562742, 0)
 shape = SubResource("CapsuleShape3D_i2kpe")
 
 [node name="Model" type="Node3D" parent="." unique_id=269631758]
 
 [node name="temp-blend-model" parent="Model" unique_id=758620597 instance=ExtResource("3_i2kpe")]
 
-[node name="Equipment Manager" type="Node3D" parent="Model" unique_id=1930931214]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1, 0)
-script = ExtResource("4_u8867")
-
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=852057834]
 target_desired_distance = 6.0
+
+[node name="Equipment Manager" type="Node3D" parent="." unique_id=1930931214]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("4_u8867")

@@ -51,6 +51,7 @@ var sec_fire_delay_timer  # only if action type
 
 var weapon_behaviour
 var animation_manager
+@export var player_controlled = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -89,21 +90,8 @@ func _process(delta: float) -> void:
 			print('secondary reload complete')
 			sec_is_reloading = false
 			sec_current_ammo = sec_magazine_size
-	
-	# primary action
-	if not prim_is_reloading:
-		if prim_fire_type == Prim_fire_type.BURST or prim_fire_type == Prim_fire_type.SINGLE:
-			if prim_fire_delay_timer <= 0:
-				if Input.is_action_just_pressed('primary_action') and prim_current_ammo > 0:
-					primary_action()
-		elif prim_fire_type == Prim_fire_type.AUTO:
-			if prim_fire_delay_timer <= 0:
-				if Input.is_action_pressed('primary_action') and prim_current_ammo > 0:
-					primary_action()
-			
-	
-	# secondary action
-	if has_sec_action:
+		
+	if has_sec_action and player_controlled:
 		if not sec_is_reloading or not sec_has_ammo:
 			if sec_fire_type == Sec_fire_type.ACTION_BURST or sec_fire_type == Sec_fire_type.ACTION_SINGLE:
 				if Input.is_action_just_pressed('secondary_action') and (sec_current_ammo > 0 or not sec_has_ammo):
@@ -118,11 +106,34 @@ func _process(delta: float) -> void:
 				elif not sec_is_scoping and Input.is_action_just_pressed('secondary_action'):
 					sec_is_scoping = true
 					secondary_action()
+
+func _input(_event: InputEvent) -> void:
+	if player_controlled:
+		if Input.is_action_just_pressed('primary_action'):
+			activate_primary()
+			
+		if ((prim_current_ammo < prim_magazine_size and Input.is_action_just_pressed('reload')) or (prim_current_ammo == 0 and Input.is_action_just_pressed('primary_action'))) and not prim_is_reloading:
+			reload()
 		
-	if ((prim_current_ammo < prim_magazine_size and Input.is_action_just_pressed('reload')) or (prim_current_ammo == 0 and Input.is_action_just_pressed('primary_action'))) and not prim_is_reloading:
+func reload():
 		prim_is_reloading = true
 		print('starting reload')
-		prim_reload_timer = prim_reload_time
+		prim_reload_timer = prim_reload_time		
+
+func activate_primary():
+	if not prim_is_reloading:
+		if prim_current_ammo > 0:
+			if prim_fire_type == Prim_fire_type.BURST or prim_fire_type == Prim_fire_type.SINGLE:
+				if prim_fire_delay_timer <= 0:
+					if prim_current_ammo > 0:
+						primary_action()
+			elif prim_fire_type == Prim_fire_type.AUTO:
+				if prim_fire_delay_timer <= 0:
+					if prim_current_ammo > 0:
+						primary_action()
+		else:
+			reload()
+		
 		
 func primary_action():
 	if prim_fire_type == Prim_fire_type.BURST:

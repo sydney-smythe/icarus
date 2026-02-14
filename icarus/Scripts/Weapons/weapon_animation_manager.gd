@@ -8,12 +8,14 @@ var model
 @export_group("Animation Data")
 @export var primary_animation : String = "temp-fire"
 @onready var animation_player = $Model/AnimationPlayer
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	model = get_child(0)
 	model.scale = Vector3(model_scale,model_scale,model_scale)
 	model.position = model_position_offest
 	model.rotation_degrees = model_rotation_offest
+	
 
 
 func play_primary_fire():

@@ -29,6 +29,7 @@ window/size/viewport_height=1080
 "Weapon Targets"="Things that receive damage from weapons"
 "Ignore Weapon"="Weapon projectiles will ignore this target"
 "Is Forceable"="Can be hit by forces. Requires the apply_force() function."
+Enemies=""
 
 [gui]
 

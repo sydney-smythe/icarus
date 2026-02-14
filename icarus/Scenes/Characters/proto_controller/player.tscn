@@ -47,7 +47,7 @@ point_count = 4
 [sub_resource type="BoxShape3D" id="BoxShape3D_4cql4"]
 size = Vector3(1.4520874, 4.039551, 1.7353516)
 
-[node name="Player" type="CharacterBody3D" unique_id=140928765 groups=["Ignore Weapon", "Is Forceable"]]
+[node name="Player" type="CharacterBody3D" unique_id=140928765 groups=["Ignore Weapon", "Is Forceable", "Weapon Targets"]]
 script = ExtResource("1_rlwtg")
 can_sprint = true
 can_freefly = true

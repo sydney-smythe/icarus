@@ -1,7 +1,7 @@
 extends Area3D
 
 @export var blast_strength_player : float = 4.0
-@export var blast_strength_enemy : float = 17.0
+@export var blast_strength_enemy : float = 18.0
 @export var blast_vertical_modifier : Vector3 = Vector3(0, 1, 0)
 @export var strength_distance_curve : Curve
 var max_distance : float = 4.0 # MUST BE CHANGED IF BLAST COLLIDER SIZE CHANGES

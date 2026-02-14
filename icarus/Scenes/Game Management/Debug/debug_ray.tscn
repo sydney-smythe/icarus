@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bvtjpbc0s6445"]
+
+[ext_resource type="Script" uid="uid://4bahmiqkx2io" path="res://Scripts/System/DrawLine3D.gd" id="1_sv2kp"]
+
+[node name="Debug Ray" type="Node2D" unique_id=1993600693]
+script = ExtResource("1_sv2kp")
