@@ -27,11 +27,12 @@ func _ready() -> void:
 	
 func late_ready():
 	# add the default equipment to slot 0
-	add_equipment(0, default_equipment, true, true)  # add and equip the default weapon
-	print(str(inventory_array))
-	add_equipment(1, default_equipment, true, false)  # add and equip the default weapon
-	print(str(inventory_array))
-	print(str(active_equipment))
+	pass
+	#add_equipment(0, default_equipment, true, true)  # add and equip the default weapon
+	#print(str(inventory_array))
+	#add_equipment(1, default_equipment, true, false)  # add and equip the default weapon
+	#print(str(inventory_array))
+	#print(str(active_equipment))
  
 func _process(_delta: float) -> void:
 	# handles swapping weapon inputs
@@ -67,9 +68,19 @@ func _process(_delta: float) -> void:
 				swap_active_equipment(index)
 				break
 
-func swap_active_equipment(new_active_index : int):
-	
-	if not new_active_index == active_equipment:
+func disable_equipment():
+	var current_active = get_child(active_equipment)
+	current_active.hide()
+	current_active.process_mode = Node.PROCESS_MODE_DISABLED
+
+func enable_equipment():
+	var current_active = get_child(active_equipment)
+	current_active.show()
+	current_active.process_mode = Node.PROCESS_MODE_ALWAYS
+
+func swap_active_equipment(new_active_index : int, override_same_swap = false):
+	# override same swap is only used when replacing a weapon when equipping a new one in the active slot
+	if not new_active_index == active_equipment or override_same_swap:
 		if not new_active_index > inventory_size - 1:
 			if not inventory_array[new_active_index][1] == false:  # only works if you can swap to the new index
 				var current_active = get_child(active_equipment)
@@ -85,7 +96,15 @@ func swap_active_equipment(new_active_index : int):
 	else:
 		print('[Equip Manager] Warning: attempting to swap to already active equipment.')
 
-func add_equipment(equipment_index : int, equipment_id : String, can_equip : bool = true, is_auto_active : bool = false):
+func add_equipment(equipment_index : int, equipment_id : String, can_equip : bool = true, is_auto_active : bool = false, auto_assign_index = false):
+	# if auto assign index, find the first empty index, and if there are none, replace current weapon
+	if auto_assign_index:
+		equipment_index = active_equipment
+		for index in range(0, inventory_size):
+			if 'EMPTY' in inventory_array[index][0]:
+				equipment_index = index
+				break
+	
 	# rename the new node if a child with the same name already exists
 	var equip_name : String = data_manager.weapon_dict[equipment_id][1]
 	var name_already_exists : bool = false
@@ -116,7 +135,7 @@ func add_equipment(equipment_index : int, equipment_id : String, can_equip : boo
 		get_child(equipment_index).hide()
 		get_child(equipment_index).process_mode = Node.PROCESS_MODE_DISABLED
 		if is_auto_active and can_equip:
-			swap_active_equipment(equipment_index)
+			swap_active_equipment(equipment_index, true)
 		elif is_auto_active and not can_equip:
 			print('[Equip Manager] Warning: new equipment should not be automatically activated and not equippable!')
 	else:

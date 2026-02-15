@@ -2,6 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://dtcbimoxm5nnr" path="res://Temp Visuals/Environment/Cobblestone-Charcoal-Gray.jpg" id="1_ypyp0"]
 [ext_resource type="Texture2D" uid="uid://cy7m12m7qm5to" path="res://Temp Visuals/Environment/brick-wall-1916752_1280_jpg.png" id="2_1w34q"]
+[ext_resource type="PackedScene" uid="uid://c8x7hvb250pby" path="res://Scenes/Characters/Enemies/default_enemy.tscn" id="3_3nisk"]
+[ext_resource type="PackedScene" uid="uid://baq3akkb3owu5" path="res://Scenes/Environment/boon_pickup.tscn" id="4_y3yqq"]
+[ext_resource type="PackedScene" uid="uid://cgpgj3njkxsx0" path="res://Scenes/Environment/essence_pickup.tscn" id="5_8w2q5"]
+[ext_resource type="PackedScene" uid="uid://ce45owb8ju6wy" path="res://Scenes/Environment/weapon_pickup.tscn" id="6_3kujw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sru4l"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -114,7 +118,7 @@ size = Vector3(13, 7, 1)
 material = SubResource("StandardMaterial3D_3nisk")
 
 [node name="CSGBox3D10" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=2141776712]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9, 5.8122425, 0.16918945)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9, 5.513079, 0.16918945)
 operation = 2
 size = Vector3(7.282715, 2.711914, 1)
 material = SubResource("StandardMaterial3D_3nisk")
@@ -160,3 +164,23 @@ sides = 32
 transform = Transform3D(0.68476474, 0, 0, 0, 1, 0, 0, 0, 1, 1.8729529, -0.13354492, 0.035705566)
 operation = 2
 size = Vector3(2.5961304, 1.2670898, 4.321411)
+
+[node name="Default Enemy" parent="." unique_id=473507800 instance=ExtResource("3_3nisk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.488669, 3.3666747, 3.546453)
+
+[node name="Default Enemy2" parent="." unique_id=900523030 instance=ExtResource("3_3nisk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.389381, 3.3666747, -3.9905205)
+
+[node name="Boon Pickup" parent="." unique_id=1785314233 instance=ExtResource("4_y3yqq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.09082, 1.0020201, -11.093455)
+
+[node name="Essence Pickup" parent="." unique_id=1975173551 instance=ExtResource("5_8w2q5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2696543, 1, 11.164534)
+
+[node name="Weapon Pickup" parent="." unique_id=2109639200 instance=ExtResource("6_3kujw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.531805, 3.8550937, -0.018316627)
+
+[node name="Weapon Pickup2" parent="." unique_id=480260339 instance=ExtResource("6_3kujw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.728937, 3.8550937, -10.710287)
+weapon_id = "1"
+model_scale = 0.2

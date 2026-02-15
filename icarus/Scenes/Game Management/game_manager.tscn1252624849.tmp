@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://vljm1q5kram"]
+
+[ext_resource type="Script" uid="uid://qi4mshokmhqb" path="res://Scripts/System/game_manager.gd" id="1_bjdwl"]
+[ext_resource type="Script" uid="uid://b6xjfy7xptsy5" path="res://Scripts/System/data_manager.gd" id="1_n8t8x"]
+[ext_resource type="Script" uid="uid://di7k1gfjpm2tk" path="res://Scripts/System/stage_manager.gd" id="2_vyj3o"]
+[ext_resource type="PackedScene" uid="uid://hl5qyawevdr" path="res://Scenes/UI/hud.tscn" id="4_ob72n"]
+[ext_resource type="PackedScene" uid="uid://c6oaxjuj06mpc" path="res://Scenes/UI/main_menu_ui.tscn" id="4_xmb8h"]
+[ext_resource type="PackedScene" uid="uid://dw1b0eqcs74nf" path="res://Scenes/UI/crosshair.tscn" id="5_pg8qd"]
+[ext_resource type="PackedScene" uid="uid://c740upcymk5ps" path="res://Scenes/UI/debug_ui.tscn" id="6_n8t8x"]
+[ext_resource type="AudioStream" uid="uid://buejnxt5r58we" path="res://Temp Audio/drone.mp3" id="8_vyj3o"]
+
+[node name="Game Manager" type="Node3D" unique_id=901033503]
+script = ExtResource("1_bjdwl")
+
+[node name="Sub Managers" type="Node3D" parent="." unique_id=1772515746]
+
+[node name="Data Manager" type="Node3D" parent="Sub Managers" unique_id=1796835999]
+script = ExtResource("1_n8t8x")
+
+[node name="Stage Manager" type="Node3D" parent="." unique_id=465460131]
+script = ExtResource("2_vyj3o")
+
+[node name="NULL" type="Node3D" parent="Stage Manager" unique_id=113266015]
+
+[node name="UI Manager" type="Control" parent="." unique_id=1365812415]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Main Menu UI" parent="UI Manager" unique_id=1214043351 instance=ExtResource("4_xmb8h")]
+layout_mode = 1
+
+[node name="Crosshair" parent="UI Manager" unique_id=737581695 instance=ExtResource("5_pg8qd")]
+layout_mode = 1
+
+[node name="Debug UI" parent="UI Manager" unique_id=2046165957 instance=ExtResource("6_n8t8x")]
+layout_mode = 1
+
+[node name="HUD" parent="UI Manager" unique_id=1064581951 instance=ExtResource("4_ob72n")]
+layout_mode = 1
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1768096775]
+stream = ExtResource("8_vyj3o")
+bus = &"Music"

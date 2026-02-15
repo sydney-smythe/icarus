@@ -4,7 +4,8 @@ var state_manager
 @onready var model: Node3D = $Model
 @onready var model_animation_player = model.get_child(0).get_node('AnimationPlayer')
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
-@onready var equipment_manager: Node3D = $"Model/Equipment Manager"
+@onready var equipment_manager: Node3D = $"Model/Pivot/Equipment Manager"
+@onready var vertical_pivot : Node3D = $"Model/Pivot"
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 var is_moving : bool = false
 var is_crouching : bool = false
@@ -48,30 +49,31 @@ func _physics_process(delta: float) -> void:
 	if target:
 		update_target_location()
 		var distance_to_target = global_transform.origin.distance_to(target.global_transform.origin)
+		#print(str(distance_to_target))
 		next_location = nav_agent.get_next_path_position()
 		in_range = distance_to_target <= attack_range
 	
-	if not test_visibility():
-		in_range = false
-	#print(str(test_visibility()))
-	if not in_range:
-		if is_on_floor():
-			var current_location = global_transform.origin
-			input_dir = (next_location - current_location).normalized()
-	else:
-		input_dir = Vector3(0,0,0)
-		
-		# try attack and/or rotate if timer is 0
-		rotate_look((next_location - global_transform.origin).normalized())
-		if current_attack_timer <= 0:
-			var chance = randf()
-			#if chance < 0.3:  # 30% to look towards player
+		if not test_visibility():
+			in_range = false
+		#print(str(test_visibility()))
+		if not in_range:
+			if is_on_floor():
+				var current_location = global_transform.origin
+				input_dir = (next_location - current_location).normalized()
+		else:
+			input_dir = Vector3(0,0,0)
 			
+			# try attack and/or rotate if timer is 0
+			rotate_look((target.global_transform.origin - global_transform.origin).normalized())
+			if current_attack_timer <= 0:
+				var chance = randf()
+				#if chance < 0.3:  # 30% to look towards player
 				
-			#chance = randf()
-			if chance < 0.15:  # 15% to try firing
-				equipment_manager.attack()
-			current_attack_timer = attack_interval_timer
+					
+				#chance = randf()
+				if chance < 0.15:  # 15% to try firing
+					equipment_manager.attack()
+				current_attack_timer = attack_interval_timer
 		
 	#print(str(input_dir))
 	#input_dir = Vector3(0,0,0)
@@ -156,9 +158,11 @@ func _physics_process(delta: float) -> void:
 
 func rotate_look(dir):
 	if not (dir * Vector3(1,0,1)).is_equal_approx(Vector3(0,0,0)):
-		var target_pos = global_transform.origin - (dir * Vector3(1,0,1))
+		var target_pos_horiz = global_transform.origin - (dir * Vector3(1,0,1))
+		var target_pos_vert = global_transform.origin - (dir * Vector3(1,1,1)) 
 		#var old = transform.basis
-		look_at(target_pos, Vector3.UP)
+		look_at(target_pos_horiz, Vector3.UP)
+		vertical_pivot.look_at(target_pos_vert, Vector3.UP)
 		#var new = transform.basis
 		#transform.basis = lerp(old,new, .4)
 	#head.transform.basis = Basis()
@@ -186,13 +190,15 @@ func update_target_location():
 	
 func test_visibility() -> bool:
 	# test if the first thing a ray hits is the target
-	if target:
+	if target and equipment_manager.active_equipment != -1:
 		var space_state = get_world_3d().direct_space_state
 		var origin_point = collision_shape_3d.global_transform.origin
-		var end_point = origin_point + -collision_shape_3d.global_transform.basis.z * equipment_manager.get_max_range()
+		var dir = (target.global_transform.origin - origin_point).normalized()
+		var end_point = origin_point + dir * equipment_manager.get_max_range()
 		var query = PhysicsRayQueryParameters3D.create(origin_point, end_point)
 		query.exclude = [self]
 		var collision = space_state.intersect_ray(query)
+
 		if collision:
 			#print('collision at position: ' + str(collision.position))
 			#print('collision object: ' + str(collision.collider.name))

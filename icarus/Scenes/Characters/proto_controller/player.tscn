@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" uid="uid://cqb2oidf1iin6" path="res://Scripts/Character/Movement/proto_controller.gd" id="1_rlwtg"]
-[ext_resource type="Texture2D" uid="uid://nshvql1wtwr0" path="res://Temp Visuals/UI/temp_crosshair.png" id="2_2egnu"]
 [ext_resource type="Script" uid="uid://c53lghcmyip3c" path="res://Scripts/Equipment/equipment_manager.gd" id="3_j5cwe"]
 [ext_resource type="PackedScene" uid="uid://dw6ekp4nbf3a7" path="res://Scenes/Characters/proto_controller/temp_blend_model.tscn" id="3_xgce8"]
 [ext_resource type="Script" uid="uid://c4k1rxxxmqinn" path="res://Scripts/Character/essence_blast.gd" id="4_7v1lc"]
 [ext_resource type="Script" uid="uid://7sure81t4del" path="res://Scripts/Character/player_audio_manager.gd" id="5_4cql4"]
 [ext_resource type="AudioStream" uid="uid://bntipp0lusu36" path="res://Temp Audio/temp-footstep.ogg" id="5_xgce8"]
+[ext_resource type="Script" uid="uid://cu8uhhnwvq2h5" path="res://Scripts/Character/boon_manager.gd" id="8_egnfr"]
 
 [sub_resource type="Curve" id="Curve_4cql4"]
 _data = [Vector2(0, 0.7), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -83,23 +83,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=275272256]
 
-[node name="UI Manager" type="Node" parent="Head/Camera3D" unique_id=1855927317]
-
-[node name="TextureRect" type="TextureRect" parent="Head/Camera3D/UI Manager" unique_id=312839773]
-anchors_preset = -1
-anchor_left = 0.49600002
-anchor_top = 0.492
-anchor_right = 0.49600002
-anchor_bottom = 0.492
-offset_left = -72.39203
-offset_top = -70.81601
-offset_right = 427.60797
-offset_bottom = 429.184
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.29, 0.29)
-texture = ExtResource("2_2egnu")
-
 [node name="Essence Blast" type="Area3D" parent="Head/Camera3D" unique_id=1994323815]
 transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 0, 0.025982857, -1.2880154)
 script = ExtResource("4_7v1lc")
@@ -125,3 +108,6 @@ script = ExtResource("5_4cql4")
 stream = ExtResource("5_xgce8")
 volume_db = 65.074
 bus = &"SFX"
+
+[node name="Boon Manager" type="Node3D" parent="." unique_id=102398871]
+script = ExtResource("8_egnfr")

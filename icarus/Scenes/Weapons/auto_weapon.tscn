@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://jbb5eh0ihyf1"]
+
+[ext_resource type="Script" uid="uid://cc24lt6cjylk1" path="res://Scripts/Weapons/weapon_manager.gd" id="1_i6bgn"]
+[ext_resource type="Script" uid="uid://b12ei004bv6pu" path="res://Scripts/Weapons/Weapon Behaviours/default_weapon_behaviour.gd" id="2_xvmx3"]
+[ext_resource type="PackedScene" uid="uid://bgf45ahtixemx" path="res://Scenes/Weapon Projectiles/default_projectile.tscn" id="3_v3c3d"]
+[ext_resource type="Script" uid="uid://covx4saijl6gl" path="res://Scripts/Weapons/weapon_animation_manager.gd" id="4_fcnc1"]
+[ext_resource type="PackedScene" uid="uid://8b4280754djx" path="res://Temp Visuals/Items/cyberpunk_rifle.glb" id="5_xvmx3"]
+[ext_resource type="Texture2D" uid="uid://dnot7ux5nip7u" path="res://Temp Visuals/Items/pngtree-simple-muzzle-flash-vector-png-png-image_5797978.png" id="6_opf7j"]
+[ext_resource type="Material" uid="uid://dth5muwl33j61" path="res://Materials/Temp Materials/Weapon Drawover.tres" id="7_iay3w"]
+[ext_resource type="Script" uid="uid://conko2sjj7" path="res://Scripts/Weapons/weapon_audio_manager.gd" id="8_ovjk4"]
+[ext_resource type="AudioStream" uid="uid://e5qyd78jg8ae" path="res://Temp Audio/369528__johandeecke__short-gunshot.wav" id="9_mxjaa"]
+
+[sub_resource type="Animation" id="Animation_rb7mo"]
+length = 0.13333334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapon Manager/Behaviour Manager/Animation Manager/Model/MeshInstance3D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_3w3ja"]
+resource_name = "temp-fire"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapon Manager/Behaviour Manager/Animation Manager/Model/MeshInstance3D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6012l"]
+_data = {
+&"RESET": SubResource("Animation_rb7mo"),
+&"temp-fire": SubResource("Animation_3w3ja")
+}
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3w3ja"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6012l"]
+transparency = 1
+albedo_texture = ExtResource("6_opf7j")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_knc57"]
+material = ExtResource("7_iay3w")
+
+[node name="Auto Weapon" type="Node3D" unique_id=153835434]
+
+[node name="Weapon Manager" type="Node3D" parent="." unique_id=1182113624]
+script = ExtResource("1_i6bgn")
+prim_fire_type = 2
+prim_magazine_size = 40
+prim_reload_time = 1.3
+prim_fire_delay = 0.08
+
+[node name="Behaviour Manager" type="Node3D" parent="Weapon Manager" unique_id=1534131358]
+script = ExtResource("2_xvmx3")
+recoil_strength = 1.3
+damage = 2
+projectile = ExtResource("3_v3c3d")
+
+[node name="Animation Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=450035929]
+script = ExtResource("4_fcnc1")
+model_scale = 0.015
+model_position_offest = Vector3(0.25, -0.37, -0.07)
+model_rotation_offest = Vector3(0, -180, 0)
+
+[node name="Model" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=1755739398 instance=ExtResource("5_xvmx3")]
+transform = Transform3D(-1.7484555e-09, 0, -0.04, 0, 0.04, 0, 0.04, 0, -1.7484555e-09, 0.54172325, -0.3, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=1571579351]
+root_node = NodePath("../../../../..")
+libraries/ = SubResource("AnimationLibrary_6012l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=261724011]
+transform = Transform3D(1.0927839e-06, 25.000004, -7.450582e-07, 2.1855694e-06, 7.4505806e-07, 25.000004, 25, -1.0927835e-06, -2.1855694e-06, 3.45136e-06, 8.619942, 78.95794)
+visible = false
+mesh = SubResource("PlaneMesh_3w3ja")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_6012l")
+
+[node name="Mesh" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=5478577]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Mesh" unique_id=37554842]
+transform = Transform3D(-3.0224896e-08, 1, 0, -0.6914651, -4.371139e-08, 0, 0, 0, 0.7821668, 0, 0, 0)
+mesh = SubResource("CylinderMesh_knc57")
+skeleton = NodePath("../../../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Mesh" unique_id=1792561025]
+transform = Transform3D(0.68595415, 0, 0, 0, 0.61521083, 0, 0, 0, 0.55023, 0.5938804, -0.6100663, 0)
+mesh = SubResource("CylinderMesh_knc57")
+skeleton = NodePath("../../../../..")
+
+[node name="Audio Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=729461471]
+script = ExtResource("8_ovjk4")
+
+[node name="Primary Fire Audio" type="AudioStreamPlayer3D" parent="Weapon Manager/Behaviour Manager/Audio Manager" unique_id=840866558]
+stream = ExtResource("9_mxjaa")
+bus = &"SFX"

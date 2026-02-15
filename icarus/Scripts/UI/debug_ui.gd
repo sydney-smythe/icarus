@@ -32,6 +32,7 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	
 	#ENGINE INFO
+	current_level.text = 'Current Stage: ' + str(get_node('/root/Game Manager/Stage Manager').get_child(0).name)
 	fps_count.text = 'FPS: ' + str(Engine.get_frames_per_second())
 	
 	# PLAYER INFO 

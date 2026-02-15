@@ -23,7 +23,9 @@ shape = SubResource("CapsuleShape3D_i2kpe")
 
 [node name="temp-blend-model" parent="Model" unique_id=758620597 instance=ExtResource("3_i2kpe")]
 
-[node name="Equipment Manager" type="Node3D" parent="Model" unique_id=1930931214]
+[node name="Pivot" type="Node3D" parent="Model" unique_id=877141701]
+
+[node name="Equipment Manager" type="Node3D" parent="Model/Pivot" unique_id=1930931214]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1, 0)
 script = ExtResource("4_u8867")
 

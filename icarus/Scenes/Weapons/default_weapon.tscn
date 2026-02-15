@@ -63,6 +63,7 @@ script = ExtResource("1_vynfx")
 
 [node name="Behaviour Manager" type="Node3D" parent="Weapon Manager" unique_id=1534131358]
 script = ExtResource("2_nwkwr")
+damage = 10
 projectile = ExtResource("3_78gpb")
 
 [node name="Animation Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=450035929]

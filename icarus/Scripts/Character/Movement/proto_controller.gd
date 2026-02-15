@@ -6,8 +6,7 @@
 
 extends CharacterBody3D
 
-
-
+@export var player_enabled : bool = true
 ## Can we move around?
 @export var can_move : bool = true
 ## Are we affected by gravity?
@@ -95,9 +94,12 @@ var is_moving : bool = false
 var is_sliding : bool = false
 var control_strength : float = 1.0
 
+
+
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var camera: Node3D = $Head/Camera3D
+@onready var equipment_manager = camera.get_node('Equipment Manager')
 @onready var standing_collider: CollisionShape3D = $"Standing Collider"
 @onready var crouching_collider: CollisionShape3D = $"Crouching Collider"
 @onready var ray_cast_3d: RayCast3D = $RayCast3D
@@ -132,12 +134,18 @@ var forcer_vector : Vector3 = Vector3(0,0,0)
 
 @export_group('Essence')
 @export var essence : int = 100
+@export var overessence : int = 0
 # curves: X axis is how much health you have (%, 0.0-1.0), Y axis is multiplier for something
 @export var essence_grav_curve: Curve
 @export var essence_speed_curve: Curve
 @export var essence_force_curve: Curve
 
+var unforceable = false
+
 func _ready() -> void:
+	
+	PlayerManager.register_player(self)
+	
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
@@ -153,337 +161,339 @@ func _ready() -> void:
 	wall_jump_timer = 0
 
 func _unhandled_input(event: InputEvent) -> void:
-	# Mouse capturing
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		capture_mouse()
-	if Input.is_key_pressed(KEY_ESCAPE):
-		release_mouse()
-	
-	# Look around
-	if mouse_captured and event is InputEventMouseMotion:
-		rotate_look(event.relative)
-	
-	# Toggle freefly mode
-	if can_freefly and Input.is_action_just_pressed(input_freefly):
-		if not freeflying:
-			enable_freefly()
-			if 'freeflying' not in active_actions:
-				active_actions.append('freeflying')
-		else:
-			disable_freefly()
-			if 'freeflying' in active_actions:
-				active_actions.erase('freeflying')
+	if player_enabled:
+		# Mouse capturing
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			capture_mouse()
+		if Input.is_key_pressed(KEY_ESCAPE):
+			release_mouse()
+		
+		# Look around
+		if mouse_captured and event is InputEventMouseMotion:
+			rotate_look(event.relative)
+		
+		# Toggle freefly mode
+		if can_freefly and Input.is_action_just_pressed(input_freefly):
+			if not freeflying:
+				enable_freefly()
+				if 'freeflying' not in active_actions:
+					active_actions.append('freeflying')
+			else:
+				disable_freefly()
+				if 'freeflying' in active_actions:
+					active_actions.erase('freeflying')
 
 func _physics_process(delta: float) -> void:
-	#handle animations
-	if not is_moving:
-		model_animation_player.play("idle")
-	elif is_sprinting:
-		model_animation_player.play("run")
-		#audio_manager.play_movement_audio()
-	elif is_moving and not is_sprinting:
-		model_animation_player.play("walk")
-		#audio_manager.play_movement_audio()
-	
-	if is_on_floor() or not is_on_wall():
-		is_wall_running = false
-	
-	if not is_wall_running:
-		wall_run_timer = 0.0
-	
-	if not can_wall_jump and is_on_floor():
-		can_wall_jump = true
-	
-	if not can_wall_run and is_on_floor():
-		can_wall_run = true
-	
-	# reset FOV if not crouching or sprinting
-	if not is_crouching and not is_sprinting and not is_sliding:
-		adjust_to_default_fov()
-		move_speed = base_speed
-	
-	# If freeflying, handle freefly and nothing else
-	if can_freefly and freeflying:
-		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
-		var motion := (head.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		motion *= freefly_speed * delta
-		move_and_collide(motion)
-		return
-	
-	if is_sliding:
-		if not Input.is_action_pressed(input_crouch) or move_speed <= crouch_speed or not is_moving:
-			move_speed = crouch_speed
-			if 'sliding' in active_actions:
-				active_actions.erase('sliding')
-			is_crouching = true
-			is_sliding = false
-			is_sprinting = false
-			
-		else:
-			var floor_dot = 0
-			if is_on_floor():
-				floor_dot = -global_transform.basis.z.dot(get_floor_normal())
-			if not is_on_floor() or get_floor_angle() < 0.45:
-				move_speed -= sliding_speed_loss * delta
-			elif get_floor_angle() > 0.45:
-				if floor_dot <= 0:
-					move_speed -= sliding_speed_loss * 4 * delta # slow slide faster if going uphill
-				if floor_dot > 0 and move_speed < sliding_speed:  # regain max slide speed if going downwards
-					move_speed += sliding_speed_loss * delta
-			if move_speed > sliding_speed:
-				move_speed = sliding_speed
-			
-			
-	if is_wall_running:
-		if wall_run_timer <= 0:
-			is_wall_running = false
-			current_wall_run_grav_mod = wall_run_grav_mod
-			
-	# Apply gravity to velocity
-	if has_gravity:
-		if not is_on_floor() and not is_wall_running:
-			velocity += get_gravity() * gravity_modifier * delta * essence_grav_curve.sample(float(essence)/100)
-		elif is_wall_running:
-			velocity += get_gravity() * gravity_modifier * delta * current_wall_run_grav_mod * essence_grav_curve.sample(float(essence)/100)
-
-	if (is_on_wall_only() and get_slide_collision_count() > 1) and Input.is_action_pressed('move_forward') and is_sprinting and velocity.y <= 0:
+	if player_enabled:
+		#handle animations
+		if not is_moving:
+			model_animation_player.play("idle")
+		elif is_sprinting:
+			model_animation_player.play("run")
+			#audio_manager.play_movement_audio()
+		elif is_moving and not is_sprinting:
+			model_animation_player.play("walk")
+			#audio_manager.play_movement_audio()
 		
-		var wall_collision_normal = get_slide_collision(1).get_normal()
-		var wall_side_vector = Vector2(wall_collision_normal.x, wall_collision_normal.z)
-		if can_wall_run or prev_wall_run_jump_side != wall_side_vector:
-			# check to make sure the player is somewhat orthogonal to the wall
-			var wall_normal = get_wall_normal()
-			var forward_dir = -global_transform.basis.z
-			var wall_dot = forward_dir.dot(wall_normal)
-			if wall_dot < 0.5 and wall_dot > -0.5:
-				wall_run_timer = wall_run_length
-				current_wall_run_grav_mod = wall_run_grav_mod
-				velocity.y = 0
-				can_wall_run = false
-				is_wall_running = true
-				prev_wall_run_jump_side = wall_side_vector
-				wall_run_normal = Vector3(-wall_collision_normal.x, wall_collision_normal.y, -wall_collision_normal.z)
-			
-
-	# Apply jumping
-	if can_jump:
-		if 'jump' in active_actions:
-				active_actions.erase('jump')
-		if Input.is_action_just_pressed(input_jump):
+		if is_on_floor() or not is_on_wall():
 			is_wall_running = false
-			if is_on_floor():  # regular jump
-				if 'jump' not in active_actions:
-					active_actions.append('jump')
-				if is_sprinting:
-					velocity.y = jump_velocity_sprinting
-				else:
-					velocity.y = jump_velocity_default
-			elif is_on_wall_only() and get_slide_collision_count() > 1:  # wall jump
-				var wall_collision_normal = get_slide_collision(1).get_normal()
-				var wall_side_vector = Vector2(wall_collision_normal.x, wall_collision_normal.z)
+		
+		if not is_wall_running:
+			wall_run_timer = 0.0
+		
+		if not can_wall_jump and is_on_floor():
+			can_wall_jump = true
+		
+		if not can_wall_run and is_on_floor():
+			can_wall_run = true
+		
+		# reset FOV if not crouching or sprinting
+		if not is_crouching and not is_sprinting and not is_sliding:
+			adjust_to_default_fov()
+			move_speed = base_speed
+		
+		# If freeflying, handle freefly and nothing else
+		if can_freefly and freeflying:
+			var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
+			var motion := (head.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+			motion *= freefly_speed * delta
+			move_and_collide(motion)
+			return
+		
+		if is_sliding:
+			if not Input.is_action_pressed(input_crouch) or move_speed <= crouch_speed or not is_moving:
+				move_speed = crouch_speed
+				if 'sliding' in active_actions:
+					active_actions.erase('sliding')
+				is_crouching = true
+				is_sliding = false
+				is_sprinting = false
 				
-				if can_wall_jump or prev_wall_jump_side != wall_side_vector:
-					# Set wall jump direction (horizontal push away from wall)
-					wall_jump_direction = Vector3(wall_collision_normal.x, 0, wall_collision_normal.z).normalized()
-					wall_jump_timer = wall_jump_momentum_time
-					
-					# Apply immediate horizontal velocity
-					velocity.x = wall_jump_direction.x * wall_jump_push_strength
-					velocity.z = wall_jump_direction.z * wall_jump_push_strength
-					
-					prev_wall_jump_side = wall_side_vector
-					can_wall_jump = false
-					
+			else:
+				var floor_dot = 0
+				if is_on_floor():
+					floor_dot = -global_transform.basis.z.dot(get_floor_normal())
+				if not is_on_floor() or get_floor_angle() < 0.45:
+					move_speed -= sliding_speed_loss * delta
+				elif get_floor_angle() > 0.45:
+					if floor_dot <= 0:
+						move_speed -= sliding_speed_loss * 4 * delta # slow slide faster if going uphill
+					if floor_dot > 0 and move_speed < sliding_speed:  # regain max slide speed if going downwards
+						move_speed += sliding_speed_loss * delta
+				if move_speed > sliding_speed:
+					move_speed = sliding_speed
+				
+				
+		if is_wall_running:
+			if wall_run_timer <= 0:
+				is_wall_running = false
+				current_wall_run_grav_mod = wall_run_grav_mod
+				
+		# Apply gravity to velocity
+		if has_gravity:
+			if not is_on_floor() and not is_wall_running:
+				velocity += get_gravity() * gravity_modifier * delta * essence_grav_curve.sample(float(essence)/100)
+			elif is_wall_running:
+				velocity += get_gravity() * gravity_modifier * delta * current_wall_run_grav_mod * essence_grav_curve.sample(float(essence)/100)
+
+		if (is_on_wall_only() and get_slide_collision_count() > 1) and Input.is_action_pressed('move_forward') and is_sprinting and velocity.y <= 0:
+			
+			var wall_collision_normal = get_slide_collision(1).get_normal()
+			var wall_side_vector = Vector2(wall_collision_normal.x, wall_collision_normal.z)
+			if can_wall_run or prev_wall_run_jump_side != wall_side_vector:
+				# check to make sure the player is somewhat orthogonal to the wall
+				var wall_normal = get_wall_normal()
+				var forward_dir = -global_transform.basis.z
+				var wall_dot = forward_dir.dot(wall_normal)
+				if wall_dot < 0.5 and wall_dot > -0.5:
+					wall_run_timer = wall_run_length
+					current_wall_run_grav_mod = wall_run_grav_mod
+					velocity.y = 0
+					can_wall_run = false
+					is_wall_running = true
+					prev_wall_run_jump_side = wall_side_vector
+					wall_run_normal = Vector3(-wall_collision_normal.x, wall_collision_normal.y, -wall_collision_normal.z)
+				
+
+		# Apply jumping
+		if can_jump:
+			if 'jump' in active_actions:
+					active_actions.erase('jump')
+			if Input.is_action_just_pressed(input_jump):
+				is_wall_running = false
+				if is_on_floor():  # regular jump
 					if 'jump' not in active_actions:
 						active_actions.append('jump')
 					if is_sprinting:
 						velocity.y = jump_velocity_sprinting
 					else:
 						velocity.y = jump_velocity_default
+				elif is_on_wall_only() and get_slide_collision_count() > 1:  # wall jump
+					var wall_collision_normal = get_slide_collision(1).get_normal()
+					var wall_side_vector = Vector2(wall_collision_normal.x, wall_collision_normal.z)
+					
+					if can_wall_jump or prev_wall_jump_side != wall_side_vector:
+						# Set wall jump direction (horizontal push away from wall)
+						wall_jump_direction = Vector3(wall_collision_normal.x, 0, wall_collision_normal.z).normalized()
+						wall_jump_timer = wall_jump_momentum_time
+						
+						# Apply immediate horizontal velocity
+						velocity.x = wall_jump_direction.x * wall_jump_push_strength
+						velocity.z = wall_jump_direction.z * wall_jump_push_strength
+						
+						prev_wall_jump_side = wall_side_vector
+						can_wall_jump = false
+						
+						if 'jump' not in active_actions:
+							active_actions.append('jump')
+						if is_sprinting:
+							velocity.y = jump_velocity_sprinting
+						else:
+							velocity.y = jump_velocity_default
 
-	# Modify speed based on sprinting
-	if can_sprint and Input.is_action_pressed(input_sprint) and is_moving and Input.is_action_pressed(input_forward):
-		is_sprinting = true
-		move_speed = sprint_speed
-		adjust_to_sprinting_fov()
-		if 'sprint' not in active_actions:
-			active_actions.append('sprint')
-	else:
-		is_sprinting = false
-		if 'sprint' in active_actions:
-				active_actions.erase('sprint')
-				
-	# Modify speed based on crouching
-	if can_crouch and Input.is_action_pressed(input_crouch):
-		# DEBUG!! hurt player
-		#essence -= 1
-		# if sprinting currently: slide, then go into crouch
-		if is_sprinting and ((is_on_floor() and -global_transform.basis.z.dot(get_floor_normal()) >= 0) or not is_on_floor()):
-			# cannot start slide if going uphill
-			apply_force(0.2, Vector3(0,-1,0), true, 0.2)
-			swap_collider(true)
-			is_sliding = true
+		# Modify speed based on sprinting
+		if can_sprint and Input.is_action_pressed(input_sprint) and is_moving and Input.is_action_pressed(input_forward):
+			is_sprinting = true
+			move_speed = sprint_speed
+			adjust_to_sprinting_fov()
+			if 'sprint' not in active_actions:
+				active_actions.append('sprint')
+		else:
 			is_sprinting = false
-			can_sprint = false
-			adjust_camera_to_crouching()
-			move_speed = sliding_speed
-			if 'sliding' not in active_actions:
-				active_actions.append('sliding')
-		elif not is_sliding: # if not sprinting, default crouch
-			swap_collider(true)
-			can_sprint = false
-			is_crouching = true
-			move_speed = crouch_speed
-			adjust_camera_to_crouching()
-			adjust_to_crouching_fov()
-			if 'crouch' not in active_actions:
-				active_actions.append('crouch')	
-	else:
-		# if you try to uncrouch whilst under a surface that you could not enter while standing, don't uncrouch
-		ray_cast_3d.force_raycast_update()
-		if ray_cast_3d.is_colliding() and ray_cast_3d.get_collider() is CSGCombiner3D:
-			is_crouching = true
-			if 'crouch' not in active_actions:
-				active_actions.append('crouch')
-			pass
+			if 'sprint' in active_actions:
+					active_actions.erase('sprint')
+					
+		# Modify speed based on crouching
+		if can_crouch and Input.is_action_pressed(input_crouch):
+			# DEBUG!! hurt player
+			#essence -= 1
+			# if sprinting currently: slide, then go into crouch
+			if is_sprinting and ((is_on_floor() and -global_transform.basis.z.dot(get_floor_normal()) >= 0) or not is_on_floor()):
+				# cannot start slide if going uphill
+				apply_force(0.2, Vector3(0,-1,0), true, 0.2)
+				swap_collider(true)
+				is_sliding = true
+				is_sprinting = false
+				can_sprint = false
+				adjust_camera_to_crouching()
+				move_speed = sliding_speed
+				if 'sliding' not in active_actions:
+					active_actions.append('sliding')
+			elif not is_sliding: # if not sprinting, default crouch
+				swap_collider(true)
+				can_sprint = false
+				is_crouching = true
+				move_speed = crouch_speed
+				adjust_camera_to_crouching()
+				adjust_to_crouching_fov()
+				if 'crouch' not in active_actions:
+					active_actions.append('crouch')	
 		else:
-			swap_collider(false)
-			can_sprint = true
-			is_crouching = false
-			adjust_camera_to_standing()
-			if 'crouch' in active_actions:
-					active_actions.erase('crouch')	
+			# if you try to uncrouch whilst under a surface that you could not enter while standing, don't uncrouch
+			ray_cast_3d.force_raycast_update()
+			if ray_cast_3d.is_colliding() and ray_cast_3d.get_collider() is CSGCombiner3D:
+				is_crouching = true
+				if 'crouch' not in active_actions:
+					active_actions.append('crouch')
+				pass
+			else:
+				swap_collider(false)
+				can_sprint = true
+				is_crouching = false
+				adjust_camera_to_standing()
+				if 'crouch' in active_actions:
+						active_actions.erase('crouch')	
 
-	# Apply desired movement to velocity (REWORKED SECTION)
-	if can_move:
-		# Determine control strength based on state
-		if not is_sliding:
-			control_strength = 1.0
-		else:
-			control_strength = 0.07
-		
-		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
-		
-		# Update active actions for UI
-		if input_dir[1] > 0:
-			if 'move forward' in active_actions:
-				active_actions.erase('move forward')
-			if 'move backward' not in active_actions:
-				active_actions.append('move backward')
-		elif input_dir[1] < 0:
-			if 'move forward' not in active_actions:
-				active_actions.append('move forward')
-			if 'move backward' in active_actions:
-				active_actions.erase('move backward')
-		else:
-			if 'move forward' in active_actions:
-				active_actions.erase('move forward')
-			if 'move backward' in active_actions:
-				active_actions.erase('move backward')
+		# Apply desired movement to velocity (REWORKED SECTION)
+		if can_move:
+			# Determine control strength based on state
+			if not is_sliding:
+				control_strength = 1.0
+			else:
+				control_strength = 0.07
+			
+			var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
+			
+			# Update active actions for UI
+			if input_dir[1] > 0:
+				if 'move forward' in active_actions:
+					active_actions.erase('move forward')
+				if 'move backward' not in active_actions:
+					active_actions.append('move backward')
+			elif input_dir[1] < 0:
+				if 'move forward' not in active_actions:
+					active_actions.append('move forward')
+				if 'move backward' in active_actions:
+					active_actions.erase('move backward')
+			else:
+				if 'move forward' in active_actions:
+					active_actions.erase('move forward')
+				if 'move backward' in active_actions:
+					active_actions.erase('move backward')
+					
+			if input_dir[0] > 0:
+				if 'move left' in active_actions:
+					active_actions.erase('move left')
+				if 'move right' not in active_actions:
+					active_actions.append('move right')
+			elif input_dir[0] < 0:
+				if 'move left' not in active_actions:
+					active_actions.append('move left')
+				if 'move right' in active_actions:
+					active_actions.erase('move right')
+			else:
+				if 'move left' in active_actions:
+					active_actions.erase('move left')
+				if 'move right' in active_actions:
+					active_actions.erase('move right')
+			
+			var move_dir := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+			
+			# Adjust control during wall jump
+			if wall_jump_timer > 0:
+				var time_ratio = wall_jump_timer / wall_jump_momentum_time
+				control_strength = lerp(1.0, wall_jump_air_control, time_ratio)
+			
+			# Reduce control in air
+			if not is_on_floor():
+				control_strength *= air_strafe_mobility
+			
+			# PHYSICS-BASED MOVEMENT: Add acceleration instead of setting velocity
+			if move_dir:
+				is_moving = true
 				
-		if input_dir[0] > 0:
-			if 'move left' in active_actions:
-				active_actions.erase('move left')
-			if 'move right' not in active_actions:
-				active_actions.append('move right')
-		elif input_dir[0] < 0:
-			if 'move left' not in active_actions:
-				active_actions.append('move left')
-			if 'move right' in active_actions:
-				active_actions.erase('move right')
-		else:
-			if 'move left' in active_actions:
-				active_actions.erase('move left')
-			if 'move right' in active_actions:
-				active_actions.erase('move right')
-		
-		var move_dir := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		
-		# Adjust control during wall jump
-		if wall_jump_timer > 0:
-			var time_ratio = wall_jump_timer / wall_jump_momentum_time
-			control_strength = lerp(1.0, wall_jump_air_control, time_ratio)
-		
-		# Reduce control in air
-		if not is_on_floor():
-			control_strength *= air_strafe_mobility
-		
-		# PHYSICS-BASED MOVEMENT: Add acceleration instead of setting velocity
-		if move_dir:
-			is_moving = true
-			
-			# Calculate target velocity
-			var target_velocity = move_dir * move_speed * essence_speed_curve.sample(float(essence)/100)
-			
-			# Add acceleration toward target velocity (only affects horizontal movement)
-			var velocity_horizontal = Vector3(velocity.x, 0, velocity.z)
-			var acceleration_force = (target_velocity - velocity_horizontal) * acceleration * control_strength * delta
-			
-			velocity.x += acceleration_force.x
-			velocity.z += acceleration_force.z
+				# Calculate target velocity
+				var target_velocity = move_dir * move_speed * essence_speed_curve.sample(float(essence)/100)
+				
+				# Add acceleration toward target velocity (only affects horizontal movement)
+				var velocity_horizontal = Vector3(velocity.x, 0, velocity.z)
+				var acceleration_force = (target_velocity - velocity_horizontal) * acceleration * control_strength * delta
+				
+				velocity.x += acceleration_force.x
+				velocity.z += acceleration_force.z
+			else:
+				is_moving = false
+				
+				# Apply friction when not actively moving
+				var current_friction = friction
+				
+				# Adjust friction based on state
+				if not is_on_floor():
+					current_friction = air_friction
+				elif is_sliding:
+					current_friction = slide_friction
+				
+				# During wall jump, apply minimal friction
+				if wall_jump_timer > 0:
+					current_friction *= 0.1
+				
+				# Apply friction to horizontal velocity only
+				var horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
+				var friction_amount = current_friction * delta
+				
+				# Only apply friction if there's horizontal movement
+				if horizontal_velocity.length() > 0.01:
+					var friction_vector = horizontal_velocity.normalized() * friction_amount
+					
+					# Don't overshoot and reverse direction
+					if friction_vector.length() > horizontal_velocity.length():
+						velocity.x = 0
+						velocity.z = 0
+					else:
+						velocity.x -= friction_vector.x
+						velocity.z -= friction_vector.z
 		else:
 			is_moving = false
-			
-			# Apply friction when not actively moving
-			var current_friction = friction
-			
-			# Adjust friction based on state
-			if not is_on_floor():
-				current_friction = air_friction
-			elif is_sliding:
-				current_friction = slide_friction
-			
-			# During wall jump, apply minimal friction
-			if wall_jump_timer > 0:
-				current_friction *= 0.1
-			
-			# Apply friction to horizontal velocity only
+			# When movement is disabled, still allow external forces but apply strong friction
 			var horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
-			var friction_amount = current_friction * delta
-			
-			# Only apply friction if there's horizontal movement
 			if horizontal_velocity.length() > 0.01:
-				var friction_vector = horizontal_velocity.normalized() * friction_amount
-				
-				# Don't overshoot and reverse direction
+				var friction_vector = horizontal_velocity.normalized() * friction * 2.0 * delta
 				if friction_vector.length() > horizontal_velocity.length():
 					velocity.x = 0
 					velocity.z = 0
 				else:
 					velocity.x -= friction_vector.x
 					velocity.z -= friction_vector.z
-	else:
-		is_moving = false
-		# When movement is disabled, still allow external forces but apply strong friction
-		var horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
-		if horizontal_velocity.length() > 0.01:
-			var friction_vector = horizontal_velocity.normalized() * friction * 2.0 * delta
-			if friction_vector.length() > horizontal_velocity.length():
-				velocity.x = 0
-				velocity.z = 0
-			else:
-				velocity.x -= friction_vector.x
-				velocity.z -= friction_vector.z
-	
-	# decrease wall jump timer
-	if wall_jump_timer > 0:
-		wall_jump_timer -= delta
 		
-	# decrease wall run timer
-	if wall_run_timer > 0:
-		apply_force(1, wall_run_normal)
-		wall_run_timer -= delta
-		current_wall_run_grav_mod += wall_run_decay * delta
-	
-	# Use velocity to actually move
-	if is_wall_running:
-		if abs(velocity.x) + abs(velocity.z) < wall_run_min_speed:
-			is_wall_running = false
-	
-	# Apply external forces
-	velocity += forcer_vector
-	move_and_slide()
-	forcer_vector = Vector3(0,0,0)
+		# decrease wall jump timer
+		if wall_jump_timer > 0:
+			wall_jump_timer -= delta
+			
+		# decrease wall run timer
+		if wall_run_timer > 0:
+			apply_force(1, wall_run_normal)
+			wall_run_timer -= delta
+			current_wall_run_grav_mod += wall_run_decay * delta
+		
+		# Use velocity to actually move
+		if is_wall_running:
+			if abs(velocity.x) + abs(velocity.z) < wall_run_min_speed:
+				is_wall_running = false
+		
+		# Apply external forces
+		velocity += forcer_vector
+		move_and_slide()
+		forcer_vector = Vector3(0,0,0)
 
 
 ## Rotate us to look around.
@@ -578,16 +588,42 @@ func swap_collider(now_crouching : bool):
 		standing_collider.set_deferred("disabled", false)
 		
 func apply_force(strength : float, direction : Vector3, sustained : bool = false, duration : float = 0.0):
-	if sustained:
-		var force_object = preload("res://Scenes/Physics/forcer.tscn").instantiate()
-		force_object.force_strength = strength
-		force_object.force_direction = direction
-		force_object.is_sustained = sustained
-		force_object.duration = duration
-		add_child(force_object)
-	else:
-		forcer_vector += direction * strength * essence_force_curve.sample(float(essence) / 100)
+	if not unforceable:
+		if sustained:
+			var force_object = preload("res://Scenes/Physics/forcer.tscn").instantiate()
+			force_object.force_strength = strength
+			force_object.force_direction = direction
+			force_object.is_sustained = sustained
+			force_object.duration = duration
+			add_child(force_object)
+		else:
+			forcer_vector += direction * strength * essence_force_curve.sample(float(essence) / 100)
 		
-func hit_by_weapon(damage : int):  # REQUIREMENT OF WEAPON TARGETS GROUP
-	print('player recieved damage: ' + str(damage))
-	essence -= damage
+func hit_by_weapon(amount : int, overheal : bool = false, dedicated_overheal : bool = false):  # REQUIREMENT OF WEAPON TARGETS GROUP
+	print('player recieved damage: ' + str(amount))
+	if amount > 0:
+		var remainder = amount
+		if overessence > 0:
+			if amount > overessence:
+				remainder = amount - overessence 
+			else:
+				remainder = 0
+			overessence -= amount
+		essence -= remainder
+		if essence < 0:
+			essence = 0
+	
+	if amount < 0:
+		if dedicated_overheal:
+			overessence -= amount
+		elif overheal:
+			if essence - amount > 100:
+				overessence -= (100 - (essence - amount))
+				essence -= (amount + (100 - (essence - amount)))
+			else:
+				essence -= amount
+		else:
+			essence -= amount
+		if essence > 100:
+			essence = 100
+				

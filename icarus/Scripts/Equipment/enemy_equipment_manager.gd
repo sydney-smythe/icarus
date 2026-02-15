@@ -12,7 +12,7 @@ var data_manager
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	data_manager = get_node("/root/Game Manager/Sub Managers/Data Manager/")
-	host = get_parent().get_parent()
+	host = get_parent().get_parent().get_parent()
 	for i in range(0,inventory_size):  # for now, create empty child nodes as temp item placeholders 
 		var temp_child = Node3D.new()
 		temp_child.name = "EMPTY SLOT " + str(i)

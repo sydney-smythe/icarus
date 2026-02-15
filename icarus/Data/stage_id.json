@@ -1,0 +1,22 @@
+{
+	"EXAMPLE": 
+		["STAGE PATH", 
+		"STAGE NAME", 
+		"PLAYER SPAWN", 
+		"STAGE MODE", 
+		"DEFAULT WEAPON ID (or 'null' otherwise)"],
+		
+	"-1": 
+		["uid://bpdkut2aq0xfl", 
+		"Main Menu", 
+		[0,0,0], 
+		"MAIN MENU", 
+		"null"],
+		
+	"0": 
+		["uid://dd3w624uqyeoi", 
+		"Demo Map 01", 
+		[0,0,0], 
+		"PVP", 
+		"2"]
+}

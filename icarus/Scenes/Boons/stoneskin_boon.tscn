@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ckoa3b7seh84w"]
+
+[ext_resource type="Script" uid="uid://c2mktet13txc1" path="res://Scripts/Boons/stoneskin_boon.gd" id="1_drnn5"]
+
+[node name="Stoneskin Boon" type="Node3D" unique_id=1024524766]
+script = ExtResource("1_drnn5")

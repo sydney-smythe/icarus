@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://baq3akkb3owu5"]
+
+[ext_resource type="Script" uid="uid://dnllbt334ib33" path="res://Scripts/Environment/Pickup Types/boon_pickup.gd" id="2_paljb"]
+[ext_resource type="PackedScene" uid="uid://ccylk8r1bs4r0" path="res://Temp Visuals/Items/cyber_orb.glb" id="3_paljb"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eacf1"]
+
+[node name="Boon Pickup" type="Node3D" unique_id=1785314233]
+script = ExtResource("2_paljb")
+requires_interact_pressed = false
+boon_length = 10.0
+
+[node name="Model" type="Node3D" parent="." unique_id=290668179]
+
+[node name="Sketchfab_Scene" parent="Model" unique_id=2047933014 instance=ExtResource("3_paljb")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="Touch Range" type="Area3D" parent="." unique_id=1235291534]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Touch Range" unique_id=499141364]
+shape = SubResource("SphereShape3D_eacf1")
+
+[node name="Interact Range" type="Area3D" parent="." unique_id=1517655093]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interact Range" unique_id=450334048]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("SphereShape3D_eacf1")
+
+[connection signal="body_entered" from="Touch Range" to="." method="_on_touch_range_body_entered"]
+[connection signal="body_exited" from="Touch Range" to="." method="_on_touch_range_body_exited"]
+[connection signal="body_entered" from="Interact Range" to="." method="_on_interact_range_body_entered"]
+[connection signal="body_exited" from="Interact Range" to="." method="_on_interact_range_body_exited"]

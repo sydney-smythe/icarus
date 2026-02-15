@@ -53,6 +53,8 @@ var weapon_behaviour
 var animation_manager
 @export var player_controlled = false
 
+var check_fire : bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	weapon_behaviour = get_child(0)
@@ -70,6 +72,11 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
+	if check_fire:
+		if Input.is_action_pressed('primary_action'):
+				activate_primary()
+	
 	if prim_fire_delay_timer > 0:
 		prim_fire_delay_timer -= delta
 	if sec_fire_delay_timer > 0:
@@ -109,8 +116,15 @@ func _process(delta: float) -> void:
 
 func _input(_event: InputEvent) -> void:
 	if player_controlled:
-		if Input.is_action_just_pressed('primary_action'):
-			activate_primary()
+		if prim_fire_type == Prim_fire_type.AUTO:
+			if Input.is_action_pressed('primary_action'):
+				check_fire = true
+				activate_primary()
+			elif Input.is_action_just_released('primary_action'):
+				check_fire = false
+		else:
+			if Input.is_action_just_pressed('primary_action'):
+				activate_primary()
 			
 		if ((prim_current_ammo < prim_magazine_size and Input.is_action_just_pressed('reload')) or (prim_current_ammo == 0 and Input.is_action_just_pressed('primary_action'))) and not prim_is_reloading:
 			reload()
@@ -136,6 +150,7 @@ func activate_primary():
 		
 		
 func primary_action():
+	prim_fire_delay_timer = prim_fire_delay
 	if prim_fire_type == Prim_fire_type.BURST:
 		for i in range(0,prim_burst_size):
 			if prim_current_ammo > 0:
@@ -150,7 +165,7 @@ func primary_action():
 		prim_current_ammo -= 1
 		if prim_current_ammo <= 0:
 			print('out of primary ammo')
-	prim_fire_delay_timer = prim_fire_delay
+	
 		
 func secondary_action():
 	if sec_fire_type == Sec_fire_type.SCOPE:
