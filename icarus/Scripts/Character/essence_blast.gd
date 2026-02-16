@@ -12,10 +12,11 @@ func _ready() -> void:
 	pass
 
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed('essence_blast'):
 		if player.essence > 10:
-			player.essence -= 10
+			#player.essence -= 10
+			player.hit_by_weapon(10)
 			player.apply_force(blast_strength_player, camera.global_transform.basis.z.normalized())
 			var bodies = get_overlapping_bodies()
 			for body in bodies:

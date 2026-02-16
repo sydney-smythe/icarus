@@ -17,9 +17,11 @@ func update_enemy_targets():
 	
 func load_stage(stage_id : String, enable_player : bool = true, auto_mouse_capture : bool = true):
 	var stage = load(data_manager.stage_dict[stage_id][0]).instantiate()
-	if self.get_child_count() > 0:
-		self.get_child(0).queue_free()  # remove default model
 	self.add_child(stage)
+	if get_child_count() > 1:
+		move_child(stage, 0)
+		get_child(1).queue_free()  # remove default stage
+	
 	if enable_player:
 		game_manager.enable_player()
 	ui_manager.load_stage_ui(stage_id)
@@ -29,6 +31,7 @@ func load_stage(stage_id : String, enable_player : bool = true, auto_mouse_captu
 		player.equipment_manager.add_equipment(0, default_weapon, true, true)
 	if auto_mouse_capture:
 		player.capture_mouse()
+	print('[Stage Manager] finished loading stage: ' + str(stage.name))
 	#func add_equipment(equipment_index : int, equipment_id : String, can_equip : bool = true, is_auto_active : bool = false, auto_assign_index = false):
 	
 func unload_stage():

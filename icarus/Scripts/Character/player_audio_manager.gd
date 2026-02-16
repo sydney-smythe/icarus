@@ -8,7 +8,7 @@ func _ready() -> void:
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	play_movement_audio()
 	
 func play_movement_audio():

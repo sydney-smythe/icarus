@@ -16,6 +16,8 @@ script = ExtResource("1_bjdwl")
 [node name="Data Manager" type="Node3D" parent="Sub Managers" unique_id=1796835999]
 script = ExtResource("1_n8t8x")
 
+[node name="Climb Manager" type="Node3D" parent="Sub Managers" unique_id=1100719306]
+
 [node name="Stage Manager" type="Node3D" parent="." unique_id=465460131]
 script = ExtResource("2_vyj3o")
 
@@ -32,6 +34,7 @@ mouse_filter = 2
 script = ExtResource("4_ob72n")
 
 [node name="Debug UI" parent="UI Manager" unique_id=2046165957 instance=ExtResource("5_vyj3o")]
+visible = false
 layout_mode = 1
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1768096775]

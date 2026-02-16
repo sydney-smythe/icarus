@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 		is_available = true
 		pickup_available()
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	
 	if Input.is_action_just_pressed("interact"):
 		if requires_interact_pressed and player in interact_body_list and is_available:

@@ -3,6 +3,7 @@ extends Node3D
 @export var max_health : int = 3
 @export var is_booster : bool = false
 @export var boost_strength : float = 1.0
+@onready var game_manager : Node3D = get_node('/root/Game Manager/') 
 var current_health : int
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,4 +27,5 @@ func change_current_health(health_alteration : int):
 
 func kill_enemy():
 	print('enemy killed. freeing...')
-	get_parent().queue_free()
+	game_manager.signal_killed(get_parent())
+	#get_parent().queue_free()

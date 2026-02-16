@@ -21,14 +21,14 @@ func _ready() -> void:
 		get_child(i).process_mode = Node.PROCESS_MODE_DISABLED
 		#print("Created empty inventory slot")
 		inventory_array.append([("EMPTY SLOT " + str(i)), false])
-	print(str(inventory_array))
+	#print(str(inventory_array))
 	
 	call_deferred('late_ready')  # used to add the default equipment, but waits til after the data manager is ready.
 	
 func late_ready():
 	# add the default equipment to slot 0
 	add_equipment(0, default_equipment, true, true)  # add and equip the default weapon
-	print(str(inventory_array))
+	#print(str(inventory_array))
 	#add_equipment(1, default_equipment, true, false)  # add and equip the default weapon
 	#print(str(inventory_array))
 	#print(str(active_equipment))
@@ -100,7 +100,7 @@ func remove_equipment(equipment_index : int):
 			var empty_child = Node3D.new()
 			empty_child.name = "EMPTY SLOT " + str(equipment_index)
 			add_child(empty_child)
-			print("Created empty inventory slot.")
+			#print("Created empty inventory slot.")
 			inventory_array[equipment_index] = [("Slot" + str(equipment_index)), false]
 	else:
 		print('[Enemy Equip Manager] Error: equipment index is out of range.')

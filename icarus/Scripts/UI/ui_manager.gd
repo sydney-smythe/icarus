@@ -9,6 +9,9 @@ var main_menu = 'uid://c6oaxjuj06mpc'
 func _ready() -> void:
 	pass # Replace with function body.
 
+func load_ui(ui_path : String):
+	var ui_instance = load(ui_path).instantiate()
+	add_child(ui_instance)
 
 func load_stage_ui(scene_id : String):
 	var stage_mode = data_manager.stage_dict[scene_id][3]

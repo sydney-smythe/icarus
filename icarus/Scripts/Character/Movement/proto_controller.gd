@@ -1,11 +1,10 @@
-
 # ProtoController v1.0 by Brackeys
 # CC0 License
 # Intended for rapid prototyping of first-person games.
 # Happy prototyping!
 
 extends CharacterBody3D
-
+@onready var game_manager = get_node('/root/Game Manager/')
 @export var player_enabled : bool = true
 ## Can we move around?
 @export var can_move : bool = true
@@ -133,6 +132,7 @@ var prev_wall_run_jump_side : Vector2
 var forcer_vector : Vector3 = Vector3(0,0,0)
 
 @export_group('Essence')
+@export var max_essence : int = 100
 @export var essence : int = 100
 @export var overessence : int = 0
 # curves: X axis is how much health you have (%, 0.0-1.0), Y axis is multiplier for something
@@ -588,7 +588,7 @@ func swap_collider(now_crouching : bool):
 		standing_collider.set_deferred("disabled", false)
 		
 func apply_force(strength : float, direction : Vector3, sustained : bool = false, duration : float = 0.0):
-	if not unforceable:
+	if not unforceable and not freeflying:
 		if sustained:
 			var force_object = preload("res://Scenes/Physics/forcer.tscn").instantiate()
 			force_object.force_strength = strength
@@ -613,6 +613,9 @@ func hit_by_weapon(amount : int, overheal : bool = false, dedicated_overheal : b
 		if essence < 0:
 			essence = 0
 	
+	if essence <= 0:
+		game_manager.signal_killed(self)
+	
 	if amount < 0:
 		if dedicated_overheal:
 			overessence -= amount
@@ -627,3 +630,5 @@ func hit_by_weapon(amount : int, overheal : bool = false, dedicated_overheal : b
 		if essence > 100:
 			essence = 100
 				
+func reset_essence():
+	essence = max_essence

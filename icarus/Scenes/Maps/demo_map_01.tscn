@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dd3w624uqyeoi"]
 
+[ext_resource type="PackedScene" uid="uid://dcglx3ojly4i3" path="res://Scenes/Game Management/spawn_points.tscn" id="1_y3yqq"]
 [ext_resource type="Texture2D" uid="uid://dtcbimoxm5nnr" path="res://Temp Visuals/Environment/Cobblestone-Charcoal-Gray.jpg" id="1_ypyp0"]
 [ext_resource type="Texture2D" uid="uid://cy7m12m7qm5to" path="res://Temp Visuals/Environment/brick-wall-1916752_1280_jpg.png" id="2_1w34q"]
-[ext_resource type="PackedScene" uid="uid://c8x7hvb250pby" path="res://Scenes/Characters/Enemies/default_enemy.tscn" id="3_3nisk"]
 [ext_resource type="PackedScene" uid="uid://baq3akkb3owu5" path="res://Scenes/Environment/boon_pickup.tscn" id="4_y3yqq"]
 [ext_resource type="PackedScene" uid="uid://cgpgj3njkxsx0" path="res://Scenes/Environment/essence_pickup.tscn" id="5_8w2q5"]
 [ext_resource type="PackedScene" uid="uid://ce45owb8ju6wy" path="res://Scenes/Environment/weapon_pickup.tscn" id="6_3kujw"]
@@ -33,6 +33,9 @@ albedo_texture = ExtResource("2_1w34q")
 uv1_scale = Vector3(1.525, 1.525, 1.525)
 
 [node name="demo map 01" type="Node3D" unique_id=1820104611]
+
+[node name="Spawn Points" parent="." unique_id=528820919 instance=ExtResource("1_y3yqq")]
+spawn_points = Array[Vector3]([Vector3(-5, 1, -11), Vector3(11.5, 3.8, 3.75), Vector3(6, 1, 11), Vector3(-11.5, 3.8, 4.2)])
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=780885280]
 environment = SubResource("Environment_o8s5h")
@@ -165,17 +168,11 @@ transform = Transform3D(0.68476474, 0, 0, 0, 1, 0, 0, 0, 1, 1.8729529, -0.133544
 operation = 2
 size = Vector3(2.5961304, 1.2670898, 4.321411)
 
-[node name="Default Enemy" parent="." unique_id=473507800 instance=ExtResource("3_3nisk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.488669, 3.3666747, 3.546453)
-
-[node name="Default Enemy2" parent="." unique_id=900523030 instance=ExtResource("3_3nisk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.389381, 3.3666747, -3.9905205)
-
-[node name="Boon Pickup" parent="." unique_id=1785314233 instance=ExtResource("4_y3yqq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.09082, 1.0020201, -11.093455)
+[node name="Boon Pickup2" parent="." unique_id=132968479 instance=ExtResource("4_y3yqq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0159903, 1.002, -14.372992)
 
 [node name="Essence Pickup" parent="." unique_id=1975173551 instance=ExtResource("5_8w2q5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2696543, 1, 11.164534)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9663, 1, 14.334053)
 
 [node name="Weapon Pickup" parent="." unique_id=2109639200 instance=ExtResource("6_3kujw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.531805, 3.8550937, -0.018316627)

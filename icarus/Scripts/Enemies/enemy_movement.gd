@@ -206,3 +206,6 @@ func test_visibility() -> bool:
 				return true
 			
 	return false
+	
+func reset_essence():
+	state_manager.current_health = state_manager.max_health

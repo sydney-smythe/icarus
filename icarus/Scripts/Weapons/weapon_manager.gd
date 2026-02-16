@@ -86,7 +86,7 @@ func _process(delta: float) -> void:
 		if prim_reload_timer > 0:
 			prim_reload_timer -= delta
 		else:
-			print('primary reload complete')
+			#print('primary reload complete')
 			prim_is_reloading = false
 			prim_current_ammo = prim_magazine_size
 	
@@ -94,7 +94,7 @@ func _process(delta: float) -> void:
 		if sec_reload_timer > 0:
 			sec_reload_timer -= delta
 		else:
-			print('secondary reload complete')
+			#print('secondary reload complete')
 			sec_is_reloading = false
 			sec_current_ammo = sec_magazine_size
 		
@@ -131,7 +131,7 @@ func _input(_event: InputEvent) -> void:
 		
 func reload():
 		prim_is_reloading = true
-		print('starting reload')
+		#print('starting reload')
 		prim_reload_timer = prim_reload_time		
 
 func activate_primary():
@@ -156,7 +156,7 @@ func primary_action():
 			if prim_current_ammo > 0:
 				weapon_behaviour.primary_fire()
 				prim_current_ammo -= 1
-				print('fired shot ' + str(i+1))
+				#print('fired shot ' + str(i+1))
 				await get_tree().create_timer(prim_burst_item_delay).timeout
 			else:
 				print('out of ammo, not firing')
@@ -176,13 +176,13 @@ func secondary_action():
 				if sec_current_ammo > 0:
 					weapon_behaviour.secondary_fire()
 					sec_current_ammo -= 1
-					print('fired shot ' + str(i+1))
+					#print('fired shot ' + str(i+1))
 					await get_tree().create_timer(sec_burst_item_delay).timeout
 				else:
 					print('out of ammo, not firing')
 			else:
 				weapon_behaviour.secondary_fire()
-				print('fired shot ' + str(i+1))
+				#print('fired shot ' + str(i+1))
 				await get_tree().create_timer(sec_burst_item_delay).timeout
 	elif sec_fire_type == Sec_fire_type.ACTION_SINGLE:
 		weapon_behaviour.primary_fire()

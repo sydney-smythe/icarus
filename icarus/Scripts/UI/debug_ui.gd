@@ -22,14 +22,14 @@ func _ready() -> void:
 func late_ready():
 	current_level.text = 'Current Stage: ' + str(get_node('/root/Game Manager/Stage Manager').get_child(0).name)
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed('toggle_debug_ui'):
 		if self.visible:
 			self.hide()
 		else:
 			self.show()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	#ENGINE INFO
 	current_level.text = 'Current Stage: ' + str(get_node('/root/Game Manager/Stage Manager').get_child(0).name)
@@ -48,7 +48,10 @@ func _process(delta: float) -> void:
 	camera_rotation.text = 'Cam: ' + str(player.get_node('Head').get_node('Camera3D').global_transform.basis.z)
 	
 	# ESSENCE INFO
-	essence.text = 'Essence: ' + str(player.essence)
+	if player.overessence <= 0:
+		essence.text = 'Essence: ' + str(player.essence)
+	else:
+		essence.text = 'Essence: ' + str(player.essence) + " + " + str(player.overessence)
 	grav_mult.text = 'Essence Grav Mult: x' + str(snapped((player.essence_grav_curve.sample(float(player.essence)/100)), 0.01))
 	force_mult.text = 'Essence Force Mult: x' + str(snapped((player.essence_force_curve.sample(float(player.essence)/100)), 0.01))
 	speed_mult.text = 'Essence Speed Mult: x' + str(snapped((player.essence_speed_curve.sample(float(player.essence)/100)), 0.01))

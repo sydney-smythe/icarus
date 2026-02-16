@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cemuhifmaw5q3"]
+
+[ext_resource type="Script" uid="uid://djm0j0cl33qiq" path="res://Scripts/System/pvp_manager.gd" id="1_tp5j5"]
+
+[node name="PvP Manager" type="Node3D" unique_id=1928934669]
+script = ExtResource("1_tp5j5")

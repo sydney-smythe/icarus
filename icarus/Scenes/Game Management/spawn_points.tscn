@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dcglx3ojly4i3"]
+
+[ext_resource type="Script" uid="uid://d3loxc853m2vb" path="res://Scripts/System/spawn_points.gd" id="1_s8xav"]
+
+[node name="Spawn Points" type="Node3D" unique_id=528820919]
+script = ExtResource("1_s8xav")

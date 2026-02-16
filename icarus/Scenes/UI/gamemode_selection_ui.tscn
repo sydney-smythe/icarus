@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://bjfhci57hkl6l"]
+
+[ext_resource type="Script" uid="uid://ctlflwke8od7j" path="res://Scripts/UI/gamemode_selection_ui.gd" id="1_atdmp"]
+
+[node name="Gamemode Selection UI" type="Control" unique_id=347372123]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_atdmp")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1515579288]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=2088983550]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=219645442]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer" unique_id=1733190510]
+custom_minimum_size = Vector2(800, 440)
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=209578689]
+layout_mode = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_right = 30
+
+[node name="Climb" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=228091901]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 50
+text = "CLIMB"
+expand_icon = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=885687861]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 60
+
+[node name="PvP" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2" unique_id=2070168992]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 50
+text = "PvP"
+
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1140630349]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_bottom = 60
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2" unique_id=1163918859]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+
+[node name="Back" type="Button" parent="MarginContainer2/PanelContainer" unique_id=1771955620]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[connection signal="button_up" from="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/Climb" to="." method="_on_climb_button_up"]
+[connection signal="button_up" from="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/PvP" to="." method="_on_pv_p_button_up"]
+[connection signal="button_up" from="MarginContainer2/PanelContainer/Back" to="." method="_on_back_button_up"]
