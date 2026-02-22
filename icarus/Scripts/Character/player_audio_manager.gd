@@ -12,7 +12,7 @@ func _process(_delta: float) -> void:
 	play_movement_audio()
 	
 func play_movement_audio():
-	if not player.is_sliding and player.is_moving and player.is_on_floor():
+	if not player.is_sliding and player.is_moving and player.is_on_floor() and player.player_enabled:
 		if player.is_sprinting:
 			footstep_audio.pitch_scale = 1.5
 		elif player.is_crouching:

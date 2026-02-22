@@ -2,15 +2,17 @@ extends Node3D
 
 # used to load and store commonly accessed files
 
-var weapon_dict : Dictionary = {}
-var boon_dict : Dictionary = {}
-var stage_dict : Dictionary = {}
+var weapon_dict : Dictionary
+var boon_dict : Dictionary
+var stage_dict : Dictionary
+var filter_dict : Dictionary
 
 func _ready():
 	# Call the function to load your JSON file
 	weapon_dict = load_json_file("res://Data/weapon_id.json")
 	boon_dict = load_json_file("res://Data/boon_id.json")
 	stage_dict = load_json_file("res://Data/stage_id.json")
+	filter_dict = load_json_file("res://Data/filter_id.json")
 	#print(weapon_dict["0"])
 
 func load_json_file(path: String) -> Dictionary:

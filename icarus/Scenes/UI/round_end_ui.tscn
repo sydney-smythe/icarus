@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://by2of4wml06rx"]
+
+[ext_resource type="Script" uid="uid://cwlbvveuwl0ck" path="res://Scripts/UI/round_end_ui.gd" id="1_2a3wl"]
+
+[node name="Round End UI" type="Control" unique_id=1853082140 node_paths=PackedStringArray("player_names", "player_scores", "winner_labels")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_2a3wl")
+player_names = [NodePath("MarginContainer/HBoxContainer/Player 1 Info/Player 1 Name"), NodePath("MarginContainer/HBoxContainer/Player 2 Info/Player 2 Name")]
+player_scores = [NodePath("MarginContainer/HBoxContainer/Player 1 Info/Player 1 Score"), NodePath("MarginContainer/HBoxContainer/Player 2 Info/Player 2 Score")]
+winner_labels = [NodePath("MarginContainer/HBoxContainer/Player 1 Info/Player 1 Winner"), NodePath("MarginContainer/HBoxContainer/Player 2 Info/Player 2 Winner")]
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1195743435]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 100
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1603872120]
+custom_minimum_size = Vector2(1100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Player 1 Info" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=95299291]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="Player 1 Name" type="Label" parent="MarginContainer/HBoxContainer/Player 1 Info" unique_id=383522012]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 50
+text = "PLAYER NAME"
+
+[node name="Player 1 Score" type="Label" parent="MarginContainer/HBoxContainer/Player 1 Info" unique_id=1728484427]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 450
+text = "0"
+
+[node name="Player 1 Winner" type="Label" parent="MarginContainer/HBoxContainer/Player 1 Info" unique_id=948973858]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 50
+text = "Winner!"
+
+[node name="Dash" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1190102598]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="Dash Label" type="Label" parent="MarginContainer/HBoxContainer/Dash" unique_id=1976020666]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 450
+text = "-"
+
+[node name="Player 2 Info" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=220007840]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+
+[node name="Player 2 Name" type="Label" parent="MarginContainer/HBoxContainer/Player 2 Info" unique_id=1004726543]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 50
+text = "PLAYER NAME"
+
+[node name="Player 2 Score" type="Label" parent="MarginContainer/HBoxContainer/Player 2 Info" unique_id=1866324854]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 450
+text = "0"
+
+[node name="Player 2 Winner" type="Label" parent="MarginContainer/HBoxContainer/Player 2 Info" unique_id=307312999]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "Winner!"

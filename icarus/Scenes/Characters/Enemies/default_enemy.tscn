@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://4v5v8skfsiib" path="res://Scripts/Enemies/enemy_movement.gd" id="1_pccc1"]
 [ext_resource type="Script" uid="uid://d0w33o1lgscde" path="res://Scripts/Enemies/enemy_state_manager.gd" id="2_k8rbe"]
 [ext_resource type="PackedScene" uid="uid://dw6ekp4nbf3a7" path="res://Scenes/Characters/proto_controller/temp_blend_model.tscn" id="3_i2kpe"]
-[ext_resource type="Script" uid="uid://ciol8i4wlxvfm" path="res://Scripts/Equipment/enemy_equipment_manager.gd" id="4_u8867"]
+[ext_resource type="Script" uid="uid://c53lghcmyip3c" path="res://Scripts/Equipment/equipment_manager.gd" id="4_u8867"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i2kpe"]
 radius = 0.4
@@ -25,9 +25,13 @@ shape = SubResource("CapsuleShape3D_i2kpe")
 
 [node name="Pivot" type="Node3D" parent="Model" unique_id=877141701]
 
-[node name="Equipment Manager" type="Node3D" parent="Model/Pivot" unique_id=1930931214]
+[node name="Equipment Manager" type="Node3D" parent="Model/Pivot" unique_id=1930931214 node_paths=PackedStringArray("head", "host")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1, 0)
 script = ExtResource("4_u8867")
+head = NodePath("..")
+host = NodePath("../../..")
+inventory_size = 1
+player_controlled = false
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=852057834]
 target_desired_distance = 6.0

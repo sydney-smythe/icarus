@@ -19,6 +19,9 @@ var move_speed : float = 0.0
 var input_dir : Vector3 = Vector3(0,0,0)  # used for enemy AI controller
 var can_move : bool = true
 
+var invincible = false
+var target_mode : bool = true
+
 ## Movement physics parameters
 @export_group("Movement Physics")
 @export var acceleration : float = 50.0  # how quickly we accelerate toward target speed
@@ -42,43 +45,44 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	
-	if current_attack_timer > 0:
-		current_attack_timer -= delta
-	
-	var next_location
-	if target:
-		update_target_location()
-		var distance_to_target = global_transform.origin.distance_to(target.global_transform.origin)
-		#print(str(distance_to_target))
-		next_location = nav_agent.get_next_path_position()
-		in_range = distance_to_target <= attack_range
-	
-		if not test_visibility():
-			in_range = false
-		#print(str(test_visibility()))
-		if not in_range:
-			if is_on_floor():
-				var current_location = global_transform.origin
-				input_dir = (next_location - current_location).normalized()
-		else:
-			input_dir = Vector3(0,0,0)
-			
-			# try attack and/or rotate if timer is 0
-			rotate_look((target.global_transform.origin - global_transform.origin).normalized())
-			if current_attack_timer <= 0:
-				var chance = randf()
-				#if chance < 0.3:  # 30% to look towards player
-				
-					
-				#chance = randf()
-				if chance < 0.15:  # 15% to try firing
-					equipment_manager.attack()
-				current_attack_timer = attack_interval_timer
+	if target_mode:
+		if current_attack_timer > 0:
+			current_attack_timer -= delta
 		
-	#print(str(input_dir))
-	#input_dir = Vector3(0,0,0)
-	#rotate_look()
-	#handle animations
+		var next_location
+		if target:
+			update_target_location()
+			var distance_to_target = global_transform.origin.distance_to(target.global_transform.origin)
+			#print(str(distance_to_target))
+			next_location = nav_agent.get_next_path_position()
+			in_range = distance_to_target <= attack_range
+		
+			if not test_visibility():
+				in_range = false
+			#print(str(test_visibility()))
+			if not in_range:
+				if is_on_floor():
+					var current_location = global_transform.origin
+					input_dir = (next_location - current_location).normalized()
+			else:
+				input_dir = Vector3(0,0,0)
+				
+				# try attack and/or rotate if timer is 0
+				rotate_look((target.global_transform.origin - global_transform.origin).normalized())
+				if current_attack_timer <= 0:
+					var chance = randf()
+					#if chance < 0.3:  # 30% to look towards player
+					
+						
+					#chance = randf()
+					if chance < 0.15:  # 15% to try firing
+						equipment_manager.attack()
+					current_attack_timer = attack_interval_timer
+			
+		#print(str(input_dir))
+		#input_dir = Vector3(0,0,0)
+		#rotate_look()
+		#handle animations
 	if not is_moving:
 		move_speed = 0
 		model_animation_player.play("idle")
@@ -149,12 +153,13 @@ func _physics_process(delta: float) -> void:
 				velocity.z -= friction_vector.z
 	
 	# TEMP NAV MOVEMENT INFO
-	if not in_range:
-		rotate_look(input_dir)
-	velocity += forcer_vector
-	move_and_slide()
-	forcer_vector = Vector3(0,0,0)
-	in_range = false
+	if target_mode:
+		if not in_range:
+			rotate_look(input_dir)
+		velocity += forcer_vector
+		move_and_slide()
+		forcer_vector = Vector3(0,0,0)
+		in_range = false
 
 func rotate_look(dir):
 	if not (dir * Vector3(1,0,1)).is_equal_approx(Vector3(0,0,0)):
@@ -206,6 +211,16 @@ func test_visibility() -> bool:
 				return true
 			
 	return false
-	
+
+func round_reset(weapon : String):
+	reset_essence()
+	invincible = false
+	if not weapon == null:
+		equipment_manager.clear_inventory()
+		equipment_manager.add_equipment(0, weapon, true, true)
+
 func reset_essence():
 	state_manager.current_health = state_manager.max_health
+	
+func set_attack_range():
+	attack_range = randf_range(equipment_manager.get_max_range()*0.3, equipment_manager.get_max_range())

@@ -1,6 +1,8 @@
 extends Control
 
 @onready var ui_manager = get_parent()
+@onready var stage_manager = get_node('/root/Game Manager/Stage Manager')
+@onready var game_manager = get_node('/root/Game Manager')
 var main_menu_ui = "uid://c6oaxjuj06mpc"
 var pvp_lobby_ui = "uid://uvne644wrm3k"
 
@@ -10,8 +12,8 @@ func _ready() -> void:
 
 
 func _on_climb_button_up() -> void:
-	pass # Replace with function body.
-
+	stage_manager.load_stage("1")
+	game_manager.init_climb_mode("1")
 
 func _on_pv_p_button_up() -> void:
 	ui_manager.load_ui(pvp_lobby_ui)

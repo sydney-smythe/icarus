@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cx7i1y6oxaq6s"]
+
+[ext_resource type="Script" uid="uid://ydn00qshf18h" path="res://Scripts/System/climb_manager.gd" id="1_av5wf"]
+
+[node name="Climb Manager" type="Node3D" unique_id=2002669151]
+script = ExtResource("1_av5wf")

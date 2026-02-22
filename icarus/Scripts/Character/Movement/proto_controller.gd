@@ -19,6 +19,7 @@ extends CharacterBody3D
 ## Can we press to enter freefly mode (noclip)?
 @export var can_freefly : bool = false
 
+var invincible = false
 @export_group("Speeds")
 ## Look around rotation speed.
 @export var look_speed : float = 0.002
@@ -140,6 +141,8 @@ var forcer_vector : Vector3 = Vector3(0,0,0)
 @export var essence_speed_curve: Curve
 @export var essence_force_curve: Curve
 
+@onready var boon_manager : Node3D = get_node('Boon Manager')
+
 var unforceable = false
 
 func _ready() -> void:
@@ -164,26 +167,20 @@ func _unhandled_input(event: InputEvent) -> void:
 	if player_enabled:
 		# Mouse capturing
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			capture_mouse()
-		if Input.is_key_pressed(KEY_ESCAPE):
-			release_mouse()
+			game_manager.capture_mouse()
+		#if Input.is_key_pressed(KEY_ESCAPE):
+			#game_manager.release_mouse()
 		
 		# Look around
 		if mouse_captured and event is InputEventMouseMotion:
 			rotate_look(event.relative)
 		
 		# Toggle freefly mode
-		if can_freefly and Input.is_action_just_pressed(input_freefly):
-			if not freeflying:
-				enable_freefly()
-				if 'freeflying' not in active_actions:
-					active_actions.append('freeflying')
-			else:
-				disable_freefly()
-				if 'freeflying' in active_actions:
-					active_actions.erase('freeflying')
+		#if can_freefly and Input.is_action_just_pressed(input_freefly):
+			#freefly()
 
 func _physics_process(delta: float) -> void:
+	mouse_captured = game_manager.mouse_captured
 	if player_enabled:
 		#handle animations
 		if not is_moving:
@@ -330,7 +327,7 @@ func _physics_process(delta: float) -> void:
 			# if sprinting currently: slide, then go into crouch
 			if is_sprinting and ((is_on_floor() and -global_transform.basis.z.dot(get_floor_normal()) >= 0) or not is_on_floor()):
 				# cannot start slide if going uphill
-				apply_force(0.2, Vector3(0,-1,0), true, 0.2)
+				apply_force(0.2, Vector3(0,-1,0), true, 0.2, true)
 				swap_collider(true)
 				is_sliding = true
 				is_sprinting = false
@@ -481,7 +478,7 @@ func _physics_process(delta: float) -> void:
 			
 		# decrease wall run timer
 		if wall_run_timer > 0:
-			apply_force(1, wall_run_normal)
+			apply_force(1, wall_run_normal, false, 0.0, true)
 			wall_run_timer -= delta
 			current_wall_run_grav_mod += wall_run_decay * delta
 		
@@ -510,24 +507,15 @@ func rotate_look(rot_input : Vector2):
 
 
 func enable_freefly():
-	collider.disabled = true
-	freeflying = true
-	velocity = Vector3.ZERO
+	if not freeflying:
+		collider.disabled = true
+		freeflying = true
+		velocity = Vector3.ZERO
 
 func disable_freefly():
-	collider.disabled = false
-	freeflying = false
-
-
-func capture_mouse():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	mouse_captured = true
-
-
-func release_mouse():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	mouse_captured = false
-
+	if freeflying:
+		collider.disabled = false
+		freeflying = false
 
 ## Checks if some Input Actions haven't been created.
 ## Disables functionality accordingly.
@@ -587,8 +575,8 @@ func swap_collider(now_crouching : bool):
 		crouching_collider.set_deferred("disabled", true)
 		standing_collider.set_deferred("disabled", false)
 		
-func apply_force(strength : float, direction : Vector3, sustained : bool = false, duration : float = 0.0):
-	if not unforceable and not freeflying:
+func apply_force(strength : float, direction : Vector3, sustained : bool = false, duration : float = 0.0, override_unforceable : bool = false):
+	if (not unforceable and not freeflying) or override_unforceable:
 		if sustained:
 			var force_object = preload("res://Scenes/Physics/forcer.tscn").instantiate()
 			force_object.force_strength = strength
@@ -602,19 +590,21 @@ func apply_force(strength : float, direction : Vector3, sustained : bool = false
 func hit_by_weapon(amount : int, overheal : bool = false, dedicated_overheal : bool = false):  # REQUIREMENT OF WEAPON TARGETS GROUP
 	print('player recieved damage: ' + str(amount))
 	if amount > 0:
-		var remainder = amount
-		if overessence > 0:
-			if amount > overessence:
-				remainder = amount - overessence 
-			else:
-				remainder = 0
-			overessence -= amount
-		essence -= remainder
-		if essence < 0:
-			essence = 0
+		if not invincible:
+			var remainder = amount
+			if overessence > 0:
+				if amount > overessence:
+					remainder = amount - overessence 
+				else:
+					remainder = 0
+				overessence -= amount
+			essence -= remainder
+			if essence < 0:
+				essence = 0
 	
-	if essence <= 0:
+	if essence <= 0 and not invincible:
 		game_manager.signal_killed(self)
+		invincible = true
 	
 	if amount < 0:
 		if dedicated_overheal:
@@ -629,6 +619,27 @@ func hit_by_weapon(amount : int, overheal : bool = false, dedicated_overheal : b
 			essence -= amount
 		if essence > 100:
 			essence = 100
-				
+
+func round_reset(weapon : String):
+	reset_essence()
+	invincible = false
+	if not weapon == null:
+		equipment_manager.clear_inventory()
+		equipment_manager.add_equipment(0, weapon, true, true)
+	boon_manager.clear_boons()
+
 func reset_essence():
 	essence = max_essence
+	
+func toggle_weapons(mode : bool, keep_weapons_visible : bool = false):
+	if mode:  # toggle on
+		equipment_manager.show()
+		equipment_manager.disabled = false
+		equipment_manager.enable_equipment()
+	else:  # toggle off
+		if not keep_weapons_visible:
+			equipment_manager.hide()
+		else:
+			equipment_manager.show()
+		equipment_manager.disabled = true
+		equipment_manager.disable_equipment()

@@ -93,8 +93,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011688232, 0.68027925, -0.7
 shape = SubResource("BoxShape3D_4cql4")
 debug_color = Color(0.68150795, 0.43798593, 0.65781826, 0.41960785)
 
-[node name="Equipment Manager" type="Node3D" parent="Head/Camera3D" unique_id=788196802]
+[node name="Equipment Manager" type="Node3D" parent="Head/Camera3D" unique_id=788196802 node_paths=PackedStringArray("head", "host")]
 script = ExtResource("3_j5cwe")
+head = NodePath("../..")
+host = NodePath("../../..")
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1294015872]
 transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 0.8, 0)

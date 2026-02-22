@@ -37,11 +37,11 @@ func late_ready():
 	model.add_child(boon_model)
 
 func _process(delta: float) -> void:
-	if not is_available and available_timer > 0:
-		available_timer -= delta
-	else:
-		is_available = true
-		pickup_available()
+	if not single_use:
+		if not is_available and available_timer > 0:
+			available_timer -= delta
+		else:
+			pickup_available()
 
 func _input(_event: InputEvent) -> void:
 	
@@ -71,22 +71,21 @@ func fire_ray() -> bool:
 func use_pickup():
 	pickup()
 	if single_use:
-		queue_free()
+		model.get_child(0).hide()
+		is_available = false
 	else:
 		is_available = false
 		available_timer = recharge_delay
 		pickup_unavailable()
 
-func pickup():
-	boon_manager.apply_boon(boon_id, boon_length)
-
 func pickup_unavailable():
 	model.get_child(0).hide()
+	is_available = false
 	
 func pickup_available():
 	model.get_child(0).show()
-
-
+	is_available = true
+	available_timer = 0
 
 func _on_touch_range_body_entered(body: Node3D) -> void:
 	if body not in touch_body_list:
@@ -109,3 +108,6 @@ func _on_interact_range_body_entered(body: Node3D) -> void:
 func _on_interact_range_body_exited(body: Node3D) -> void:
 	if body in interact_body_list:
 		interact_body_list.erase(body)
+		
+func pickup():
+	boon_manager.apply_boon(boon_id, boon_length)

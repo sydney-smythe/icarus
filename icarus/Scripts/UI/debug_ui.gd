@@ -2,32 +2,44 @@ extends Control
 
 @onready var player: CharacterBody3D = get_node("/root/Game Manager/Player")
 # ENGINE INFO
-@onready var fps_count: Label = $"MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Engine Info/FPS Count"
+@export var fps_count: Label
 # PLAYER INFO
-@onready var actions_label: Label = $"MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info/Actions Label"
-@onready var move_speed: Label = $"MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info/Move Speed"
-@onready var velocity_vector: Label = $"MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info/Velocity Vector"
-@onready var camera_rotation: Label = $"MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info/Camera Rotation"
-@onready var current_level: Label = $"MarginContainer/PanelContainer/MarginContainer/VBoxContainer/State Info/Current Level"
+@export var actions_label: Label
+@export var move_speed: Label
+@export var velocity_vector: Label
+@export var camera_rotation: Label
+@export var current_level: Label
 # ESSENCE INFO
-@onready var essence: Label = $"MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info/Essence"
-@onready var grav_mult: Label = $"MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info/Grav Mult"
-@onready var force_mult: Label = $"MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info/Force Mult"
-@onready var speed_mult: Label = $"MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info/Speed Mult"
+@export var essence: Label
+@export var grav_mult: Label
+@export var force_mult: Label
+@export var speed_mult: Label
+# CONTAINERS
+@export var debug_panel : MarginContainer
+@export var f2_tooltip : MarginContainer
 
+var is_enabled : bool = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	toggle_visibility()
 	call_deferred("late_ready")
+
+func toggle_visibility():
+	if is_enabled:
+		f2_tooltip.show()
+		debug_panel.hide()
+		is_enabled = false
+	else:
+		f2_tooltip.hide()
+		debug_panel.show()
+		is_enabled = true
 
 func late_ready():
 	current_level.text = 'Current Stage: ' + str(get_node('/root/Game Manager/Stage Manager').get_child(0).name)
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed('toggle_debug_ui'):
-		if self.visible:
-			self.hide()
-		else:
-			self.show()
+		toggle_visibility()
 
 func _process(_delta: float) -> void:
 	

@@ -80,6 +80,13 @@ text = "PLAY THE GAME!"
 icon_alignment = 1
 expand_icon = true
 
+[node name="Settings" type="Button" parent="Main Buttons/PanelContainer/MarginContainer/VBoxContainer" unique_id=61496971]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "SETTINGS"
+icon_alignment = 1
+expand_icon = true
+
 [node name="Quit" type="Button" parent="Main Buttons/PanelContainer/MarginContainer/VBoxContainer" unique_id=636132152]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
@@ -90,4 +97,5 @@ script = ExtResource("3_m7hkf")
 
 [connection signal="button_up" from="Main Buttons/PanelContainer/MarginContainer/VBoxContainer/Play" to="." method="_on_play_button_up"]
 [connection signal="button_up" from="Main Buttons/PanelContainer/MarginContainer/VBoxContainer/Play" to="Main Buttons/PanelContainer/MarginContainer/VBoxContainer/Play" method="_on_button_up"]
+[connection signal="button_up" from="Main Buttons/PanelContainer/MarginContainer/VBoxContainer/Settings" to="." method="_on_settings_button_up"]
 [connection signal="button_up" from="Main Buttons/PanelContainer/MarginContainer/VBoxContainer/Quit" to="Main Buttons/PanelContainer/MarginContainer/VBoxContainer/Quit" method="_on_button_up"]

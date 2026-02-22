@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://t5kh5t0i2mfv"]
+
+[ext_resource type="Script" uid="uid://ci4f0ewxbkhgc" path="res://Scripts/UI/scoreboard_ui.gd" id="1_aqfdr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8f1xp"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 15
+
+[node name="Scoreboard UI" type="Control" unique_id=1200190357 node_paths=PackedStringArray("player_info", "best_of_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aqfdr")
+player_info = [NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/Player 1 Info"), NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/Player 2 Info")]
+best_of_label = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/Best of")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=217039393]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=532634831]
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8f1xp")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=754301594]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=129726128]
+layout_mode = 2
+theme_override_constants/separation = 19
+
+[node name="Best of" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=736130076]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "PvP (Best of X)"
+horizontal_alignment = 1
+
+[node name="Legend" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=377856056]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Player 1 Name" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Legend" unique_id=1540650012]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Name"
+
+[node name="Player 1 Wins" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Legend" unique_id=1973310279]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Wins"
+
+[node name="Player 1 Deaths" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Legend" unique_id=1737315131]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Deaths"
+
+[node name="Player 1 Ping" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Legend" unique_id=1145316620]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ping"
+horizontal_alignment = 2
+
+[node name="Player 1 Info" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=945859590]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Player 1 Name" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Player 1 Info" unique_id=1679635683]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "TEMP NAME"
+
+[node name="Player 1 Wins" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Player 1 Info" unique_id=1025511465]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "0"
+
+[node name="Player 1 Deaths" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Player 1 Info" unique_id=1079460026]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "0"
+
+[node name="Player 1 Ping" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Player 1 Info" unique_id=1571118988]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "10 ms"
+horizontal_alignment = 2
+
+[node name="Player 2 Info" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1325009403]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Player 2 Name" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Player 2 Info" unique_id=1181508852]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "TEMP NAME"
+
+[node name="Player 2 Wins" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Player 2 Info" unique_id=1301772498]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "0"
+
+[node name="Player 2 Deaths" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Player 2 Info" unique_id=1626408290]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "0"
+
+[node name="Player 2 Ping" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/Player 2 Info" unique_id=776654386]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "10 ms"
+horizontal_alignment = 2

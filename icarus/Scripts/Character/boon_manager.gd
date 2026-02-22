@@ -25,4 +25,6 @@ func apply_boon(boon_id : String, length : float = 30.0):
 		get_child(boon_index).boon_timer = length
 		print('[Boon Manager] Updated boon: ' + boon_dict[boon_id][1] + ' for ' + str(length) + 's')
 		
-		
+func clear_boons():
+	for child_index in range(0,get_child_count()):
+		get_child(child_index).update_timer(0, true)

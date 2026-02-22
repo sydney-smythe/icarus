@@ -24,15 +24,24 @@ func load_stage(stage_id : String, enable_player : bool = true, auto_mouse_captu
 	
 	if enable_player:
 		game_manager.enable_player()
+	else:
+		game_manager.disable_player()
 	ui_manager.load_stage_ui(stage_id)
 	update_enemy_targets()
 	var default_weapon : String = data_manager.stage_dict[stage_id][4]
 	if default_weapon != 'null':
 		player.equipment_manager.add_equipment(0, default_weapon, true, true)
 	if auto_mouse_capture:
-		player.capture_mouse()
+		game_manager.capture_mouse()
+	else:
+		game_manager.release_mouse()
 	print('[Stage Manager] finished loading stage: ' + str(stage.name))
 	#func add_equipment(equipment_index : int, equipment_id : String, can_equip : bool = true, is_auto_active : bool = false, auto_assign_index = false):
 	
 func unload_stage():
 	pass
+	
+func load_main_menu(menu_ui_stage : String = 'Main Menu'):
+	load_stage('-1', false, false)
+	# tell UI manager to load specific main menu ui stage
+	

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bk846k0apc45g"]
+
+[ext_resource type="Shader" uid="uid://bmo8l5h6woq1e" path="res://Shaders/black_and_white.gdshader" id="1_ekvwm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p70rv"]
+shader = ExtResource("1_ekvwm")
+
+[node name="Black and White Filter" type="ColorRect" unique_id=209028576]
+material = SubResource("ShaderMaterial_p70rv")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

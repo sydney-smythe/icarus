@@ -19,3 +19,7 @@ func load_stage(stage_id : String = '0') -> void:
 
 func _on_play_button_up() -> void:
 	load_mode_selection_ui()
+
+
+func _on_settings_button_up() -> void:
+	ui_manager.toggle_settings()

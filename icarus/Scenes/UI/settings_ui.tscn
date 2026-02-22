@@ -1,0 +1,194 @@
+[gd_scene format=3 uid="uid://dhto1yiiq25hm"]
+
+[ext_resource type="Script" uid="uid://d3bntc3auygaf" path="res://Scripts/UI/settings_ui.gd" id="1_7cjk5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7cjk5"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.9490196)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="Settings UI" type="Control" unique_id=986785694 node_paths=PackedStringArray("settings_screen", "about_screen", "about_button", "back_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7cjk5")
+settings_screen = NodePath("MarginContainer/Panel/MarginContainer/Settings and Controls")
+about_screen = NodePath("MarginContainer/Panel/MarginContainer/About")
+about_button = NodePath("MarginContainer/Panel/MarginContainer/About button")
+back_button = NodePath("MarginContainer/Panel/MarginContainer/Back button")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=824360499]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=60528401]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7cjk5")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=2057166778]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Settings and Controls" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=2127312273]
+layout_mode = 2
+
+[node name="Screen Title" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls" unique_id=553333761]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "SETTINGS / CONTROLS"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/Settings and Controls" unique_id=81188331]
+layout_mode = 2
+
+[node name="Settings" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer" unique_id=1187664337]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Settings Header" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Settings" unique_id=1881967981]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Settings" unique_id=291550807]
+layout_mode = 2
+text = "
+
+Settings coming soon"
+horizontal_alignment = 1
+
+[node name="Controls" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer" unique_id=1322757201]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 18
+
+[node name="Controls Header" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Controls" unique_id=344281122]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Controls"
+horizontal_alignment = 1
+
+[node name="Movement Title" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Controls" unique_id=987300413]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.74353737, 0.62489074, 0.8991623, 1)
+theme_override_font_sizes/font_size = 22
+text = "
+-Movement-"
+horizontal_alignment = 1
+
+[node name="Movement Controls" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Controls" unique_id=1124536077]
+layout_mode = 2
+text = "WASD - move
+Space - jump
+Ctrl - crouch
+Shift - sprint"
+horizontal_alignment = 1
+
+[node name="Combat Title" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Controls" unique_id=1278567852]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.74353737, 0.62489074, 0.8991623, 1)
+theme_override_font_sizes/font_size = 22
+text = "-Combat-"
+horizontal_alignment = 1
+
+[node name="Combat Controls" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Controls" unique_id=1185005237]
+layout_mode = 2
+text = "L click - shoot
+F - essence blast"
+horizontal_alignment = 1
+
+[node name="General Title" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Controls" unique_id=1324642266]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.74353737, 0.62489074, 0.8991623, 1)
+theme_override_font_sizes/font_size = 22
+text = "-General-"
+horizontal_alignment = 1
+
+[node name="General Controls" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Controls" unique_id=1424433458]
+layout_mode = 2
+text = "E - interact
+Escape - pause"
+horizontal_alignment = 1
+
+[node name="About" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=862663862]
+visible = false
+layout_mode = 2
+
+[node name="Screen Title" type="Label" parent="MarginContainer/Panel/MarginContainer/About" unique_id=175984599]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "ABOUT"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/About" unique_id=975199666]
+layout_mode = 2
+
+[node name="Settings" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/About/HBoxContainer" unique_id=2099223181]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="MarginContainer/Panel/MarginContainer/About/HBoxContainer/Settings" unique_id=534484174]
+custom_minimum_size = Vector2(1600, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "
+Project ICARUS is a fast-paced movement shooter where players must use their surroundings to out-maneuver and defeat their opponents.
+
+Players have many movement abilities at their disposal. This includes sprinting, crouching, sliding, wall running, and wall jumping. Additionally, firing a weapon generates recoil in the opposite direction, which can be used to further aid movement. 
+
+Health, which is referred to as essence, controls both the player's life and their movement capabilities. At lower amounts of essence, players are more affected by recoil forces, can move faster, and experience less gravity. Essence is lost when attacked (like health), but can also be manually lost through an Essence Blast, which applies recoil to the user (like a weapon) and fires a force blast forward. 
+
+
+Project ICARUS will be a PvP experience, and the current enemies do not reflect any future PvE plans. They are simply placeholders while PvP capabilities are developed. 
+
+
+Project ICARUS v0.0.221 Build 001 Playtest 01-Naples (Pre-Alpha)
+
+Developed using the Godot Engine
+"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Back button" type="Button" parent="MarginContainer/Panel/MarginContainer" unique_id=15152020]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Back"
+
+[node name="About button" type="Button" parent="MarginContainer/Panel/MarginContainer" unique_id=1235164323]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "About"
+
+[connection signal="button_up" from="MarginContainer/Panel/MarginContainer/Back button" to="." method="_on_back_button_button_up"]
+[connection signal="button_up" from="MarginContainer/Panel/MarginContainer/About button" to="." method="_on_about_button_button_up"]

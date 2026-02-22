@@ -24,6 +24,10 @@ var prim_fire_delay_timer
 var prim_reload_timer
 var prim_is_reloading : bool = false
 
+var ai_prim_fire_length_max : float = 1.0
+var ai_prim_fire_length_min : float = 0.1
+var ai_prim_fire_timer : float = 0
+
 @export_group("SECONDARY ACTION")
 enum Sec_fire_type {
 	SCOPE,
@@ -54,6 +58,8 @@ var animation_manager
 @export var player_controlled = false
 
 var check_fire : bool = false
+@onready var game_manager = get_node('/root/Game Manager/')
+@onready var equipment_manager = get_parent().get_parent()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -72,7 +78,12 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
+	is_enabled = not equipment_manager.disabled
+	if ai_prim_fire_timer > 0:
+		ai_prim_fire_timer -= delta
+		if equipment_manager.host.target_mode:
+			activate_primary()
+		
 	if check_fire:
 		if Input.is_action_pressed('primary_action'):
 				activate_primary()
@@ -98,7 +109,7 @@ func _process(delta: float) -> void:
 			sec_is_reloading = false
 			sec_current_ammo = sec_magazine_size
 		
-	if has_sec_action and player_controlled:
+	if has_sec_action and player_controlled and not game_manager.is_paused:
 		if not sec_is_reloading or not sec_has_ammo:
 			if sec_fire_type == Sec_fire_type.ACTION_BURST or sec_fire_type == Sec_fire_type.ACTION_SINGLE:
 				if Input.is_action_just_pressed('secondary_action') and (sec_current_ammo > 0 or not sec_has_ammo):
@@ -115,7 +126,7 @@ func _process(delta: float) -> void:
 					secondary_action()
 
 func _input(_event: InputEvent) -> void:
-	if player_controlled:
+	if player_controlled and not game_manager.is_paused and is_enabled:
 		if prim_fire_type == Prim_fire_type.AUTO:
 			if Input.is_action_pressed('primary_action'):
 				check_fire = true
@@ -133,6 +144,13 @@ func reload():
 		prim_is_reloading = true
 		#print('starting reload')
 		prim_reload_timer = prim_reload_time		
+
+func ai_activate_primary():
+	if prim_fire_type == Prim_fire_type.AUTO:
+		if not ai_prim_fire_timer > 0:
+			ai_prim_fire_timer = randf_range(ai_prim_fire_length_min, ai_prim_fire_length_max)
+	else:
+		activate_primary()
 
 func activate_primary():
 	if not prim_is_reloading:

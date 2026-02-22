@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://d2rrdcquv1ekb"]
+
+[ext_resource type="Script" uid="uid://cf4o5uv5k7t4" path="res://Scripts/UI/pause_menu_ui.gd" id="1_tocsm"]
+
+[node name="Pause Menu UI" type="Control" unique_id=1633266529 node_paths=PackedStringArray("quit_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tocsm")
+quit_button = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/Quit Button")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=933655083]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=1258233445]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=1045950100]
+layout_mode = 0
+offset_right = 450.0
+offset_bottom = 122.8125
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=887496076]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Pause Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1067606878]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 45
+text = "PAUSE"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1784725448]
+custom_minimum_size = Vector2(0, 668.83)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Settings Button" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1972749799]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 35
+text = "Settings"
+
+[node name="Quit Button" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=28793282]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 35
+text = "Quit"
+
+[connection signal="button_up" from="MarginContainer/Panel/MarginContainer/VBoxContainer/Settings Button" to="." method="_on_settings_button_button_up"]
+[connection signal="button_up" from="MarginContainer/Panel/MarginContainer/VBoxContainer/Quit Button" to="." method="_on_quit_button_button_up"]

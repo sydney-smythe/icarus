@@ -13,7 +13,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="Debug UI" type="Control" unique_id=2046165957]
+[node name="Debug UI" type="Control" unique_id=2046165957 node_paths=PackedStringArray("fps_count", "actions_label", "move_speed", "velocity_vector", "camera_rotation", "current_level", "essence", "grav_mult", "force_mult", "speed_mult", "debug_panel", "f2_tooltip")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,8 +24,20 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 mouse_filter = 2
 script = ExtResource("1_87ksd")
+fps_count = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Engine Info/FPS Count")
+actions_label = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info/Actions Label")
+move_speed = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info/Move Speed")
+velocity_vector = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info/Velocity Vector")
+camera_rotation = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info/Camera Rotation")
+current_level = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/State Info/Current Level")
+essence = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info/Essence")
+grav_mult = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info/Grav Mult")
+force_mult = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info/Force Mult")
+speed_mult = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info/Speed Mult")
+debug_panel = NodePath("Debug Panel")
+f2_tooltip = NodePath("F2 Tooltip")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1135252886]
+[node name="Debug Panel" type="MarginContainer" parent="." unique_id=1135252886]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -37,105 +49,138 @@ theme_override_constants/margin_left = 166
 theme_override_constants/margin_top = 41
 theme_override_constants/margin_right = 53
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=888375127]
+[node name="PanelContainer" type="PanelContainer" parent="Debug Panel" unique_id=888375127]
 custom_minimum_size = Vector2(303.665, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_87ksd")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=713016694]
+[node name="MarginContainer" type="MarginContainer" parent="Debug Panel/PanelContainer" unique_id=713016694]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer" unique_id=1501058494]
+[node name="VBoxContainer" type="VBoxContainer" parent="Debug Panel/PanelContainer/MarginContainer" unique_id=1501058494]
 custom_minimum_size = Vector2(325.655, 0)
 layout_mode = 2
 theme_override_constants/separation = 18
 
-[node name="Game Info" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=649815220]
+[node name="Game Info" type="VBoxContainer" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer" unique_id=649815220]
 layout_mode = 2
 theme_override_constants/separation = 9
 
-[node name="Debug Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Game Info" unique_id=986141160]
+[node name="Debug Label" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Game Info" unique_id=986141160]
 layout_mode = 2
 size_flags_vertical = 1
 text = "DEBUG MENU    (F2 to close)"
 horizontal_alignment = 1
 
-[node name="Version Information" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Game Info" unique_id=177819635]
+[node name="Version Information" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Game Info" unique_id=177819635]
 layout_mode = 2
 size_flags_vertical = 1
-text = "Project ICARUS    Build 001   v.0.1.208 
+text = "Project ICARUS    Build 001   v.0.1.221
 Playtest 01-Naples"
 horizontal_alignment = 1
 
-[node name="Engine Info" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1009475858]
+[node name="Engine Info" type="VBoxContainer" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer" unique_id=1009475858]
 layout_mode = 2
 theme_override_constants/separation = 9
 
-[node name="FPS Count" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Engine Info" unique_id=2070430885]
+[node name="FPS Count" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Engine Info" unique_id=2070430885]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4491495, 0.770701, 0.7246074, 1)
 text = "FPS:"
 
-[node name="State Info" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=178717969]
+[node name="State Info" type="VBoxContainer" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer" unique_id=178717969]
 layout_mode = 2
 theme_override_constants/separation = 9
 
-[node name="Current Level" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/State Info" unique_id=1694899832]
+[node name="Current Level" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/State Info" unique_id=1694899832]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7539762, 0.70520955, 0.5260158, 1)
 text = "Current Stage:"
 
-[node name="Player Info" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1755549854]
+[node name="Player Info" type="VBoxContainer" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer" unique_id=1755549854]
 layout_mode = 2
 theme_override_constants/separation = 9
 
-[node name="Actions Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=1565254328]
+[node name="Actions Label" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=1565254328]
 visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.69242996, 0.6779741, 0.9622832, 1)
 text = "Active Actions: "
 
-[node name="Move Speed" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=563917559]
+[node name="Move Speed" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=563917559]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8769369, 0.53171027, 0.48197937, 1)
 text = "Move Speed:"
 
-[node name="Velocity Vector" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=407619289]
+[node name="Velocity Vector" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=407619289]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8769369, 0.53171027, 0.48197937, 1)
 text = "Velocity:"
 
-[node name="Camera Rotation" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=947222022]
+[node name="Camera Rotation" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=947222022]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8769369, 0.53171027, 0.48197937, 1)
 text = "Cam:"
 
-[node name="Essence Info" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1879539497]
+[node name="Essence Info" type="VBoxContainer" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer" unique_id=1879539497]
 layout_mode = 2
 theme_override_constants/separation = 9
 
-[node name="Essence" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=1467225229]
+[node name="Essence" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=1467225229]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
 text = "Essence: "
 
-[node name="Grav Mult" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=70729807]
+[node name="Grav Mult" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=70729807]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
 text = "Essence Grav Mult: "
 
-[node name="Force Mult" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=1745510883]
+[node name="Force Mult" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=1745510883]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
 text = "Essence Force Mult: "
 
-[node name="Speed Mult" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=267056210]
+[node name="Speed Mult" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=267056210]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
 text = "Essence Speed Mult:"
+
+[node name="F2 Tooltip" type="MarginContainer" parent="." unique_id=2077056910]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -389.0
+offset_bottom = 93.333336
+grow_horizontal = 0
+theme_override_constants/margin_left = 166
+theme_override_constants/margin_top = 41
+theme_override_constants/margin_right = 53
+
+[node name="PanelContainer" type="PanelContainer" parent="F2 Tooltip" unique_id=407344385]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_87ksd")
+
+[node name="MarginContainer" type="MarginContainer" parent="F2 Tooltip/PanelContainer" unique_id=291134683]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Debug Label" type="Label" parent="F2 Tooltip/PanelContainer/MarginContainer" unique_id=1520330554]
+layout_mode = 2
+size_flags_vertical = 1
+text = "[F2] DEBUG"
+horizontal_alignment = 1

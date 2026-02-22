@@ -1,18 +1,20 @@
 extends Node3D
 
-var head
-var host
+@export var head : Node3D
+@export var host : CharacterBody3D
 @export var inventory_size : int = 2
 var default_equipment : String = "0"  # for now, default equipment is the Default Weapon. Later, will probably be fists.
 var inventory
 var inventory_array : Array[Array] = []  # contains a sub-array for each equipped item: [String: Item Name, Bool: Can be Equipped?]
 var active_equipment : int = -1  # index of child nodes
 var data_manager
+@export var player_controlled = true
+var disabled = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	data_manager = get_node("/root/Game Manager/Sub Managers/Data Manager/")
-	host = get_parent().get_parent().get_parent()
-	head = get_parent().get_parent()
+	#host = get_parent().get_parent().get_parent()
+	#head = get_parent().get_parent()
 	for i in range(0,inventory_size):  # for now, create empty child nodes as temp item placeholders 
 		var temp_child = Node3D.new()
 		temp_child.name = "EMPTY SLOT " + str(i)
@@ -25,9 +27,13 @@ func _ready() -> void:
 	
 	call_deferred('late_ready')  # used to add the default equipment, but waits til after the data manager is ready.
 	
+	
 func late_ready():
 	# add the default equipment to slot 0
+	#if not player_controlled:
+		#add_equipment(0, default_equipment, true, true)
 	pass
+		#add_equipment(equipment_index : int, equipment_id : String, can_equip : bool = true, is_auto_active : bool = false, auto_assign_index = false)
 	#add_equipment(0, default_equipment, true, true)  # add and equip the default weapon
 	#print(str(inventory_array))
 	#add_equipment(1, default_equipment, true, false)  # add and equip the default weapon
@@ -38,35 +44,36 @@ func _process(_delta: float) -> void:
 	# handles swapping weapon inputs
 	# currently handles up to 3 equips, probably will end up only having 2 tho
 	# number press inputs
-	if Input.is_action_just_pressed('equip_1'):
-		if inventory_array[0][1]:  # if can be equipped
-			swap_active_equipment(0)
-		else:
-			print('cannot swap to equip 0')
-	if Input.is_action_just_pressed('equip_2'):
-		if inventory_array[1][1]:  # if can be equipped
-			swap_active_equipment(1)
-		else:
-			print('cannot swap to equip 1')
-	#if Input.is_action_just_pressed('equip_3'):
-		#if inventory_array[2][1]:  # if can be equipped
-			#swap_active_equipment(2)
-		#else:
-			#print('cannot swap to equip 2')
-	# scroll inputs
-	if Input.is_action_just_pressed("cycle_equip_next"):
-		for i in range(0,inventory_size):
-			var index = (i + active_equipment + 1) % inventory_size
-			if inventory_array[index][1] and index != active_equipment:
-				swap_active_equipment(index)
-				break
-	
-	if Input.is_action_just_pressed("cycle_equip_prev"):
-		for i in range(inventory_size, 0, -1):
-			var index = (i + active_equipment - 1) % inventory_size
-			if inventory_array[index][1] and index != active_equipment:
-				swap_active_equipment(index)
-				break
+	if player_controlled and not disabled:
+		if Input.is_action_just_pressed('equip_1'):
+			if inventory_array[0][1]:  # if can be equipped
+				swap_active_equipment(0)
+			else:
+				print('cannot swap to equip 0')
+		if Input.is_action_just_pressed('equip_2'):
+			if inventory_array[1][1]:  # if can be equipped
+				swap_active_equipment(1)
+			else:
+				print('cannot swap to equip 1')
+		#if Input.is_action_just_pressed('equip_3'):
+			#if inventory_array[2][1]:  # if can be equipped
+				#swap_active_equipment(2)
+			#else:
+				#print('cannot swap to equip 2')
+		# scroll inputs
+		if Input.is_action_just_pressed("cycle_equip_next"):
+			for i in range(0,inventory_size):
+				var index = (i + active_equipment + 1) % inventory_size
+				if inventory_array[index][1] and index != active_equipment:
+					swap_active_equipment(index)
+					break
+		
+		if Input.is_action_just_pressed("cycle_equip_prev"):
+			for i in range(inventory_size, 0, -1):
+				var index = (i + active_equipment - 1) % inventory_size
+				if inventory_array[index][1] and index != active_equipment:
+					swap_active_equipment(index)
+					break
 
 func disable_equipment():
 	var current_active = get_child(active_equipment)
@@ -95,13 +102,17 @@ func swap_active_equipment(new_active_index : int, override_same_swap = false):
 			print('[Equip Manager] Error: equipment index is out of range.')
 	else:
 		print('[Equip Manager] Warning: attempting to swap to already active equipment.')
+	
+	if not player_controlled:
+		host.set_attack_range()
 
 func add_equipment(equipment_index : int, equipment_id : String, can_equip : bool = true, is_auto_active : bool = false, auto_assign_index = false):
 	# if auto assign index, find the first empty index, and if there are none, replace current weapon
 	if auto_assign_index:
 		equipment_index = active_equipment
 		for index in range(0, inventory_size):
-			if 'EMPTY' in inventory_array[index][0]:
+			#print(inventory_array[index][0].to_lower())
+			if 'EMPTY' in inventory_array[index][0] or 'node' in inventory_array[index][0].to_lower() or 'slot' in inventory_array[index][0].to_lower():
 				equipment_index = index
 				break
 	
@@ -117,7 +128,7 @@ func add_equipment(equipment_index : int, equipment_id : String, can_equip : boo
 		if inventory_array[equipment_index] == null:  # if nothing is equipped (should never be the case though)
 			var equipment_scene : String = data_manager.weapon_dict[equipment_id][0]
 			var new_equipment = load(equipment_scene).instantiate()
-			new_equipment.player_controlled = true
+			new_equipment.player_controlled = player_controlled
 			add_child(new_equipment)
 			if name_already_exists:
 				new_equipment.name = equip_name
@@ -127,7 +138,7 @@ func add_equipment(equipment_index : int, equipment_id : String, can_equip : boo
 			var equipment_scene : String = data_manager.weapon_dict[equipment_id][0]
 			var new_equipment = load(equipment_scene).instantiate()
 			add_child(new_equipment)
-			new_equipment.get_child(0).player_controlled = true
+			new_equipment.get_child(0).player_controlled = player_controlled
 			move_child(new_equipment, equipment_index)
 			if name_already_exists:
 				new_equipment.name = equip_name
@@ -156,3 +167,14 @@ func remove_equipment(equipment_index : int):
 			inventory_array[equipment_index] = [("Slot" + str(equipment_index)), false]
 	else:
 		print('[Equip Manager] Error: equipment index is out of range.')
+
+func clear_inventory():
+	for index in range(0,inventory_size):
+		remove_equipment(index)
+
+func attack():  # used for enemy AI
+	# triggers activate_primary() in the active equipments weapon_manager script
+	get_child(active_equipment).get_child(0).ai_activate_primary()
+	
+func get_max_range() -> float:  # used for enemy AI
+	return get_child(active_equipment).get_child(0).get_child(0).fire_range

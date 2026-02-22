@@ -55,6 +55,7 @@ func init_game():
 	for player in range(0, player_count):
 		players_dict[player] = [('Player ' + str(player)), true]
 		#print('Added player: ' + str(players_dict[player]))
+	players_dict[1][0] = 'NPC Opponent'
 	players_dict[1][1] = false  # hardcode the enemy as an NPC
 	
 	# load the map
@@ -62,7 +63,7 @@ func init_game():
 	print('finished loading the stage')
 	
 	# send game info to the game manager and tell it to initialize the game
-	game_manager.init_pvp_mode(player_count, players_dict, round_count)
+	game_manager.init_pvp_mode(player_count, players_dict, round_count, default_map_id)
 	
 	# close the UI
 	queue_free()

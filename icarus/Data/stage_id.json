@@ -2,7 +2,7 @@
 	"EXAMPLE": 
 		["STAGE PATH", 
 		"STAGE NAME", 
-		"PLAYER SPAWN", 
+		"PLAYER SPAWN (only used in climb mode, put '[0,0,0]' otherwise)", 
 		"STAGE MODE", 
 		"DEFAULT WEAPON ID (or 'null' otherwise)"],
 		
@@ -18,5 +18,13 @@
 		"Demo Map 01", 
 		[0,0,0], 
 		"PVP", 
-		"2"]
+		"2"],
+	"1":
+		[
+			"uid://bbau3iqjko5ix",
+			"Climb Map 01",
+			[0,0,0],
+			"CLIMB",
+			"0"
+		]
 }

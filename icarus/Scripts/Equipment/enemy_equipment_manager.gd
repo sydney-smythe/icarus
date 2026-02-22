@@ -111,3 +111,7 @@ func attack():
 	
 func get_max_range() -> float:
 	return get_child(active_equipment).get_child(0).get_child(0).fire_range
+
+func clear_inventory():
+	for index in range(0,inventory_size):
+		remove_equipment(index)
