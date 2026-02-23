@@ -67,7 +67,7 @@ prim_fire_delay = 0.8
 
 [node name="Behaviour Manager" type="Node3D" parent="Weapon Manager" unique_id=1534131358]
 script = ExtResource("2_vx4gb")
-damage = 3
+damage = 9
 projectile = ExtResource("3_bgcc2")
 
 [node name="Animation Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=450035929]

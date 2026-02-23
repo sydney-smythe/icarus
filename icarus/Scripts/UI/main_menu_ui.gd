@@ -1,8 +1,8 @@
 extends Control
 
 @onready var game_manager: Node3D = $"../.."
-@onready var stage_manager: Node3D = $"../../Stage Manager"
-@onready var ui_manager : Control = get_parent()
+@onready var stage_manager: Node3D = get_node('/root/Game Manager/SubViewportContainer/SubViewport/Stage Manager/')
+@onready var ui_manager : CanvasLayer = get_parent()
 var stage_selection_ui = "uid://bjfhci57hkl6l" 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

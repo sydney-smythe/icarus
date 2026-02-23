@@ -7,7 +7,7 @@ var stage_id : String
 #player_data array stores (for each player: PLAYER ID: [NODE, PLAYER NAME, IS_HUMAN_PLAYER, IS_PLAYER_ALIVE, PLAYER WINS, PLAYER DEATHS]
 var player_dict : Dictionary = {}
 var enemy_path : String = 'uid://c8x7hvb250pby'
-@onready var stage_manager = get_node('/root/Game Manager/Stage Manager')
+@onready var stage_manager = get_node('/root/Game Manager/SubViewportContainer/SubViewport/Stage Manager')
 var stage : Node3D
 var is_round_active = false
 var alive_players = 2

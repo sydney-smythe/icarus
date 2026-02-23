@@ -20,28 +20,38 @@ script = ExtResource("8_4am2k")
 [node name="Data Manager" type="Node3D" parent="Sub Managers" unique_id=1796835999]
 script = ExtResource("1_n8t8x")
 
-[node name="Stage Manager" type="Node3D" parent="." unique_id=465460131]
-script = ExtResource("2_vyj3o")
+[node name="UI Manager" type="CanvasLayer" parent="." unique_id=1404852500]
+script = ExtResource("4_ob72n")
 
-[node name="NULL" type="Node3D" parent="Stage Manager" unique_id=113266015]
+[node name="Debug UI" parent="UI Manager" unique_id=2046165957 instance=ExtResource("5_vyj3o")]
+visible = false
 
-[node name="UI Manager" type="Control" parent="." unique_id=1365812415]
-layout_mode = 3
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1787664650]
+texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("4_ob72n")
+stretch = true
+stretch_shrink = 2
 
-[node name="Debug UI" parent="UI Manager" unique_id=2046165957 instance=ExtResource("5_vyj3o")]
-visible = false
-layout_mode = 1
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1390092006]
+handle_input_locally = false
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+size = Vector2i(960, 540)
+render_target_update_mode = 4
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1768096775]
+[node name="Stage Manager" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=465460131]
+script = ExtResource("2_vyj3o")
+
+[node name="NULL" type="Node3D" parent="SubViewportContainer/SubViewport/Stage Manager" unique_id=113266015]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SubViewportContainer/SubViewport" unique_id=1768096775]
 stream = ExtResource("8_vyj3o")
+attenuation_model = 3
 bus = &"Music"
 
-[node name="Player" parent="." unique_id=140928765 instance=ExtResource("2_xwcdb")]
+[node name="Player" parent="SubViewportContainer/SubViewport" unique_id=140928765 instance=ExtResource("2_xwcdb")]
 unique_name_in_owner = true

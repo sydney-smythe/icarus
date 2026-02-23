@@ -143,7 +143,7 @@ func _input(_event: InputEvent) -> void:
 func reload():
 		prim_is_reloading = true
 		#print('starting reload')
-		prim_reload_timer = prim_reload_time		
+		prim_reload_timer = prim_reload_time * equipment_manager.reload_mult		
 
 func ai_activate_primary():
 	if prim_fire_type == Prim_fire_type.AUTO:
@@ -168,7 +168,7 @@ func activate_primary():
 		
 		
 func primary_action():
-	prim_fire_delay_timer = prim_fire_delay
+	prim_fire_delay_timer = prim_fire_delay * equipment_manager.prim_fire_rate_mult
 	if prim_fire_type == Prim_fire_type.BURST:
 		for i in range(0,prim_burst_size):
 			if prim_current_ammo > 0:
@@ -176,13 +176,13 @@ func primary_action():
 				prim_current_ammo -= 1
 				#print('fired shot ' + str(i+1))
 				await get_tree().create_timer(prim_burst_item_delay).timeout
-			else:
-				print('out of ammo, not firing')
+			#else:
+				#print('out of ammo, not firing')
 	else:
 		weapon_behaviour.primary_fire()
 		prim_current_ammo -= 1
-		if prim_current_ammo <= 0:
-			print('out of primary ammo')
+		#if prim_current_ammo <= 0:
+			#print('out of primary ammo')
 	
 		
 func secondary_action():
@@ -196,8 +196,8 @@ func secondary_action():
 					sec_current_ammo -= 1
 					#print('fired shot ' + str(i+1))
 					await get_tree().create_timer(sec_burst_item_delay).timeout
-				else:
-					print('out of ammo, not firing')
+				#else:
+					#print('out of ammo, not firing')
 			else:
 				weapon_behaviour.secondary_fire()
 				#print('fired shot ' + str(i+1))
@@ -206,5 +206,5 @@ func secondary_action():
 		weapon_behaviour.primary_fire()
 		if sec_has_ammo:
 			prim_current_ammo -= 1
-			if prim_current_ammo <= 0:
-				print('out of secondary ammo')
+			#if prim_current_ammo <= 0:
+				#print('out of secondary ammo')

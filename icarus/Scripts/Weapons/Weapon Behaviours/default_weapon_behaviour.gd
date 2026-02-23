@@ -36,7 +36,7 @@ func late_ready():
 	#pass
 	
 func primary_fire():
-	print('fire - primary')
+	#print('fire - primary')
 	animation_manager.play_primary_fire()
 	audio_manager.play_primary_audio()
 	if mode != 'Enemy':
@@ -47,7 +47,8 @@ func primary_fire():
 		fire_projectile()
 
 func secondary_fire():
-	print('fire - secondary')
+	#print('fire - secondary')
+	pass
 	
 func fire_ray():
 	var space_state = get_world_3d().direct_space_state

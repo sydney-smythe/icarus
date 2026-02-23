@@ -5,8 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://dw6ekp4nbf3a7" path="res://Scenes/Characters/proto_controller/temp_blend_model.tscn" id="3_xgce8"]
 [ext_resource type="Script" uid="uid://c4k1rxxxmqinn" path="res://Scripts/Character/essence_blast.gd" id="4_7v1lc"]
 [ext_resource type="Script" uid="uid://7sure81t4del" path="res://Scripts/Character/player_audio_manager.gd" id="5_4cql4"]
+[ext_resource type="Shader" uid="uid://cvlxvlac4rbbf" path="res://Shaders/pixel_outline.gdshader" id="5_egnfr"]
 [ext_resource type="AudioStream" uid="uid://bntipp0lusu36" path="res://Temp Audio/temp-footstep.ogg" id="5_xgce8"]
+[ext_resource type="AudioStream" uid="uid://b1djs5mvphrf4" path="res://Temp Audio/EssenceBlast.ogg" id="8_d7csw"]
 [ext_resource type="Script" uid="uid://cu8uhhnwvq2h5" path="res://Scripts/Character/boon_manager.gd" id="8_egnfr"]
+[ext_resource type="AudioStream" uid="uid://yq14ru1h6tjd" path="res://Temp Audio/Sliding.ogg" id="8_n2ll4"]
 
 [sub_resource type="Curve" id="Curve_4cql4"]
 _data = [Vector2(0, 0.7), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -47,10 +50,27 @@ point_count = 4
 [sub_resource type="BoxShape3D" id="BoxShape3D_4cql4"]
 size = Vector3(1.4520874, 4.039551, 1.7353516)
 
-[node name="Player" type="CharacterBody3D" unique_id=140928765 groups=["Ignore Weapon", "Is Forceable", "Weapon Targets"]]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p70rv"]
+render_priority = -1
+shader = ExtResource("5_egnfr")
+shader_parameter/depth_threshold = 0.05
+shader_parameter/reverse_depth_threshold = 0.25
+shader_parameter/normal_threshold = 0.6
+shader_parameter/darken_amount = 0.3
+shader_parameter/lighten_amount = 1.5
+shader_parameter/normal_edge_bias = Vector3(1, 1, 1)
+shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_d7csw"]
+material = SubResource("ShaderMaterial_p70rv")
+flip_faces = true
+size = Vector2(2, 2)
+
+[node name="Player" type="CharacterBody3D" unique_id=140928765 node_paths=PackedStringArray("essence_blast") groups=["Ignore Weapon", "Is Forceable", "Weapon Targets"]]
 script = ExtResource("1_rlwtg")
 can_sprint = true
 can_freefly = true
+essence_blast = NodePath("Head/Camera3D/Essence Blast")
 input_left = "move_left"
 input_right = "move_right"
 input_forward = "move_forward"
@@ -83,10 +103,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=275272256]
 
-[node name="Essence Blast" type="Area3D" parent="Head/Camera3D" unique_id=1994323815]
+[node name="Essence Blast" type="Area3D" parent="Head/Camera3D" unique_id=1994323815 node_paths=PackedStringArray("audio_manager")]
 transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 0, 0.025982857, -1.2880154)
 script = ExtResource("4_7v1lc")
 strength_distance_curve = SubResource("Curve_d7csw")
+audio_manager = NodePath("../../../Audio Manager")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Camera3D/Essence Blast" unique_id=1571626263]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011688232, 0.68027925, -0.7390375)
@@ -98,17 +119,33 @@ script = ExtResource("3_j5cwe")
 head = NodePath("../..")
 host = NodePath("../../..")
 
+[node name="PostProcessing" type="MeshInstance3D" parent="Head/Camera3D" unique_id=1270583205]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_d7csw")
+
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1294015872]
 transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 0.8, 0)
 enabled = false
 debug_shape_thickness = 3
 
-[node name="Audio Manager" type="Node3D" parent="." unique_id=1472932822]
+[node name="Audio Manager" type="Node3D" parent="." unique_id=1472932822 node_paths=PackedStringArray("walk_sfx", "essence_blast_sfx", "sliding_sfx")]
 script = ExtResource("5_4cql4")
+walk_sfx = NodePath("Walk")
+essence_blast_sfx = NodePath("Essence Blast")
+sliding_sfx = NodePath("Sliding")
 
-[node name="Footsteps" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=907902068]
+[node name="Walk" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=907902068]
 stream = ExtResource("5_xgce8")
 volume_db = 65.074
+bus = &"SFX"
+
+[node name="Sliding" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=1740354235]
+stream = ExtResource("8_n2ll4")
+volume_db = -27.31
+bus = &"SFX"
+
+[node name="Essence Blast" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=1381495074]
+stream = ExtResource("8_d7csw")
 bus = &"SFX"
 
 [node name="Boon Manager" type="Node3D" parent="." unique_id=102398871]

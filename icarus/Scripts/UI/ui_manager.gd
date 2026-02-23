@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 @onready var data_manager: Node3D = $"../Sub Managers/Data Manager"
 

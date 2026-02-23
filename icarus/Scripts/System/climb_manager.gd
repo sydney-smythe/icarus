@@ -18,8 +18,12 @@ func _process(delta: float) -> void:
 	if active_session:
 		climb_timer += delta
 
-func initialize_session(stage_id : String):
-	var raw_pos_data = data_manager.stage_dict[stage_id][2]
+func initialize_session(climb_stage_id : String):
+	player.toggle_weapons(true, true)
+	player.can_move = true
+	player.player_enabled = true
+	player.round_reset('null')
+	var raw_pos_data = data_manager.stage_dict[climb_stage_id][2]
 	player.global_position = Vector3(raw_pos_data[0], raw_pos_data[1], raw_pos_data[2])
 	active_session = true
 	

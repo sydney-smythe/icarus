@@ -25,10 +25,10 @@ func change_current_health(health_alteration : int):
 			current_health = 0
 			kill_enemy()
 	
-	print('applied damage to enemy: ' + str(health_alteration) + ' | current health: ' + str(current_health))
+	#print('applied damage to enemy: ' + str(health_alteration) + ' | current health: ' + str(current_health))
 
 func kill_enemy():
 	enemy.invincible = true
-	print('enemy killed. freeing...')
+	#print('enemy killed. freeing...')
 	game_manager.signal_killed(enemy)
 	#get_parent().queue_free()

@@ -10,6 +10,9 @@ var active_equipment : int = -1  # index of child nodes
 var data_manager
 @export var player_controlled = true
 var disabled = false
+
+var prim_fire_rate_mult : float = 1.0 # lower = faster fire rate
+var reload_mult : float = 1.0 # lower = faster reload
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	data_manager = get_node("/root/Game Manager/Sub Managers/Data Manager/")
@@ -77,11 +80,13 @@ func _process(_delta: float) -> void:
 
 func disable_equipment():
 	var current_active = get_child(active_equipment)
+	#disabled = true
 	current_active.hide()
 	current_active.process_mode = Node.PROCESS_MODE_DISABLED
 
 func enable_equipment():
 	var current_active = get_child(active_equipment)
+	#disabled = false
 	current_active.show()
 	current_active.process_mode = Node.PROCESS_MODE_ALWAYS
 

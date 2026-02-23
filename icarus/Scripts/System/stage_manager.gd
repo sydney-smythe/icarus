@@ -2,8 +2,8 @@ extends Node3D
 
 @onready var player = %Player
 @onready var data_manager = get_node("/root/Game Manager/Sub Managers/Data Manager/") 
-@onready var game_manager: Node3D = $".."
-@onready var ui_manager: Control = $"../UI Manager"
+@onready var game_manager: Node3D = get_node("/root/Game Manager/")
+@onready var ui_manager: CanvasLayer = get_node("/root/Game Manager/UI Manager/")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	call_deferred('late_ready')

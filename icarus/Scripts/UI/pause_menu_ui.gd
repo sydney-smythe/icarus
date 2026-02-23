@@ -1,7 +1,7 @@
 extends Control
 
-@onready var ui_manager : Control = get_parent()
-@onready var stage_manager : Node3D = get_node('/root/Game Manager/Stage Manager')
+@onready var ui_manager : CanvasLayer = get_parent()
+@onready var stage_manager : Node3D = get_node('/root/Game Manager/SubViewportContainer/SubViewport/Stage Manager')
 @onready var game_manager : Node3D = get_node('/root/Game Manager/')
 @export var quit_button : Button 
 # Called when the node enters the scene tree for the first time.

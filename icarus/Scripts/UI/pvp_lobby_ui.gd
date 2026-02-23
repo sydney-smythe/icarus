@@ -5,10 +5,10 @@ extends Control
 @export var round_count_label : Label
 @export var stage_label : Label
 
-@onready var ui_manager : Control = get_parent()
+@onready var ui_manager : CanvasLayer = get_parent()
 @onready var game_manager : Node3D = get_node("/root/Game Manager")
 @onready var data_manager : Node3D = get_node("/root/Game Manager/Sub Managers/Data Manager/")
-@onready var stage_manager : Node3D = get_node("/root/Game Manager/Stage Manager/")
+@onready var stage_manager : Node3D = get_node("/root/Game Manager/SubViewportContainer/SubViewport/Stage Manager/")
 var mode_selection_ui : String = "uid://bjfhci57hkl6l"
 var round_count  # the number of rounds to pass to game_manager when play is pressed
 var stage_info = []

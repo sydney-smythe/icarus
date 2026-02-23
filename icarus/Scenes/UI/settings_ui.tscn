@@ -121,6 +121,9 @@ horizontal_alignment = 1
 [node name="Combat Controls" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Controls" unique_id=1185005237]
 layout_mode = 2
 text = "L click - shoot
+Scroll wheel - switch weapons
+1 - equip weapon 1
+2 - equip weapon 2
 F - essence blast"
 horizontal_alignment = 1
 

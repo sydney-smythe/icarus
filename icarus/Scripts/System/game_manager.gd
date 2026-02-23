@@ -8,8 +8,9 @@ var mouse_captured = false
 var is_paused = false
 var can_pause = true
 @onready var sub_managers = get_node('Sub Managers')
-@onready var stage_manager = get_node('Stage Manager')
+@onready var stage_manager = get_node('SubViewportContainer/SubViewport/Stage Manager/')
 @onready var filter_manager = get_node('Sub Managers/Filter Manager')
+@onready var subviewport = get_node('SubViewportContainer/SubViewport')
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	disable_player()
@@ -29,7 +30,8 @@ func quit_to_main_menu():
 		
 	if active_mode == 'CLIMB':
 		sub_managers.get_node('Climb Manager').queue_free()
-		
+	
+	is_paused = false
 	active_mode = 'UI'
 	stage_manager.load_stage('-1', false, false)
 	
@@ -56,3 +58,6 @@ func capture_mouse():
 func release_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	mouse_captured = false
+	
+func _unhandled_input(event: InputEvent) -> void:
+	subviewport.push_input(event)

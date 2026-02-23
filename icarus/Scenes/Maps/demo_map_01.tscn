@@ -178,6 +178,19 @@ script = ExtResource("4_8w2q5")
 [node name="Boon Pickup" parent="Pickup Manager" unique_id=132968479 instance=ExtResource("4_y3yqq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0159903, 1.002, -14.372992)
 
+[node name="Boon Pickup2" parent="Pickup Manager" unique_id=1785314233 instance=ExtResource("4_y3yqq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+single_use = true
+boon_id = "1"
+model_scale = 8.0
+
+[node name="Boon Pickup3" parent="Pickup Manager" unique_id=2050810536 instance=ExtResource("4_y3yqq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.221283, 3.8933692, 12.103729)
+single_use = true
+boon_id = "2"
+boon_length = 100.0
+model_scale = 0.07
+
 [node name="Essence Pickup" parent="Pickup Manager" unique_id=1975173551 instance=ExtResource("5_8w2q5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9663, 1, 14.334053)
 

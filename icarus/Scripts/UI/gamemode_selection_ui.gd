@@ -1,7 +1,7 @@
 extends Control
 
 @onready var ui_manager = get_parent()
-@onready var stage_manager = get_node('/root/Game Manager/Stage Manager')
+@onready var stage_manager = get_node('/root/Game Manager/SubViewportContainer/SubViewport/Stage Manager')
 @onready var game_manager = get_node('/root/Game Manager')
 var main_menu_ui = "uid://c6oaxjuj06mpc"
 var pvp_lobby_ui = "uid://uvne644wrm3k"

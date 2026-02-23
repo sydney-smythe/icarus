@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cdfsqyn0j1udg"]
+
+[ext_resource type="Script" uid="uid://dqrrbb4jak1b6" path="res://Scripts/Boons/featherfall_boon.gd" id="1_bkh0j"]
+
+[node name="Featherfall Boon" type="Node3D" unique_id=1024524766]
+script = ExtResource("1_bkh0j")

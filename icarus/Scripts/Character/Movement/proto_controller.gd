@@ -18,6 +18,7 @@ extends CharacterBody3D
 @export var can_sprint : bool = false
 ## Can we press to enter freefly mode (noclip)?
 @export var can_freefly : bool = false
+@export var essence_blast : Area3D
 
 var invincible = false
 @export_group("Speeds")
@@ -144,6 +145,7 @@ var forcer_vector : Vector3 = Vector3(0,0,0)
 @onready var boon_manager : Node3D = get_node('Boon Manager')
 
 var unforceable = false
+var boon_grav_mult : float = 1.0
 
 func _ready() -> void:
 	
@@ -172,6 +174,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			#game_manager.release_mouse()
 		
 		# Look around
+		#print(str(mouse_captured) + '||||' + str(event is InputEventMouseMotion))
 		if mouse_captured and event is InputEventMouseMotion:
 			rotate_look(event.relative)
 		
@@ -249,9 +252,9 @@ func _physics_process(delta: float) -> void:
 		# Apply gravity to velocity
 		if has_gravity:
 			if not is_on_floor() and not is_wall_running:
-				velocity += get_gravity() * gravity_modifier * delta * essence_grav_curve.sample(float(essence)/100)
+				velocity += get_gravity() * gravity_modifier * delta * essence_grav_curve.sample(float(essence)/100) * boon_grav_mult
 			elif is_wall_running:
-				velocity += get_gravity() * gravity_modifier * delta * current_wall_run_grav_mod * essence_grav_curve.sample(float(essence)/100)
+				velocity += get_gravity() * gravity_modifier * delta * current_wall_run_grav_mod * essence_grav_curve.sample(float(essence)/100) * boon_grav_mult
 
 		if (is_on_wall_only() and get_slide_collision_count() > 1) and Input.is_action_pressed('move_forward') and is_sprinting and velocity.y <= 0:
 			
@@ -588,7 +591,7 @@ func apply_force(strength : float, direction : Vector3, sustained : bool = false
 			forcer_vector += direction * strength * essence_force_curve.sample(float(essence) / 100)
 		
 func hit_by_weapon(amount : int, overheal : bool = false, dedicated_overheal : bool = false):  # REQUIREMENT OF WEAPON TARGETS GROUP
-	print('player recieved damage: ' + str(amount))
+	#print('player recieved damage: ' + str(amount))
 	if amount > 0:
 		if not invincible:
 			var remainder = amount
@@ -623,23 +626,27 @@ func hit_by_weapon(amount : int, overheal : bool = false, dedicated_overheal : b
 func round_reset(weapon : String):
 	reset_essence()
 	invincible = false
-	if not weapon == null:
+	if not weapon == 'null':
 		equipment_manager.clear_inventory()
 		equipment_manager.add_equipment(0, weapon, true, true)
 	boon_manager.clear_boons()
+	velocity = Vector3(0,0,0)
 
 func reset_essence():
 	essence = max_essence
+	overessence = 0
 	
 func toggle_weapons(mode : bool, keep_weapons_visible : bool = false):
 	if mode:  # toggle on
 		equipment_manager.show()
 		equipment_manager.disabled = false
 		equipment_manager.enable_equipment()
+		essence_blast.enabled = true
 	else:  # toggle off
 		if not keep_weapons_visible:
 			equipment_manager.hide()
 		else:
 			equipment_manager.show()
+		essence_blast.enabled = false
 		equipment_manager.disabled = true
 		equipment_manager.disable_equipment()

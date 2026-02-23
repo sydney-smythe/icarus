@@ -119,7 +119,7 @@ func pickup_available():
 func _on_touch_range_body_entered(body: Node3D) -> void:
 	if body not in touch_body_list:
 		touch_body_list.append(body)
-	if body == player and requires_interact_pressed == false and is_available:
+	if body == player and requires_interact_pressed == false and is_available  and player.player_enabled and player.can_move:
 		print('collected pickup - touch')
 		use_pickup()
 

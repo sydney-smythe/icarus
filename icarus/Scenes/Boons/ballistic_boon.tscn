@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://jkg00ra7jp6y"]
+
+[ext_resource type="Script" uid="uid://0ordovau1iv0" path="res://Scripts/Boons/ballistic_boon.gd" id="1_3i014"]
+
+[node name="Ballistic Boon" type="Node3D" unique_id=1024524766]
+script = ExtResource("1_3i014")

@@ -29,6 +29,7 @@ func _process(_delta: float) -> void:
 		ammo.text = '-'
 	boon_names.text = ''
 	boon_times.text = ''
+	#print(str(boon_manager.active_boons))
 	for boon in boon_manager.active_boons:
 		boon_names.text = boon_names.text + boon + '\n'
 		boon_times.text = boon_times.text + str(int(boon_manager.active_boons[boon])) + 's\n'

@@ -1,4 +1,6 @@
 {
 	"EXAMPLE": ["FILE PATH", "BOON NAME", "MODEL PATH", "ICON PATH"],
-	"0": ["uid://ckoa3b7seh84w", "Stoneskin", "uid://ccylk8r1bs4r0", "NULL"]
+	"0": ["uid://ckoa3b7seh84w", "Stoneskin", "uid://ccylk8r1bs4r0", "NULL"],
+	"1": ["uid://cdfsqyn0j1udg", "Featherfall", "uid://cg1w372qi1nbn", "NULL"],
+	"2": ["uid://jkg00ra7jp6y", "Ballistic", "uid://cklbgds3vd1hj", "NULL"]
 }
