@@ -1,0 +1,191 @@
+[gd_scene format=3 uid="uid://bs72ogkvdd7d6"]
+
+[ext_resource type="Script" uid="uid://cqb2oidf1iin6" path="res://Scripts/Character/Movement/proto_controller.gd" id="1_rlwtg"]
+[ext_resource type="Script" uid="uid://c53lghcmyip3c" path="res://Scripts/Equipment/equipment_manager.gd" id="3_j5cwe"]
+[ext_resource type="PackedScene" uid="uid://dw6ekp4nbf3a7" path="res://Scenes/Characters/proto_controller/temp_blend_model.tscn" id="3_xgce8"]
+[ext_resource type="Script" uid="uid://c4k1rxxxmqinn" path="res://Scripts/Character/essence_blast.gd" id="4_7v1lc"]
+[ext_resource type="Script" uid="uid://7sure81t4del" path="res://Scripts/Character/player_audio_manager.gd" id="5_4cql4"]
+[ext_resource type="Shader" uid="uid://cvlxvlac4rbbf" path="res://Shaders/pixel_outline.gdshader" id="5_egnfr"]
+[ext_resource type="AudioStream" uid="uid://bntipp0lusu36" path="res://Temp Audio/temp-footstep.ogg" id="5_xgce8"]
+[ext_resource type="AudioStream" uid="uid://b1djs5mvphrf4" path="res://Temp Audio/EssenceBlast.ogg" id="8_d7csw"]
+[ext_resource type="Script" uid="uid://cu8uhhnwvq2h5" path="res://Scripts/Character/boon_manager.gd" id="8_egnfr"]
+[ext_resource type="AudioStream" uid="uid://yq14ru1h6tjd" path="res://Temp Audio/Sliding.ogg" id="8_n2ll4"]
+[ext_resource type="AudioStream" uid="uid://clhq3lko7siyv" path="res://Temp Audio/Land.ogg" id="10_1ge0u"]
+[ext_resource type="AudioStream" uid="uid://cljt15qg3v3xn" path="res://Temp Audio/Jump.ogg" id="11_0osbd"]
+[ext_resource type="AudioStream" uid="uid://b83p1hmonrj0h" path="res://Temp Audio/Wind.ogg" id="12_dwaxg"]
+
+[sub_resource type="Curve" id="Curve_4cql4"]
+_data = [Vector2(0, 0.7), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_7v1lc"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1.2540727), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_egnfr"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1.6), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j5cwe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
+albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
+albedo_texture = SubResource("CompressedTexture2D_j5cwe")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ucva2"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iof21"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rlwtg"]
+radius = 0.4
+height = 1.2
+
+[sub_resource type="Curve" id="Curve_d7csw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7047354, 0.6089152), -0.90544105, -0.90544105, 0, 0, Vector2(0.8913648, 0.37434804), -1.4468942, -1.4468942, 0, 0, Vector2(1, 0.10004747), -1.6746244, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4cql4"]
+size = Vector3(1.4520874, 4.039551, 1.7353516)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n2ll4"]
+render_priority = -1
+shader = ExtResource("5_egnfr")
+shader_parameter/depth_threshold = 0.05
+shader_parameter/reverse_depth_threshold = 0.25
+shader_parameter/normal_threshold = 0.6
+shader_parameter/darken_amount = 0.3
+shader_parameter/lighten_amount = 1.5
+shader_parameter/normal_edge_bias = Vector3(1, 1, 1)
+shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_d7csw"]
+material = SubResource("ShaderMaterial_n2ll4")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="Curve" id="Curve_0osbd"]
+_limits = [-39.0, -10.0, 0.0, 1.0]
+_data = [Vector2(0, -39), 0.0, 0.0, 0, 0, Vector2(0.48265898, -29.313389), 30.15249, 30.15249, 0, 0, Vector2(0.7976879, -17.76638), 63.472996, 63.472996, 0, 0, Vector2(1, -10), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_dwaxg"]
+_limits = [-42.0, -30.0, 15.0, 40.0]
+_data = [Vector2(15, -42), 0.0, 0.0, 0, 0, Vector2(29.017342, -36.769234), 0.51101524, 0.51101524, 0, 0, Vector2(40, -30), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="Player" type="CharacterBody3D" unique_id=140928765 node_paths=PackedStringArray("essence_blast") groups=["Ignore Weapon", "Is Forceable", "Weapon Targets"]]
+script = ExtResource("1_rlwtg")
+can_sprint = true
+essence_blast = NodePath("Head/Camera3D/Essence Blast")
+input_left = "move_left"
+input_right = "move_right"
+input_forward = "move_forward"
+input_back = "move_backward"
+input_jump = "jump"
+essence_grav_curve = SubResource("Curve_4cql4")
+essence_speed_curve = SubResource("Curve_7v1lc")
+essence_force_curve = SubResource("Curve_egnfr")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1749329324]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_iof21")
+mesh = SubResource("CapsuleMesh_ucva2")
+
+[node name="Model" parent="." unique_id=758620597 instance=ExtResource("3_xgce8")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0.43504924)
+visible = false
+
+[node name="Standing Collider" type="CollisionShape3D" parent="." unique_id=637673491]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_iof21")
+
+[node name="Crouching Collider" type="CollisionShape3D" parent="." unique_id=544538683]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("CapsuleShape3D_rlwtg")
+
+[node name="Head" type="Node3D" parent="." unique_id=1202042018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=275272256]
+
+[node name="Essence Blast" type="Area3D" parent="Head/Camera3D" unique_id=1994323815 node_paths=PackedStringArray("audio_manager")]
+transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 0, 0.025982857, -1.2880154)
+script = ExtResource("4_7v1lc")
+strength_distance_curve = SubResource("Curve_d7csw")
+audio_manager = NodePath("../../../Audio Manager")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Camera3D/Essence Blast" unique_id=1571626263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011688232, 0.68027925, -0.7390375)
+shape = SubResource("BoxShape3D_4cql4")
+debug_color = Color(0.68150795, 0.43798593, 0.65781826, 0.41960785)
+
+[node name="Equipment Manager" type="Node3D" parent="Head/Camera3D" unique_id=788196802 node_paths=PackedStringArray("head", "host")]
+script = ExtResource("3_j5cwe")
+head = NodePath("../..")
+host = NodePath("../../..")
+
+[node name="Pixel Art PostProcessing" type="MeshInstance3D" parent="Head/Camera3D" unique_id=1270583205]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_d7csw")
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1294015872]
+transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 0.8, 0)
+enabled = false
+debug_shape_thickness = 3
+
+[node name="Audio Manager" type="Node3D" parent="." unique_id=1472932822 node_paths=PackedStringArray("walk_sfx", "essence_blast_sfx", "sliding_sfx", "jump_sfx", "land_sfx", "wall_run_sfx", "wind_sfx")]
+script = ExtResource("5_4cql4")
+walk_sfx = NodePath("Walk")
+essence_blast_sfx = NodePath("Essence Blast")
+sliding_sfx = NodePath("Sliding")
+jump_sfx = NodePath("Jump")
+land_sfx = NodePath("Land")
+wall_run_sfx = NodePath("Wall Running")
+wind_sfx = NodePath("Wind")
+landing_volume_curve = SubResource("Curve_0osbd")
+wind_velocity_curve = SubResource("Curve_dwaxg")
+
+[node name="Walk" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=907902068]
+stream = ExtResource("5_xgce8")
+volume_db = 65.074
+bus = &"SFX"
+
+[node name="Sliding" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=1740354235]
+stream = ExtResource("8_n2ll4")
+volume_db = -38.5
+bus = &"SFX"
+
+[node name="Wall Running" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=190871309]
+stream = ExtResource("8_n2ll4")
+volume_db = -38.5
+bus = &"SFX"
+
+[node name="Essence Blast" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=1381495074]
+stream = ExtResource("8_d7csw")
+volume_db = -17.0
+bus = &"SFX"
+
+[node name="Land" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=1725780540]
+stream = ExtResource("10_1ge0u")
+volume_db = -24.0
+bus = &"SFX"
+
+[node name="Jump" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=1437490106]
+stream = ExtResource("11_0osbd")
+volume_db = -24.0
+bus = &"SFX"
+
+[node name="Wind" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=725915913]
+stream = ExtResource("12_dwaxg")
+volume_db = -35.0
+bus = &"SFX"
+
+[node name="Boon Manager" type="Node3D" parent="." unique_id=102398871]
+script = ExtResource("8_egnfr")

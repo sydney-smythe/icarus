@@ -142,7 +142,7 @@ func pickup():
 	equipment_manager.add_equipment(equipment_manager.active_equipment, weapon_id, true, true, true)
 
 func enable_interaction_popup():
-	ui_manager.get_node('Interact UI').update_and_enable(weapon_name)
+	ui_manager.update_and_enable_interact_ui(weapon_name)
 
 func disable_interaction_popup():
-	ui_manager.get_node('Interact UI').disable_ui()
+	ui_manager.disable_interact_ui()

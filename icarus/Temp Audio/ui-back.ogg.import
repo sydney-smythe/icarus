@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cvuotmp1babwa"
+path="res://.godot/imported/ui-back.ogg-ca7fa7e68a43b3d61d4c337cecc94d37.oggvorbisstr"
+
+[deps]
+
+source_file="res://Temp Audio/ui-back.ogg"
+dest_files=["res://.godot/imported/ui-back.ogg-ca7fa7e68a43b3d61d4c337cecc94d37.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

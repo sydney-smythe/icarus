@@ -43,7 +43,6 @@ func _input(_event: InputEvent) -> void:
 		toggle_visibility()
 
 func _process(_delta: float) -> void:
-	
 	#ENGINE INFO
 	current_level.text = 'Current Stage: ' + str(get_node('/root/Game Manager/SubViewportContainer/SubViewport/Stage Manager').get_child(0).name)
 	fps_count.text = 'FPS: ' + str(Engine.get_frames_per_second())

@@ -3,10 +3,11 @@ extends Node3D
 var climb_timer = 0
 var stage_id : String
 var active_session : bool = false
-var end_of_climb_timer : float = 5.0
+var end_of_climb_timer : float = 6.5
 @onready var ui_manager = get_node('/root/Game Manager/UI Manager/')
 @onready var game_manager = get_node('/root/Game Manager')
 @onready var data_manager = get_node('/root/Game Manager/Sub Managers/Data Manager')
+@export var audio_manager : Node3D
 var player : CharacterBody3D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,6 +32,7 @@ func initialize_session(climb_stage_id : String):
 func end_session(end_mode : String):
 	active_session = false
 	if end_mode == 'Win':
+		audio_manager.play_climb_win_sfx()
 		game_manager.can_pause = false
 		ui_manager.enable_climb_result(climb_timer)
 		await get_tree().create_timer(end_of_climb_timer).timeout

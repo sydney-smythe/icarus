@@ -131,7 +131,7 @@ func pickup():
 	climb_manager.end_session('Win')
 
 func enable_interaction_popup():
-	ui_manager.get_node('Interact UI').update_and_enable('Pickup')
+	ui_manager.update_and_enable_interact_ui('Pickup')
 
 func disable_interaction_popup():
-	ui_manager.get_node('Interact UI').disable_ui()
+	ui_manager.disable_interact_ui()

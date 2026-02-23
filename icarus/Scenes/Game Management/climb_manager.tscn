@@ -1,6 +1,18 @@
 [gd_scene format=3 uid="uid://cx7i1y6oxaq6s"]
 
 [ext_resource type="Script" uid="uid://ydn00qshf18h" path="res://Scripts/System/climb_manager.gd" id="1_av5wf"]
+[ext_resource type="AudioStream" uid="uid://cbpcwqhxohgwo" path="res://Temp Audio/climb-win.ogg" id="2_i436f"]
+[ext_resource type="Script" uid="uid://db0ql6l3en3kw" path="res://Scripts/System/climb_audio_manager.gd" id="2_m2in8"]
 
-[node name="Climb Manager" type="Node3D" unique_id=2002669151]
+[node name="Climb Manager" type="Node3D" unique_id=2002669151 node_paths=PackedStringArray("audio_manager")]
 script = ExtResource("1_av5wf")
+audio_manager = NodePath("Audio Manager")
+
+[node name="Audio Manager" type="Node3D" parent="." unique_id=731663466 node_paths=PackedStringArray("climb_win_sfx")]
+script = ExtResource("2_m2in8")
+climb_win_sfx = NodePath("Climb Win")
+
+[node name="Climb Win" type="AudioStreamPlayer" parent="Audio Manager" unique_id=548258091]
+stream = ExtResource("2_i436f")
+volume_db = -15.0
+bus = &"Music"

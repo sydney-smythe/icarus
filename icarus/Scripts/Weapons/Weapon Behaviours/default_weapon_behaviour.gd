@@ -75,3 +75,9 @@ func fire_projectile():
 	new_projectile.speed = projectile_speed
 	get_tree().current_scene.add_child(new_projectile)
 	new_projectile.global_position = camera.global_position + (-camera.global_transform.basis.z * 1)
+	
+func play_reload_sfx():
+	audio_manager.play_reload_audio()
+	
+func play_no_ammo_sfx():
+	audio_manager.play_no_ammo_audio()

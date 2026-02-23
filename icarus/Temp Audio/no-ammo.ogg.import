@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d2rfuqffejdxf"
+path="res://.godot/imported/no-ammo.ogg-e258c7a57ec0f9beb91357c6f7c2ff55.oggvorbisstr"
+
+[deps]
+
+source_file="res://Temp Audio/no-ammo.ogg"
+dest_files=["res://.godot/imported/no-ammo.ogg-e258c7a57ec0f9beb91357c6f7c2ff55.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

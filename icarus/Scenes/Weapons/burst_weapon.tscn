@@ -8,7 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://dnot7ux5nip7u" path="res://Temp Visuals/Items/pngtree-simple-muzzle-flash-vector-png-png-image_5797978.png" id="6_2dkps"]
 [ext_resource type="Material" uid="uid://dth5muwl33j61" path="res://Materials/Temp Materials/Weapon Drawover.tres" id="7_aftdh"]
 [ext_resource type="Script" uid="uid://conko2sjj7" path="res://Scripts/Weapons/weapon_audio_manager.gd" id="8_hg4qy"]
-[ext_resource type="AudioStream" uid="uid://e5qyd78jg8ae" path="res://Temp Audio/369528__johandeecke__short-gunshot.wav" id="9_h8ecb"]
+[ext_resource type="AudioStream" uid="uid://bguwjrl38yodp" path="res://Temp Audio/burstshot.ogg" id="9_11hmc"]
+[ext_resource type="AudioStream" uid="uid://d2rfuqffejdxf" path="res://Temp Audio/no-ammo.ogg" id="10_bgcc2"]
+[ext_resource type="AudioStream" uid="uid://b12uvkvdyxquj" path="res://Temp Audio/Reload.ogg" id="11_wlk5h"]
 
 [sub_resource type="Animation" id="Animation_rb7mo"]
 length = 0.001
@@ -61,7 +63,6 @@ material = ExtResource("7_aftdh")
 [node name="Weapon Manager" type="Node3D" parent="." unique_id=1182113624]
 script = ExtResource("1_11hmc")
 prim_fire_type = 1
-prim_magazine_size = 12
 prim_reload_time = 2.0
 prim_fire_delay = 0.8
 
@@ -101,9 +102,25 @@ transform = Transform3D(0.68595415, 0, 0, 0, 0.61521083, 0, 0, 0, 0.55023, 0.593
 mesh = SubResource("CylinderMesh_knc57")
 skeleton = NodePath("../../../../..")
 
-[node name="Audio Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=729461471]
+[node name="Audio Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=729461471 node_paths=PackedStringArray("primary_fire_audio", "no_ammo_audio", "reload_audio")]
 script = ExtResource("8_hg4qy")
+primary_fire_audio = NodePath("Primary Fire")
+no_ammo_audio = NodePath("No Ammo")
+reload_audio = NodePath("Reload")
 
-[node name="Primary Fire Audio" type="AudioStreamPlayer3D" parent="Weapon Manager/Behaviour Manager/Audio Manager" unique_id=840866558]
-stream = ExtResource("9_h8ecb")
+[node name="Primary Fire" type="AudioStreamPlayer3D" parent="Weapon Manager/Behaviour Manager/Audio Manager" unique_id=840866558]
+stream = ExtResource("9_11hmc")
+volume_db = -8.0
+bus = &"SFX"
+
+[node name="No Ammo" type="AudioStreamPlayer3D" parent="Weapon Manager/Behaviour Manager/Audio Manager" unique_id=1692401449]
+stream = ExtResource("10_bgcc2")
+volume_db = -11.0
+max_db = -1.0
+bus = &"SFX"
+
+[node name="Reload" type="AudioStreamPlayer3D" parent="Weapon Manager/Behaviour Manager/Audio Manager" unique_id=592350523]
+stream = ExtResource("11_wlk5h")
+volume_db = -14.0
+max_db = -5.0
 bus = &"SFX"

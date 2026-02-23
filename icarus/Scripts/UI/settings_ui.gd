@@ -2,6 +2,7 @@ extends Control
 
 var is_enabled = true
 var tab : String = 'Settings'  # possible values: Settings, About
+@onready var ui_manager = get_parent().get_parent()
 @onready var game_manager = get_node('/root/Game Manager')
 @export var settings_screen : VBoxContainer
 @export var about_screen : VBoxContainer
@@ -23,6 +24,7 @@ func toggle_visibility():
 
 
 func _on_back_button_button_up() -> void:
+	ui_manager.play_ui_back_sfx()
 	if tab == 'Settings':
 		toggle_visibility()
 	elif tab == 'About':
@@ -33,6 +35,7 @@ func _on_back_button_button_up() -> void:
 
 
 func _on_about_button_button_up() -> void:
+	ui_manager.play_ui_accept_sfx()
 	settings_screen.hide()
 	about_screen.show()
 	about_button.hide()

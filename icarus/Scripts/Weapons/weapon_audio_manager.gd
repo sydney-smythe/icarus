@@ -1,6 +1,8 @@
 extends Node3D
 
-@onready var primary_fire_audio: AudioStreamPlayer3D = $"Primary Fire Audio"
+@export var primary_fire_audio: AudioStreamPlayer3D
+@export var no_ammo_audio: AudioStreamPlayer3D
+@export var reload_audio: AudioStreamPlayer3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -9,3 +11,9 @@ func _ready() -> void:
 
 func play_primary_audio():
 	primary_fire_audio.play()
+
+func play_no_ammo_audio():
+	no_ammo_audio.play()
+	
+func play_reload_audio():
+	reload_audio.play()

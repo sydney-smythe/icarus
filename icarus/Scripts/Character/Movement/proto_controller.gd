@@ -17,7 +17,7 @@ extends CharacterBody3D
 ## Can we hold to run?
 @export var can_sprint : bool = false
 ## Can we press to enter freefly mode (noclip)?
-@export var can_freefly : bool = false
+@export var can_freefly : bool = true
 @export var essence_blast : Area3D
 
 var invincible = false
@@ -36,6 +36,8 @@ var invincible = false
 @export var air_strafe_mobility : float = 0.09  # how much you can control your movement in the air | in the future, this could increase as you gain a rhythm / momentum?
 var wall_jump_timer : float = 0.0
 var wall_jump_direction : Vector3 = Vector3.ZERO
+var was_just_on_ground = false
+var y_velocity_pre_impact : float = 0
 # Wall run parameters
 @export var wall_run_length : float = 3.0  # seconds you can run on the wall for straight (before gravity regains full control of y)
 @export var wall_run_decay : float = 0.2  # higher = the quicker gravity regains control
@@ -164,6 +166,9 @@ func _ready() -> void:
 	collider = standing_collider
 	crouching_collider.set_deferred("disabled", true)
 	wall_jump_timer = 0
+	
+	if is_on_floor():
+		was_just_on_ground = true
 
 func _unhandled_input(event: InputEvent) -> void:
 	if player_enabled:
@@ -179,10 +184,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			rotate_look(event.relative)
 		
 		# Toggle freefly mode
-		#if can_freefly and Input.is_action_just_pressed(input_freefly):
-			#freefly()
+		
 
 func _physics_process(delta: float) -> void:
+	
+	if can_freefly and Input.is_action_just_pressed(input_freefly):
+		if not freeflying:
+			enable_freefly()
+		else:
+			disable_freefly()
+	
 	mouse_captured = game_manager.mouse_captured
 	if player_enabled:
 		#handle animations
@@ -288,6 +299,7 @@ func _physics_process(delta: float) -> void:
 						velocity.y = jump_velocity_sprinting
 					else:
 						velocity.y = jump_velocity_default
+					audio_manager.play_jump_sfx()
 				elif is_on_wall_only() and get_slide_collision_count() > 1:  # wall jump
 					var wall_collision_normal = get_slide_collision(1).get_normal()
 					var wall_side_vector = Vector2(wall_collision_normal.x, wall_collision_normal.z)
@@ -310,6 +322,7 @@ func _physics_process(delta: float) -> void:
 							velocity.y = jump_velocity_sprinting
 						else:
 							velocity.y = jump_velocity_default
+						audio_manager.play_jump_sfx()
 
 		# Modify speed based on sprinting
 		if can_sprint and Input.is_action_pressed(input_sprint) and is_moving and Input.is_action_pressed(input_forward):
@@ -494,6 +507,14 @@ func _physics_process(delta: float) -> void:
 		velocity += forcer_vector
 		move_and_slide()
 		forcer_vector = Vector3(0,0,0)
+		
+		if is_on_floor() and not was_just_on_ground:
+			audio_manager.play_land_sfx(y_velocity_pre_impact)
+			was_just_on_ground = true
+		
+		if not is_on_floor():
+			y_velocity_pre_impact = velocity.y
+			was_just_on_ground = false
 
 
 ## Rotate us to look around.

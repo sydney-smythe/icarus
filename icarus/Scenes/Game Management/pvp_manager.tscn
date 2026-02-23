@@ -1,6 +1,46 @@
 [gd_scene format=3 uid="uid://cemuhifmaw5q3"]
 
 [ext_resource type="Script" uid="uid://djm0j0cl33qiq" path="res://Scripts/System/pvp_manager.gd" id="1_tp5j5"]
+[ext_resource type="Script" uid="uid://l2oakv2gmaid" path="res://Scripts/System/pvp_audio_manager.gd" id="2_2cqtw"]
+[ext_resource type="AudioStream" uid="uid://cbnat4vp3r2mh" path="res://Temp Audio/round-start.ogg" id="3_62enw"]
+[ext_resource type="AudioStream" uid="uid://mrsfi5l85nfa" path="res://Temp Audio/round-win.ogg" id="4_uxror"]
+[ext_resource type="AudioStream" uid="uid://t1pgb1ul7end" path="res://Temp Audio/round-lose.ogg" id="5_sblch"]
+[ext_resource type="AudioStream" uid="uid://c3j8q58hhc35n" path="res://Temp Audio/match-win.ogg" id="6_bgw7g"]
+[ext_resource type="AudioStream" uid="uid://0sun5kmyw6n7" path="res://Temp Audio/match-lose.ogg" id="7_s7qmg"]
 
-[node name="PvP Manager" type="Node3D" unique_id=1928934669]
+[node name="PvP Manager" type="Node3D" unique_id=1928934669 node_paths=PackedStringArray("audio_manager")]
 script = ExtResource("1_tp5j5")
+audio_manager = NodePath("Audio Manager")
+
+[node name="Audio Manager" type="Node3D" parent="." unique_id=71309221 node_paths=PackedStringArray("round_start", "round_win", "round_lose", "match_win", "match_lose")]
+script = ExtResource("2_2cqtw")
+round_start = NodePath("Round Start")
+round_win = NodePath("Round Win")
+round_lose = NodePath("Round Lose")
+match_win = NodePath("Match Win")
+match_lose = NodePath("Match Lose")
+
+[node name="Round Start" type="AudioStreamPlayer" parent="Audio Manager" unique_id=1277212428]
+stream = ExtResource("3_62enw")
+volume_db = -25.0
+bus = &"SFX"
+
+[node name="Round Win" type="AudioStreamPlayer" parent="Audio Manager" unique_id=814430521]
+stream = ExtResource("4_uxror")
+volume_db = -15.0
+bus = &"Music"
+
+[node name="Round Lose" type="AudioStreamPlayer" parent="Audio Manager" unique_id=26600724]
+stream = ExtResource("5_sblch")
+volume_db = -15.0
+bus = &"Music"
+
+[node name="Match Win" type="AudioStreamPlayer" parent="Audio Manager" unique_id=1981562831]
+stream = ExtResource("6_bgw7g")
+volume_db = -15.0
+bus = &"Music"
+
+[node name="Match Lose" type="AudioStreamPlayer" parent="Audio Manager" unique_id=555519823]
+stream = ExtResource("7_s7qmg")
+volume_db = -15.0
+bus = &"Music"

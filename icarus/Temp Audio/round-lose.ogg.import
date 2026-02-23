@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://t1pgb1ul7end"
+path="res://.godot/imported/round-lose.ogg-25e1cb430678ed883d2d5d6abccb520d.oggvorbisstr"
+
+[deps]
+
+source_file="res://Temp Audio/round-lose.ogg"
+dest_files=["res://.godot/imported/round-lose.ogg-25e1cb430678ed883d2d5d6abccb520d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

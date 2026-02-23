@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://0sun5kmyw6n7"
+path="res://.godot/imported/match-lose.ogg-3a61e6dd032b66db3e050682b0a36e1d.oggvorbisstr"
+
+[deps]
+
+source_file="res://Temp Audio/match-lose.ogg"
+dest_files=["res://.godot/imported/match-lose.ogg-3a61e6dd032b66db3e050682b0a36e1d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -5,7 +5,7 @@ extends Control
 @export var round_count_label : Label
 @export var stage_label : Label
 
-@onready var ui_manager : CanvasLayer = get_parent()
+@onready var ui_manager : CanvasLayer = get_parent().get_parent()
 @onready var game_manager : Node3D = get_node("/root/Game Manager")
 @onready var data_manager : Node3D = get_node("/root/Game Manager/Sub Managers/Data Manager/")
 @onready var stage_manager : Node3D = get_node("/root/Game Manager/SubViewportContainer/SubViewport/Stage Manager/")
@@ -30,23 +30,27 @@ func ui_update():
 
 
 func _on_less_rounds_button_up() -> void:
+	ui_manager.play_ui_accept_sfx()
 	if round_count > 3:
 		round_count -= 2
 		ui_update()
 
 
 func _on_more_rounds_button_up() -> void:
+	ui_manager.play_ui_accept_sfx()
 	if round_count < 255:
 		round_count += 2
 		ui_update()
 
 
 func _on_back_button_up() -> void:
+	ui_manager.play_ui_back_sfx()
 	ui_manager.load_ui(mode_selection_ui)
 	queue_free()
 
 
 func _on_start_game_button_up() -> void:
+	ui_manager.play_ui_accept_sfx()
 	init_game()
 	
 	

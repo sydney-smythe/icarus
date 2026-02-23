@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dg2kg7wwtdfn7"
+path="res://.godot/imported/autoshot.ogg-584ea66e6cbf404d3203f42f11454cab.oggvorbisstr"
+
+[deps]
+
+source_file="res://Temp Audio/autoshot.ogg"
+dest_files=["res://.godot/imported/autoshot.ogg-584ea66e6cbf404d3203f42f11454cab.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

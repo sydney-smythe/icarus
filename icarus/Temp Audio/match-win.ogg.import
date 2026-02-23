@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c3j8q58hhc35n"
+path="res://.godot/imported/match-win.ogg-da3fce0a808f867453773384946088c8.oggvorbisstr"
+
+[deps]
+
+source_file="res://Temp Audio/match-win.ogg"
+dest_files=["res://.godot/imported/match-win.ogg-da3fce0a808f867453773384946088c8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

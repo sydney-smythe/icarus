@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://clhq3lko7siyv"
+path="res://.godot/imported/Land.ogg-a30a908a1095e4b7f131d3dcc9fb78f5.oggvorbisstr"
+
+[deps]
+
+source_file="res://Temp Audio/Land.ogg"
+dest_files=["res://.godot/imported/Land.ogg-a30a908a1095e4b7f131d3dcc9fb78f5.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

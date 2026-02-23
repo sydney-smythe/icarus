@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b83p1hmonrj0h"
+path="res://.godot/imported/Wind.ogg-55b22c28e2adf71952366efb2e51ec9a.oggvorbisstr"
+
+[deps]
+
+source_file="res://Temp Audio/Wind.ogg"
+dest_files=["res://.godot/imported/Wind.ogg-55b22c28e2adf71952366efb2e51ec9a.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

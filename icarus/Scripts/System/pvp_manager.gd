@@ -20,6 +20,7 @@ var round_start_delay : float = 3.0
 @onready var ui_manager = get_node('/root/Game Manager/UI Manager')
 @onready var data_manager = get_node('/root/Game Manager/Sub Managers/Data Manager')
 @onready var filter_manager : CanvasLayer = get_node('/root/Game Manager/Sub Managers/Filter Manager')
+@export var audio_manager : Node3D
 var game_manager : Node3D
 # Called when the node enters the scene tree for the first time.
 
@@ -96,6 +97,7 @@ func init_round():
 			player_node.toggle_weapons(true, true)
 		else:
 			player_node.target_mode = true
+	audio_manager.play_round_start_sfx()
 	is_round_active = true
 
 func end_round():
@@ -113,6 +115,7 @@ func end_round():
 				ui_manager.declare_session_winner(int(player_id))
 			if not player_dict[player_id][2]:  # if bot, disable targeting
 				player_dict[player_id][0].target_mode = false
+				
 	
 	print('[PvP Manager] Scores:')
 	stage.get_node('Spawn Points').reset_points()
@@ -120,8 +123,20 @@ func end_round():
 		print(str(player_dict[player_id][1]) + ': ' + str(player_dict[player_id][4]))
 	print('')
 	ui_manager.toggle_end_of_round_screen(player_dict)
+	
+	# for now, hardcode the round end music
+	if is_winner and winner_id == 0:
+		audio_manager.play_match_end_sfx(true)
+	elif is_winner and winner_id != 0:
+		audio_manager.play_match_end_sfx(false)
+	elif not is_winner and player_dict[0][3]:
+		audio_manager.play_round_end_sfx(true)
+	else:
+		audio_manager.play_round_end_sfx(false)
+		
 	await get_tree().create_timer(time_between_rounds).timeout
 	ui_manager.toggle_end_of_round_screen(player_dict)
+	
 	if is_winner:
 		end_session()
 	else:

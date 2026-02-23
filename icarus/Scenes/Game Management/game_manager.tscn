@@ -4,8 +4,7 @@
 [ext_resource type="Script" uid="uid://b6xjfy7xptsy5" path="res://Scripts/System/data_manager.gd" id="1_n8t8x"]
 [ext_resource type="Script" uid="uid://di7k1gfjpm2tk" path="res://Scripts/System/stage_manager.gd" id="2_vyj3o"]
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/Characters/proto_controller/player.tscn" id="2_xwcdb"]
-[ext_resource type="Script" uid="uid://cyrhe4ydsqpd" path="res://Scripts/UI/ui_manager.gd" id="4_ob72n"]
-[ext_resource type="PackedScene" uid="uid://c740upcymk5ps" path="res://Scenes/UI/Debug/debug_ui.tscn" id="5_vyj3o"]
+[ext_resource type="PackedScene" uid="uid://dux8sue3rcvnq" path="res://Scenes/UI/ui_manager.tscn" id="4_ob72n"]
 [ext_resource type="Script" uid="uid://crxqxb7hqndyl" path="res://Scripts/System/filter_manager.gd" id="8_4am2k"]
 [ext_resource type="AudioStream" uid="uid://buejnxt5r58we" path="res://Temp Audio/drone.mp3" id="8_vyj3o"]
 
@@ -20,11 +19,7 @@ script = ExtResource("8_4am2k")
 [node name="Data Manager" type="Node3D" parent="Sub Managers" unique_id=1796835999]
 script = ExtResource("1_n8t8x")
 
-[node name="UI Manager" type="CanvasLayer" parent="." unique_id=1404852500]
-script = ExtResource("4_ob72n")
-
-[node name="Debug UI" parent="UI Manager" unique_id=2046165957 instance=ExtResource("5_vyj3o")]
-visible = false
+[node name="UI Manager" parent="." unique_id=598893974 instance=ExtResource("4_ob72n")]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1787664650]
 texture_filter = 1

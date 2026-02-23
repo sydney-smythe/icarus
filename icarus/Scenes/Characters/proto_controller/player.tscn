@@ -10,6 +10,9 @@
 [ext_resource type="AudioStream" uid="uid://b1djs5mvphrf4" path="res://Temp Audio/EssenceBlast.ogg" id="8_d7csw"]
 [ext_resource type="Script" uid="uid://cu8uhhnwvq2h5" path="res://Scripts/Character/boon_manager.gd" id="8_egnfr"]
 [ext_resource type="AudioStream" uid="uid://yq14ru1h6tjd" path="res://Temp Audio/Sliding.ogg" id="8_n2ll4"]
+[ext_resource type="AudioStream" uid="uid://clhq3lko7siyv" path="res://Temp Audio/Land.ogg" id="10_1ge0u"]
+[ext_resource type="AudioStream" uid="uid://cljt15qg3v3xn" path="res://Temp Audio/Jump.ogg" id="11_0osbd"]
+[ext_resource type="AudioStream" uid="uid://b83p1hmonrj0h" path="res://Temp Audio/Wind.ogg" id="12_dwaxg"]
 
 [sub_resource type="Curve" id="Curve_4cql4"]
 _data = [Vector2(0, 0.7), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -50,7 +53,7 @@ point_count = 4
 [sub_resource type="BoxShape3D" id="BoxShape3D_4cql4"]
 size = Vector3(1.4520874, 4.039551, 1.7353516)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_p70rv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n2ll4"]
 render_priority = -1
 shader = ExtResource("5_egnfr")
 shader_parameter/depth_threshold = 0.05
@@ -62,14 +65,23 @@ shader_parameter/normal_edge_bias = Vector3(1, 1, 1)
 shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
 
 [sub_resource type="QuadMesh" id="QuadMesh_d7csw"]
-material = SubResource("ShaderMaterial_p70rv")
+material = SubResource("ShaderMaterial_n2ll4")
 flip_faces = true
 size = Vector2(2, 2)
+
+[sub_resource type="Curve" id="Curve_0osbd"]
+_limits = [-39.0, -20.0, 0.0, 1.0]
+_data = [Vector2(0, -39), 0.0, 0.0, 0, 0, Vector2(0.48843932, -31.622318), 30.15249, 30.15249, 0, 0, Vector2(0.7745665, -25.24547), 19.634178, 19.634178, 0, 0, Vector2(1, -20), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_dwaxg"]
+_limits = [-42.0, -33.0, 15.0, 40.0]
+_data = [Vector2(15, -42), 0.0, 0.0, 0, 0, Vector2(29.017342, -36.769234), 0.51101524, 0.51101524, 0, 0, Vector2(40, -33), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [node name="Player" type="CharacterBody3D" unique_id=140928765 node_paths=PackedStringArray("essence_blast") groups=["Ignore Weapon", "Is Forceable", "Weapon Targets"]]
 script = ExtResource("1_rlwtg")
 can_sprint = true
-can_freefly = true
 essence_blast = NodePath("Head/Camera3D/Essence Blast")
 input_left = "move_left"
 input_right = "move_right"
@@ -119,7 +131,7 @@ script = ExtResource("3_j5cwe")
 head = NodePath("../..")
 host = NodePath("../../..")
 
-[node name="PostProcessing" type="MeshInstance3D" parent="Head/Camera3D" unique_id=1270583205]
+[node name="Pixel Art PostProcessing" type="MeshInstance3D" parent="Head/Camera3D" unique_id=1270583205]
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_d7csw")
 
@@ -128,11 +140,17 @@ transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 0
 enabled = false
 debug_shape_thickness = 3
 
-[node name="Audio Manager" type="Node3D" parent="." unique_id=1472932822 node_paths=PackedStringArray("walk_sfx", "essence_blast_sfx", "sliding_sfx")]
+[node name="Audio Manager" type="Node3D" parent="." unique_id=1472932822 node_paths=PackedStringArray("walk_sfx", "essence_blast_sfx", "sliding_sfx", "jump_sfx", "land_sfx", "wall_run_sfx", "wind_sfx")]
 script = ExtResource("5_4cql4")
 walk_sfx = NodePath("Walk")
 essence_blast_sfx = NodePath("Essence Blast")
 sliding_sfx = NodePath("Sliding")
+jump_sfx = NodePath("Jump")
+land_sfx = NodePath("Land")
+wall_run_sfx = NodePath("Wall Running")
+wind_sfx = NodePath("Wind")
+landing_volume_curve = SubResource("Curve_0osbd")
+wind_velocity_curve = SubResource("Curve_dwaxg")
 
 [node name="Walk" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=907902068]
 stream = ExtResource("5_xgce8")
@@ -141,11 +159,32 @@ bus = &"SFX"
 
 [node name="Sliding" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=1740354235]
 stream = ExtResource("8_n2ll4")
-volume_db = -27.31
+volume_db = -38.5
+bus = &"SFX"
+
+[node name="Wall Running" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=190871309]
+stream = ExtResource("8_n2ll4")
+volume_db = -38.5
 bus = &"SFX"
 
 [node name="Essence Blast" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=1381495074]
 stream = ExtResource("8_d7csw")
+volume_db = -17.0
+bus = &"SFX"
+
+[node name="Land" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=1725780540]
+stream = ExtResource("10_1ge0u")
+volume_db = -24.0
+bus = &"SFX"
+
+[node name="Jump" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=1437490106]
+stream = ExtResource("11_0osbd")
+volume_db = -29.0
+bus = &"SFX"
+
+[node name="Wind" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=725915913]
+stream = ExtResource("12_dwaxg")
+volume_db = -35.0
 bus = &"SFX"
 
 [node name="Boon Manager" type="Node3D" parent="." unique_id=102398871]

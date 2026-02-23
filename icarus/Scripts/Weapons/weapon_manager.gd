@@ -85,7 +85,7 @@ func _process(delta: float) -> void:
 			activate_primary()
 		
 	if check_fire:
-		if Input.is_action_pressed('primary_action'):
+		if Input.is_action_pressed('primary_action') and is_enabled:
 				activate_primary()
 	
 	if prim_fire_delay_timer > 0:
@@ -141,9 +141,10 @@ func _input(_event: InputEvent) -> void:
 			reload()
 		
 func reload():
-		prim_is_reloading = true
-		#print('starting reload')
-		prim_reload_timer = prim_reload_time * equipment_manager.reload_mult		
+	weapon_behaviour.play_reload_sfx()
+	prim_is_reloading = true
+	#print('starting reload')
+	prim_reload_timer = prim_reload_time * equipment_manager.reload_mult		
 
 func ai_activate_primary():
 	if prim_fire_type == Prim_fire_type.AUTO:
@@ -176,7 +177,9 @@ func primary_action():
 				prim_current_ammo -= 1
 				#print('fired shot ' + str(i+1))
 				await get_tree().create_timer(prim_burst_item_delay).timeout
-			#else:
+			else:
+				weapon_behaviour.play_no_ammo_sfx()
+				break
 				#print('out of ammo, not firing')
 	else:
 		weapon_behaviour.primary_fire()

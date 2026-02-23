@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dux8sue3rcvnq"]
+
+[ext_resource type="Script" uid="uid://cyrhe4ydsqpd" path="res://Scripts/UI/ui_manager.gd" id="1_huwks"]
+[ext_resource type="PackedScene" uid="uid://c740upcymk5ps" path="res://Scenes/UI/Debug/debug_ui.tscn" id="2_1bij0"]
+[ext_resource type="AudioStream" uid="uid://blttturbffhur" path="res://Temp Audio/ui-accept.ogg" id="3_1bij0"]
+[ext_resource type="Script" uid="uid://dud20tlpm0eo5" path="res://Scripts/UI/ui_audio_manager.gd" id="3_04kky"]
+[ext_resource type="AudioStream" uid="uid://cvuotmp1babwa" path="res://Temp Audio/ui-back.ogg" id="4_88ycu"]
+
+[node name="UI Manager" type="CanvasLayer" unique_id=598893974 node_paths=PackedStringArray("audio_manager", "ui_nodes")]
+script = ExtResource("1_huwks")
+audio_manager = NodePath("Audio Manager")
+ui_nodes = NodePath("UI Nodes")
+
+[node name="Audio Manager" type="Node3D" parent="." unique_id=777821947 node_paths=PackedStringArray("accept_sfx", "back_sfx")]
+script = ExtResource("3_04kky")
+accept_sfx = NodePath("Accept")
+back_sfx = NodePath("Back")
+
+[node name="Accept" type="AudioStreamPlayer" parent="Audio Manager" unique_id=1228293108]
+stream = ExtResource("3_1bij0")
+volume_db = -20.0
+bus = &"SFX"
+
+[node name="Back" type="AudioStreamPlayer" parent="Audio Manager" unique_id=308198736]
+stream = ExtResource("4_88ycu")
+volume_db = -20.0
+bus = &"SFX"
+
+[node name="UI Nodes" type="Control" parent="." unique_id=73488718]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Debug UI" parent="UI Nodes" unique_id=2046165957 instance=ExtResource("2_1bij0")]
+visible = false
+layout_mode = 1
