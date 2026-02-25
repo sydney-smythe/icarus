@@ -211,3 +211,6 @@ func secondary_action():
 			prim_current_ammo -= 1
 			#if prim_current_ammo <= 0:
 				#print('out of secondary ammo')
+				
+func play_equip_sfx():
+	weapon_behaviour.play_equip_sfx()

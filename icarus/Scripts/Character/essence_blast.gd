@@ -1,6 +1,6 @@
 extends Area3D
 
-@export var blast_strength_player : float = 4.0
+@export var blast_strength_player : float = 11.0
 @export var blast_strength_enemy : float = 18.0
 @export var blast_vertical_modifier : Vector3 = Vector3(0, 1, 0)
 @export var strength_distance_curve : Curve
@@ -20,6 +20,7 @@ func _input(_event: InputEvent) -> void:
 		if player.essence > 10:
 			#player.essence -= 10
 			audio_manager.play_essence_blast()
+			player.has_attacked_since_last_wall_run = true
 			player.hit_by_weapon(10)
 			player.apply_force(blast_strength_player, camera.global_transform.basis.z.normalized())
 			var bodies = get_overlapping_bodies()

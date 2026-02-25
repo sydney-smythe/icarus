@@ -34,3 +34,4 @@ func start_boon():  # boon effects go here
 	
 func end_boon():  # undoing boon effects goes here
 	boon_manager.active_boons.erase(data_manager.boon_dict[boon_id][1])
+	queue_free()

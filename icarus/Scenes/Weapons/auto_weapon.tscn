@@ -11,6 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://dg2kg7wwtdfn7" path="res://Temp Audio/autoshot.ogg" id="9_i6bgn"]
 [ext_resource type="AudioStream" uid="uid://d2rfuqffejdxf" path="res://Temp Audio/no-ammo.ogg" id="10_xvmx3"]
 [ext_resource type="AudioStream" uid="uid://b12uvkvdyxquj" path="res://Temp Audio/Reload.ogg" id="11_v3c3d"]
+[ext_resource type="AudioStream" uid="uid://3r85pvvkbumn" path="res://Temp Audio/equip.ogg" id="12_fcnc1"]
+[ext_resource type="AudioStream" uid="uid://b8cvag3pfv84c" path="res://Temp Audio/enemy-hit.ogg" id="13_xw6ga"]
 
 [sub_resource type="Animation" id="Animation_rb7mo"]
 length = 0.13333334
@@ -106,11 +108,13 @@ transform = Transform3D(0.68595415, 0, 0, 0, 0.61521083, 0, 0, 0, 0.55023, 0.593
 mesh = SubResource("CylinderMesh_knc57")
 skeleton = NodePath("../../../../..")
 
-[node name="Audio Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=729461471 node_paths=PackedStringArray("primary_fire_audio", "no_ammo_audio", "reload_audio")]
+[node name="Audio Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=729461471 node_paths=PackedStringArray("primary_fire_audio", "no_ammo_audio", "reload_audio", "equip_audio", "enemy_hit_audio")]
 script = ExtResource("8_ovjk4")
 primary_fire_audio = NodePath("Primary Fire")
 no_ammo_audio = NodePath("No Ammo")
 reload_audio = NodePath("Reload")
+equip_audio = NodePath("Equip")
+enemy_hit_audio = NodePath("Enemy Hit")
 
 [node name="Primary Fire" type="AudioStreamPlayer3D" parent="Weapon Manager/Behaviour Manager/Audio Manager" unique_id=840866558]
 stream = ExtResource("9_i6bgn")
@@ -128,4 +132,16 @@ bus = &"SFX"
 stream = ExtResource("11_v3c3d")
 volume_db = -14.0
 max_db = -5.0
+bus = &"SFX"
+
+[node name="Equip" type="AudioStreamPlayer3D" parent="Weapon Manager/Behaviour Manager/Audio Manager" unique_id=418334838]
+stream = ExtResource("12_fcnc1")
+volume_db = -14.0
+max_db = -5.0
+bus = &"SFX"
+
+[node name="Enemy Hit" type="AudioStreamPlayer3D" parent="Weapon Manager/Behaviour Manager/Audio Manager" unique_id=42352908]
+stream = ExtResource("13_xw6ga")
+volume_db = 11.0
+max_db = 1.0
 bus = &"SFX"

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dvdn8ldpnrdrv"
+path="res://.godot/imported/self-hit.ogg-1814f3fbe3a6b0c725422a3359c48ba3.oggvorbisstr"
+
+[deps]
+
+source_file="res://Temp Audio/self-hit.ogg"
+dest_files=["res://.godot/imported/self-hit.ogg-1814f3fbe3a6b0c725422a3359c48ba3.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

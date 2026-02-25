@@ -96,7 +96,7 @@ var is_sprinting : bool = false
 var is_moving : bool = false
 var is_sliding : bool = false
 var control_strength : float = 1.0
-
+var has_attacked_since_last_wall_run : bool = false
 
 
 ## IMPORTANT REFERENCES
@@ -217,7 +217,12 @@ func _physics_process(delta: float) -> void:
 		
 		if not can_wall_run and is_on_floor():
 			can_wall_run = true
+			
 		
+		if has_attacked_since_last_wall_run:
+			can_wall_run = true
+			can_wall_jump = true
+			has_attacked_since_last_wall_run = false
 		# reset FOV if not crouching or sprinting
 		if not is_crouching and not is_sprinting and not is_sliding:
 			adjust_to_default_fov()
@@ -615,6 +620,7 @@ func hit_by_weapon(amount : int, overheal : bool = false, dedicated_overheal : b
 	#print('player recieved damage: ' + str(amount))
 	if amount > 0:
 		if not invincible:
+			audio_manager.play_hit_sfx()
 			var remainder = amount
 			if overessence > 0:
 				if amount > overessence:

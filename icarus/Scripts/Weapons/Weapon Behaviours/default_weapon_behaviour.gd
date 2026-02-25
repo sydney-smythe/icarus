@@ -41,6 +41,7 @@ func primary_fire():
 	audio_manager.play_primary_audio()
 	if mode != 'Enemy':
 		host.apply_force(recoil_strength, camera.global_transform.basis.z.normalized())
+		host.has_attacked_since_last_wall_run = true
 	if attack_type == Attack_types.HITSCAN:
 		fire_ray()
 	elif attack_type == Attack_types.PROJECTILE:
@@ -62,6 +63,8 @@ func fire_ray():
 		#print('collision object: ' + str(collision.collider.name))
 		if collision.collider.is_in_group("Weapon Targets"):
 			collision.collider.hit_by_weapon(damage)
+			if mode == 'Player':
+				audio_manager.play_enemy_hit_audio()
 	#else:
 		#print('no collision occured')
 	# draw a line for debug
@@ -81,3 +84,6 @@ func play_reload_sfx():
 	
 func play_no_ammo_sfx():
 	audio_manager.play_no_ammo_audio()
+	
+func play_equip_sfx():
+	audio_manager.play_equip_audio()

@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://clhq3lko7siyv" path="res://Temp Audio/Land.ogg" id="10_1ge0u"]
 [ext_resource type="AudioStream" uid="uid://cljt15qg3v3xn" path="res://Temp Audio/Jump.ogg" id="11_0osbd"]
 [ext_resource type="AudioStream" uid="uid://b83p1hmonrj0h" path="res://Temp Audio/Wind.ogg" id="12_dwaxg"]
+[ext_resource type="AudioStream" uid="uid://dvdn8ldpnrdrv" path="res://Temp Audio/self-hit.ogg" id="13_y8owm"]
 
 [sub_resource type="Curve" id="Curve_4cql4"]
 _data = [Vector2(0, 0.7), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -140,7 +141,7 @@ transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 0
 enabled = false
 debug_shape_thickness = 3
 
-[node name="Audio Manager" type="Node3D" parent="." unique_id=1472932822 node_paths=PackedStringArray("walk_sfx", "essence_blast_sfx", "sliding_sfx", "jump_sfx", "land_sfx", "wall_run_sfx", "wind_sfx")]
+[node name="Audio Manager" type="Node3D" parent="." unique_id=1472932822 node_paths=PackedStringArray("walk_sfx", "essence_blast_sfx", "sliding_sfx", "jump_sfx", "land_sfx", "wall_run_sfx", "wind_sfx", "hit_sfx")]
 script = ExtResource("5_4cql4")
 walk_sfx = NodePath("Walk")
 essence_blast_sfx = NodePath("Essence Blast")
@@ -149,6 +150,7 @@ jump_sfx = NodePath("Jump")
 land_sfx = NodePath("Land")
 wall_run_sfx = NodePath("Wall Running")
 wind_sfx = NodePath("Wind")
+hit_sfx = NodePath("Player Hit")
 landing_volume_curve = SubResource("Curve_0osbd")
 wind_velocity_curve = SubResource("Curve_dwaxg")
 
@@ -185,6 +187,11 @@ bus = &"SFX"
 [node name="Wind" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=725915913]
 stream = ExtResource("12_dwaxg")
 volume_db = -35.0
+bus = &"SFX"
+
+[node name="Player Hit" type="AudioStreamPlayer3D" parent="Audio Manager" unique_id=79102607]
+stream = ExtResource("13_y8owm")
+volume_db = -5.0
 bus = &"SFX"
 
 [node name="Boon Manager" type="Node3D" parent="." unique_id=102398871]

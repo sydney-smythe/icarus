@@ -8,6 +8,7 @@ extends Node3D
 @export var land_sfx : AudioStreamPlayer3D
 @export var wall_run_sfx : AudioStreamPlayer3D
 @export var wind_sfx : AudioStreamPlayer3D
+@export var hit_sfx : AudioStreamPlayer3D
 var fading_out_slide = false
 var sliding_vol : float
 var fading_out_wall_run = false
@@ -85,6 +86,9 @@ func play_essence_blast():
 
 func play_jump_sfx():
 	jump_sfx.play()
+	
+func play_hit_sfx():
+	hit_sfx.play()
 
 func play_wind_sfx(total_velocity : float):
 	if total_velocity > 40:

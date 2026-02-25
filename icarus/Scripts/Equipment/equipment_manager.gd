@@ -101,6 +101,7 @@ func swap_active_equipment(new_active_index : int, override_same_swap = false):
 				current_active.process_mode = Node.PROCESS_MODE_DISABLED
 				new_active.show()
 				new_active.process_mode = Node.PROCESS_MODE_ALWAYS
+				new_active.get_node('Weapon Manager').play_equip_sfx()
 				active_equipment = new_active_index
 				print('[Equip Manager] Active equipment: ' + str(new_active_index))
 		else:

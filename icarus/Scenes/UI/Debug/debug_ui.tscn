@@ -81,7 +81,7 @@ horizontal_alignment = 1
 [node name="Version Information" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Game Info" unique_id=177819635]
 layout_mode = 2
 size_flags_vertical = 1
-text = "Project ICARUS    Build 001   v.0.1.221
+text = "Project ICARUS    Build 001   v.0.1.224
 Playtest 01-Naples"
 horizontal_alignment = 1
 
