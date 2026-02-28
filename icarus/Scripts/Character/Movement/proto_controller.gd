@@ -149,6 +149,8 @@ var forcer_vector : Vector3 = Vector3(0,0,0)
 var unforceable = false
 var boon_grav_mult : float = 1.0
 
+@onready var ui_manager = get_node('/root/Game Manager/UI Manager/')
+
 func _ready() -> void:
 	
 	PlayerManager.register_player(self)
@@ -677,3 +679,7 @@ func toggle_weapons(mode : bool, keep_weapons_visible : bool = false):
 		essence_blast.enabled = false
 		equipment_manager.disabled = true
 		equipment_manager.disable_equipment()
+
+func update_essence_blast_status(cooldown : float):
+	if ui_manager.get_child(1).has_node('HUD'):
+		ui_manager.get_child(1).get_node('HUD').set_essence_blast_cooldown(cooldown)

@@ -37,5 +37,7 @@ func _input(_event: InputEvent) -> void:
 func start_cooldown():
 	if not on_cooldown:
 		on_cooldown = true
+		player.update_essence_blast_status(cooldown)
 		await get_tree().create_timer(cooldown).timeout
 		on_cooldown = false
+	
