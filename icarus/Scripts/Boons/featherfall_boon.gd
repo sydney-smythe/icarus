@@ -31,9 +31,9 @@ func update_timer(new_time : float, override : bool = false):
 		
 func start_boon():  # boon effects go here
 	boon_manager.active_boons[data_manager.boon_dict[boon_id][1]] = boon_timer
-	host.boon_grav_mult = 0.0
+	host.boon_grav_mult = 0.6
 	
 func end_boon():  # undoing boon effects goes here
 	boon_manager.active_boons.erase(data_manager.boon_dict[boon_id][1])
-	host.boon_grav_mult = 0.6
+	host.boon_grav_mult = 1.0
 	queue_free()

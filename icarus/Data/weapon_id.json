@@ -1,6 +1,6 @@
 {
 	"EXAMPLE": ["FILE PATH", "WEAPON NAME", "WEAPON TYPE", "MODEL PATH"],
-	"0": ["uid://dkvbfeohtoit0", "Default Weapon", "Medium", "uid://bnd4v6k62i4lx"],
+	"0": ["uid://dkvbfeohtoit0", "Default Weapon", "Medium", "uid://dgaa0a0gdgqaa"],
 	"1": ["uid://dy5bynl58tc7y", "Burst Weapon", "Medium", "uid://ctuhl1543fyka"],
-	"2": ["uid://jbb5eh0ihyf1", "Auto Weapon", "Light", "uid://8b4280754djx"]
+	"2": ["uid://jbb5eh0ihyf1", "Auto Weapon", "Light", "uid://vk64krm14yoc"]
 }
