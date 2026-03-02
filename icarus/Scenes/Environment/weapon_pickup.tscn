@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ce45owb8ju6wy"]
 
 [ext_resource type="PackedScene" uid="uid://bnd4v6k62i4lx" path="res://Temp Visuals/Items/fn309.blend" id="1_o183u"]
+[ext_resource type="Script" uid="uid://c3kh8yh3c6lqm" path="res://Scripts/Environment/pickup_model_rotation.gd" id="2_jv8uj"]
 [ext_resource type="Script" uid="uid://df5qux5vs65sm" path="res://Scripts/Environment/Pickup Types/weapon_pickup.gd" id="2_r5qgx"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_eacf1"]
@@ -10,6 +11,7 @@ script = ExtResource("2_r5qgx")
 single_use = true
 
 [node name="Model" type="Node3D" parent="." unique_id=290668179]
+script = ExtResource("2_jv8uj")
 
 [node name="fn309" parent="Model" unique_id=1282017251 instance=ExtResource("1_o183u")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)

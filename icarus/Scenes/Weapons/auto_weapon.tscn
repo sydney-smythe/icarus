@@ -75,8 +75,8 @@ projectile = ExtResource("3_v3c3d")
 [node name="Animation Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=450035929]
 script = ExtResource("4_fcnc1")
 model_scale = 0.2
-model_position_offest = Vector3(0.3, -0.29, -0.6)
-model_rotation_offest = Vector3(0, 90, 0)
+model_position_offest = Vector3(0.3, -0.32, -0.6)
+model_rotation_offest = Vector3(0, 90, -7)
 
 [node name="Model" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=1048245953 instance=ExtResource("5_xw6ga")]
 

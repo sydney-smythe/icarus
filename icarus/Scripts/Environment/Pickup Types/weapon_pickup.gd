@@ -39,6 +39,7 @@ func late_ready():
 	if model.get_child_count() > 0:
 		model.get_child(0).queue_free()  # remove default model
 	model.add_child(gun_model)
+	model.set_model()
 
 func _process(delta: float) -> void:
 	if not single_use:

@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://baq3akkb3owu5"]
 
+[ext_resource type="Script" uid="uid://c3kh8yh3c6lqm" path="res://Scripts/Environment/pickup_model_rotation.gd" id="2_bbmow"]
 [ext_resource type="Script" uid="uid://dnllbt334ib33" path="res://Scripts/Environment/Pickup Types/boon_pickup.gd" id="2_paljb"]
 [ext_resource type="PackedScene" uid="uid://ccylk8r1bs4r0" path="res://Temp Visuals/Items/cyber_orb.glb" id="3_paljb"]
 
@@ -11,6 +12,7 @@ requires_interact_pressed = false
 boon_length = 10.0
 
 [node name="Model" type="Node3D" parent="." unique_id=290668179]
+script = ExtResource("2_bbmow")
 
 [node name="Sketchfab_Scene" parent="Model" unique_id=2047933014 instance=ExtResource("3_paljb")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

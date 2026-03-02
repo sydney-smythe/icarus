@@ -93,7 +93,7 @@ func play_hit_sfx():
 func play_wind_sfx(total_velocity : float):
 	if total_velocity > 40:
 		total_velocity = 40
-	print('vol: ' + str(wind_velocity_curve.sample(total_velocity)))
+	#print('vol: ' + str(wind_velocity_curve.sample(total_velocity)))
 	wind_sfx.volume_db = wind_velocity_curve.sample(total_velocity)
 	fade_in_audio(wind_sfx, 0.8, wind_sfx.volume_db)
 	#wind_sfx.play()

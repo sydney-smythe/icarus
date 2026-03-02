@@ -25,6 +25,7 @@ func _ready() -> void:
 func late_ready():
 	player = PlayerManager.get_player()
 	camera = player.get_node('Head').get_node('Camera3D')
+	model.set_model()
 
 func _process(delta: float) -> void:
 	if not single_use:

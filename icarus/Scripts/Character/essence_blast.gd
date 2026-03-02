@@ -11,9 +11,16 @@ var max_distance : float = 4.0 # MUST BE CHANGED IF BLAST COLLIDER SIZE CHANGES
 @onready var player: CharacterBody3D = $"../../.."
 @onready var camera: Camera3D = $".."
 var enabled = true
+var cooldown_timer : float = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
+
+func _process(delta: float) -> void:
+	if on_cooldown:
+		cooldown_timer -= delta
+		if cooldown_timer <= 0:
+			on_cooldown = false
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed('essence_blast') and enabled and not on_cooldown:
@@ -38,6 +45,9 @@ func start_cooldown():
 	if not on_cooldown:
 		on_cooldown = true
 		player.update_essence_blast_status(cooldown)
-		await get_tree().create_timer(cooldown).timeout
-		on_cooldown = false
+		cooldown_timer = cooldown
 	
+func reset_cooldown():
+	if on_cooldown:
+		cooldown_timer = 0
+		player.update_essence_blast_status(0)

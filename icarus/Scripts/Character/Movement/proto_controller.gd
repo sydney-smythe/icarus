@@ -660,6 +660,7 @@ func round_reset(weapon : String):
 		equipment_manager.add_equipment(0, weapon, true, true)
 	boon_manager.clear_boons()
 	velocity = Vector3(0,0,0)
+	essence_blast.reset_cooldown()
 
 func reset_essence():
 	essence = max_essence
