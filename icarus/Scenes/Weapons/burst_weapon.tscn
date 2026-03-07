@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://b12ei004bv6pu" path="res://Scripts/Weapons/Weapon Behaviours/default_weapon_behaviour.gd" id="2_vx4gb"]
 [ext_resource type="PackedScene" uid="uid://bgf45ahtixemx" path="res://Scenes/Weapon Projectiles/default_projectile.tscn" id="3_bgcc2"]
 [ext_resource type="Script" uid="uid://covx4saijl6gl" path="res://Scripts/Weapons/weapon_animation_manager.gd" id="4_wlk5h"]
-[ext_resource type="PackedScene" uid="uid://ctuhl1543fyka" path="res://Temp Visuals/Items/steampunk_rifle.blend" id="5_mnob8"]
+[ext_resource type="PackedScene" uid="uid://b0hlqhoy7d456" path="res://Assets/Models/Weapons/burst_gun.glb" id="5_2dkps"]
 [ext_resource type="Texture2D" uid="uid://dnot7ux5nip7u" path="res://Temp Visuals/Items/pngtree-simple-muzzle-flash-vector-png-png-image_5797978.png" id="6_2dkps"]
 [ext_resource type="Material" uid="uid://dth5muwl33j61" path="res://Materials/Temp Materials/Weapon Drawover.tres" id="7_aftdh"]
 [ext_resource type="Script" uid="uid://conko2sjj7" path="res://Scripts/Weapons/weapon_audio_manager.gd" id="8_hg4qy"]
@@ -31,7 +31,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_3w3ja"]
 resource_name = "temp-fire"
-length = 0.11348304
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -39,22 +39,23 @@ tracks/0/path = NodePath("Weapon Manager/Behaviour Manager/Animation Manager/Mod
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(-0.060825575, 0.001, 0.0945546),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.099999994),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true, true, false]
+"values": [true, false]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_6012l"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fcnc1"]
 _data = {
 &"RESET": SubResource("Animation_rb7mo"),
 &"temp-fire": SubResource("Animation_3w3ja")
 }
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_11hmc"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_xw6ga"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vx4gb"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_opf7j"]
 transparency = 1
+cull_mode = 2
 albedo_texture = ExtResource("6_2dkps")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_knc57"]
@@ -75,21 +76,23 @@ projectile = ExtResource("3_bgcc2")
 
 [node name="Animation Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=450035929]
 script = ExtResource("4_wlk5h")
-model_scale = 0.17
-model_position_offest = Vector3(0.2, -0.5, -0.1)
+model_scale = 0.22
+model_position_offest = Vector3(0.3, -0.32, -0.4)
+model_rotation_offest = Vector3(0, 90, -7)
 
-[node name="Model" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=1593807259 instance=ExtResource("5_mnob8")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -2, 0)
+[node name="Model" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=1643586106 instance=ExtResource("5_2dkps")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14069945, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=1571579351]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=773216358]
 root_node = NodePath("../../../../..")
-libraries/ = SubResource("AnimationLibrary_6012l")
+libraries/ = SubResource("AnimationLibrary_fcnc1")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=1793878602]
-transform = Transform3D(-3.079442e-08, -1, 2.9802315e-08, 8.742278e-08, 2.9802319e-08, 1, -0.9999999, 3.0794418e-08, 8.742277e-08, -0.027129594, 2.2647183, -4.0008626)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=210499894]
+transform = Transform3D(1, -8.940697e-08, -8.7422784e-08, 8.742279e-08, 2.980232e-08, 1.0000001, -8.940697e-08, -1.0000001, 2.980233e-08, 2.4964218, 0.37948927, 0)
 visible = false
-mesh = SubResource("PlaneMesh_11hmc")
-surface_material_override/0 = SubResource("StandardMaterial3D_vx4gb")
+mesh = SubResource("PlaneMesh_xw6ga")
+skeleton = NodePath("../../Old model delete!")
+surface_material_override/0 = SubResource("StandardMaterial3D_opf7j")
 
 [node name="Mesh" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=5478577]
 visible = false
