@@ -94,6 +94,9 @@ mesh = SubResource("PlaneMesh_xw6ga")
 skeleton = NodePath("../../Old model delete!")
 surface_material_override/0 = SubResource("StandardMaterial3D_opf7j")
 
+[node name="Exit Point" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=801997443]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8952508, 0.30339104, 0)
+
 [node name="Mesh" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=5478577]
 visible = false
 

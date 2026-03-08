@@ -8,9 +8,11 @@ var tab : String = 'Settings'  # possible values: Settings, About
 @export var about_screen : VBoxContainer
 @export var about_button : Button
 @export var back_button : Button
+@export var version_text : Label
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	toggle_visibility()
+	set_version_text()
 
 func toggle_visibility():
 	if is_enabled:
@@ -21,7 +23,8 @@ func toggle_visibility():
 		is_enabled = true
 		game_manager.release_mouse()
 
-
+func set_version_text():
+	version_text.text = 'Project ICARUS v.' + game_manager.GAME_VERSION + ' Build ' + game_manager.GAME_BUILD + ' Playtest ' + game_manager.GAME_PLAYTEST_NAME + ' (' + game_manager.GAME_STATE + ')\n\nDeveloped using the Godot Engine'
 
 func _on_back_button_button_up() -> void:
 	ui_manager.play_ui_back_sfx()

@@ -16,7 +16,9 @@ enum Attack_types {HITSCAN, PROJECTILE}
 @export var projectile_speed : float = 0.5
 @onready var animation_manager = $"Animation Manager"
 @onready var audio_manager: Node3D = $"Audio Manager"
+var bullet_trail = 'uid://saod68jbabc7'
 var mode : String = 'Player' 
+@onready var exit_point = get_node('Animation Manager/Model/Exit Point')
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	call_deferred('late_ready')
@@ -65,7 +67,15 @@ func fire_ray():
 			collision.collider.hit_by_weapon(damage)
 			if mode == 'Player':
 				audio_manager.play_enemy_hit_audio()
-	#else:
+		var new_trail = load(bullet_trail).instantiate()
+		new_trail.origin_point = exit_point.global_position
+		new_trail.end_point = collision.position
+		get_node('/root/Game Manager').add_child(new_trail)
+	else:
+		var new_trail = load(bullet_trail).instantiate()
+		new_trail.origin_point = exit_point.global_position
+		new_trail.end_point = end_point
+		get_node('/root/Game Manager').add_child(new_trail)
 		#print('no collision occured')
 	# draw a line for debug
 	#var ray_object = preload("res://Scenes/Game Management/Debug/debug_ray.tscn").instantiate()

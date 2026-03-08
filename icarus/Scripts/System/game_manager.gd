@@ -1,5 +1,11 @@
 extends Node3D
 
+# GAME INFORMATION
+const GAME_VERSION : String = '0.1.307'
+const GAME_BUILD : String = '001'
+const GAME_STATE : String = 'Pre-Alpha'
+const GAME_PLAYTEST_NAME : String = '01-Naples'
+
 @onready var player = %Player
 var pvp_manager = "uid://cemuhifmaw5q3"
 var climb_manager = "uid://cx7i1y6oxaq6s"

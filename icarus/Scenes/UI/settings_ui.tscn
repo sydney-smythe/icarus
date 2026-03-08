@@ -14,7 +14,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="Settings UI" type="Control" unique_id=986785694 node_paths=PackedStringArray("settings_screen", "about_screen", "about_button", "back_button")]
+[node name="Settings UI" type="Control" unique_id=986785694 node_paths=PackedStringArray("settings_screen", "about_screen", "about_button", "back_button", "version_text")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +26,7 @@ settings_screen = NodePath("MarginContainer/Panel/MarginContainer/Settings and C
 about_screen = NodePath("MarginContainer/Panel/MarginContainer/About")
 about_button = NodePath("MarginContainer/Panel/MarginContainer/About button")
 back_button = NodePath("MarginContainer/Panel/MarginContainer/Back button")
+version_text = NodePath("MarginContainer/Panel/MarginContainer/About/HBoxContainer/Settings/Label3")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=824360499]
 layout_mode = 1
@@ -171,8 +172,15 @@ Health, which is referred to as essence, controls both the player's life and the
 
 Project ICARUS will be a PvP experience, and the current enemies do not reflect any future PvE plans. They are simply placeholders while PvP capabilities are developed. 
 
+"
+horizontal_alignment = 1
+autowrap_mode = 3
 
-Project ICARUS v0.0.221 Build 001 Playtest 01-Naples (Pre-Alpha)
+[node name="Label3" type="Label" parent="MarginContainer/Panel/MarginContainer/About/HBoxContainer/Settings" unique_id=436697487]
+custom_minimum_size = Vector2(1600, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Project ICARUS v0.0.221 Build 001 Playtest 01-Naples (Pre-Alpha)
 
 Developed using the Godot Engine
 "

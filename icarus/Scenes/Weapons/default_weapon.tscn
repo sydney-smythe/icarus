@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://cc24lt6cjylk1" path="res://Scripts/Weapons/weapon_manager.gd" id="1_vynfx"]
 [ext_resource type="Script" uid="uid://b12ei004bv6pu" path="res://Scripts/Weapons/Weapon Behaviours/default_weapon_behaviour.gd" id="2_nwkwr"]
 [ext_resource type="PackedScene" uid="uid://bgf45ahtixemx" path="res://Scenes/Weapon Projectiles/default_projectile.tscn" id="3_78gpb"]
-[ext_resource type="Material" uid="uid://dth5muwl33j61" path="res://Materials/Temp Materials/Weapon Drawover.tres" id="3_ao240"]
 [ext_resource type="Script" uid="uid://covx4saijl6gl" path="res://Scripts/Weapons/weapon_animation_manager.gd" id="3_t12gy"]
 [ext_resource type="PackedScene" uid="uid://dgaa0a0gdgqaa" path="res://Assets/Models/Weapons/default_gun.glb" id="5_bwl48"]
 [ext_resource type="Texture2D" uid="uid://dnot7ux5nip7u" path="res://Temp Visuals/Items/pngtree-simple-muzzle-flash-vector-png-png-image_5797978.png" id="6_rb7mo"]
@@ -58,9 +57,6 @@ transparency = 1
 cull_mode = 2
 albedo_texture = ExtResource("6_rb7mo")
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_knc57"]
-material = ExtResource("3_ao240")
-
 [node name="Default Weapon" type="Node3D" unique_id=153835434]
 
 [node name="Weapon Manager" type="Node3D" parent="." unique_id=1182113624]
@@ -79,6 +75,9 @@ model_rotation_offest = Vector3(0, 90, 0)
 
 [node name="Model" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=485206775 instance=ExtResource("5_bwl48")]
 
+[node name="Exit Point" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=26088609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.157403, 0.32809007, 0)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=1571579351]
 root_node = NodePath("../../../../..")
 libraries/ = SubResource("AnimationLibrary_6012l")
@@ -89,19 +88,6 @@ visible = false
 mesh = SubResource("PlaneMesh_3w3ja")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_6012l")
-
-[node name="Mesh" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=5478577]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Mesh" unique_id=37554842]
-transform = Transform3D(-3.0224896e-08, 1, 0, -0.6914651, -4.371139e-08, 0, 0, 0, 0.7821668, 0, 0, 0)
-mesh = SubResource("CylinderMesh_knc57")
-skeleton = NodePath("../../../../..")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Mesh" unique_id=1792561025]
-transform = Transform3D(0.68595415, 0, 0, 0, 0.61521083, 0, 0, 0, 0.55023, 0.5938804, -0.6100663, 0)
-mesh = SubResource("CylinderMesh_knc57")
-skeleton = NodePath("../../../../..")
 
 [node name="Audio Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=729461471 node_paths=PackedStringArray("primary_fire_audio", "no_ammo_audio", "reload_audio", "equip_audio", "enemy_hit_audio")]
 script = ExtResource("8_6012l")

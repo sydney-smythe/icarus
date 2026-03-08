@@ -1,6 +1,9 @@
 extends Control
 
+@onready var game_manager = get_node('/root/Game Manager/')
 var player: CharacterBody3D
+# GAME INFO
+@export var version_text : Label
 # ENGINE INFO
 @export var fps_count: Label
 # PLAYER INFO
@@ -23,6 +26,7 @@ var is_enabled : bool = true
 func _ready() -> void:
 	toggle_visibility()
 	call_deferred("late_ready")
+	version_text.text = 'Project ICARUS   Build ' + game_manager.GAME_BUILD + '   \nv.' + game_manager.GAME_VERSION + '   Playtest ' + game_manager.GAME_PLAYTEST_NAME
 
 func toggle_visibility():
 	if is_enabled:

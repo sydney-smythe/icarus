@@ -91,6 +91,9 @@ mesh = SubResource("PlaneMesh_xw6ga")
 skeleton = NodePath("../../Old model delete!")
 surface_material_override/0 = SubResource("StandardMaterial3D_opf7j")
 
+[node name="Exit Point" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=885845731]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3248086, 0.29660845, 0)
+
 [node name="Audio Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=729461471 node_paths=PackedStringArray("primary_fire_audio", "no_ammo_audio", "reload_audio", "equip_audio", "enemy_hit_audio")]
 script = ExtResource("8_ovjk4")
 primary_fire_audio = NodePath("Primary Fire")

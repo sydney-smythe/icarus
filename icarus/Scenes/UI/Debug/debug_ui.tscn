@@ -13,7 +13,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="Debug UI" type="Control" unique_id=2046165957 node_paths=PackedStringArray("fps_count", "actions_label", "move_speed", "velocity_vector", "camera_rotation", "current_level", "essence", "grav_mult", "force_mult", "speed_mult", "debug_panel", "f2_tooltip")]
+[node name="Debug UI" type="Control" unique_id=2046165957 node_paths=PackedStringArray("version_text", "fps_count", "actions_label", "move_speed", "velocity_vector", "camera_rotation", "current_level", "essence", "grav_mult", "force_mult", "speed_mult", "debug_panel", "f2_tooltip")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,6 +24,7 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 mouse_filter = 2
 script = ExtResource("1_87ksd")
+version_text = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Game Info/Version Information")
 fps_count = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Engine Info/FPS Count")
 actions_label = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info/Actions Label")
 move_speed = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info/Move Speed")

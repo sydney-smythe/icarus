@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://saod68jbabc7"]
+
+[ext_resource type="Script" uid="uid://dp2r1d0cl38es" path="res://Scripts/Effects/Weapons/bullet_trail.gd" id="1_vkdjq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vkdjq"]
+albedo_color = Color(1, 0.77254903, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.7372549, 0.11764706, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j2apo"]
+material = SubResource("StandardMaterial3D_vkdjq")
+height = 4.0
+
+[node name="Bullet Trail" type="MeshInstance3D" unique_id=254111052]
+mesh = SubResource("CylinderMesh_j2apo")
+script = ExtResource("1_vkdjq")
