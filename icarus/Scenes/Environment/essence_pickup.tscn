@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cfosgfap3gruu" path="res://Scripts/Environment/Pickup Types/essence_pickup.gd" id="2_0k7p4"]
 [ext_resource type="Script" uid="uid://c3kh8yh3c6lqm" path="res://Scripts/Environment/pickup_model_rotation.gd" id="2_umi4y"]
-[ext_resource type="PackedScene" uid="uid://cd2e0ekk3l33h" path="res://Temp Visuals/Items/heart_in_love.glb" id="3_0k7p4"]
+[ext_resource type="PackedScene" uid="uid://21xt2sf0dsms" path="res://Assets/Models/Pickups/essence_star.glb" id="3_umi4y"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_eacf1"]
 
@@ -13,8 +13,8 @@ requires_interact_pressed = false
 [node name="Model" type="Node3D" parent="." unique_id=290668179]
 script = ExtResource("2_umi4y")
 
-[node name="Sketchfab_Scene" parent="Model" unique_id=261368700 instance=ExtResource("3_0k7p4")]
-transform = Transform3D(0.005, 0, 0, 0, 0.005, 0, 0, 0, 0.005, 0, 0, 0)
+[node name="essence_star" parent="Model" unique_id=1611942797 instance=ExtResource("3_umi4y")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 
 [node name="Touch Range" type="Area3D" parent="." unique_id=1235291534]
 
