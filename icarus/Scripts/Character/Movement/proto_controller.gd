@@ -627,9 +627,10 @@ func hit_by_weapon(amount : int, overheal : bool = false, dedicated_overheal : b
 			if overessence > 0:
 				if amount > overessence:
 					remainder = amount - overessence 
+					overessence = 0
 				else:
 					remainder = 0
-				overessence -= amount
+					overessence -= amount
 			essence -= remainder
 			if essence < 0:
 				essence = 0
