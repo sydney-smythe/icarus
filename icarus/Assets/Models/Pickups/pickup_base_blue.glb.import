@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://utcki0t1pt0w"
+uid="uid://dck6w3kjaa6ba"
 path="res://.godot/imported/pickup_base_blue.glb-655a95ef0da43b372cde1b46b4407cf8.scn"
 
 [deps]
@@ -37,6 +37,12 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"nodes": {
+"PATH:Red Inner": {
+"import/skip_import": true
+}
+}
+}
 gltf/naming_version=2
 gltf/embedded_image_handling=1

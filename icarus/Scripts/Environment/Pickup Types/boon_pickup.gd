@@ -13,6 +13,7 @@ extends Node3D
 @export var boon_length : float = 30.0
 @onready var data_manager = get_node("/root/Game Manager/Sub Managers/Data Manager/")
 @onready var model: Node3D = $Model
+@onready var base : Node3D = $Base
 @export var model_scale : float = 0.5
 var boon_manager
 
@@ -36,6 +37,7 @@ func late_ready():
 		model.get_child(0).queue_free()  # remove default model
 	model.add_child(boon_model)
 	model.set_model()
+	base.snap_pickup_to_floor()
 
 func _process(delta: float) -> void:
 	if not single_use:

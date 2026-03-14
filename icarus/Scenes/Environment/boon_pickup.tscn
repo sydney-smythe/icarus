@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c3kh8yh3c6lqm" path="res://Scripts/Environment/pickup_model_rotation.gd" id="2_bbmow"]
 [ext_resource type="Script" uid="uid://dnllbt334ib33" path="res://Scripts/Environment/Pickup Types/boon_pickup.gd" id="2_paljb"]
 [ext_resource type="PackedScene" uid="uid://ccylk8r1bs4r0" path="res://Temp Visuals/Items/cyber_orb.glb" id="3_paljb"]
+[ext_resource type="Script" uid="uid://cb8yauskpf5br" path="res://Scripts/Environment/pickup_base_positioning.gd" id="4_iu6bl"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_eacf1"]
 
@@ -16,6 +17,10 @@ script = ExtResource("2_bbmow")
 
 [node name="Sketchfab_Scene" parent="Model" unique_id=2047933014 instance=ExtResource("3_paljb")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="Base" type="Node3D" parent="." unique_id=748454539]
+script = ExtResource("4_iu6bl")
+base_model = 1
 
 [node name="Touch Range" type="Area3D" parent="." unique_id=1235291534]
 

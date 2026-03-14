@@ -8,6 +8,7 @@ extends Node3D
 @onready var touch_range: Area3D = $"Touch Range"
 @onready var interact_range: Area3D = $"Interact Range"
 @onready var model: Node3D = $Model
+@onready var base : Node3D = $Base
 
 # essence data
 @export var essence_amount = 20
@@ -26,6 +27,7 @@ func late_ready():
 	player = PlayerManager.get_player()
 	camera = player.get_node('Head').get_node('Camera3D')
 	model.set_model()
+	base.snap_pickup_to_floor()
 
 func _process(delta: float) -> void:
 	if not single_use:

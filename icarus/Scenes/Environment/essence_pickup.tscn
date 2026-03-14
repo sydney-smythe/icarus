@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cfosgfap3gruu" path="res://Scripts/Environment/Pickup Types/essence_pickup.gd" id="2_0k7p4"]
 [ext_resource type="Script" uid="uid://c3kh8yh3c6lqm" path="res://Scripts/Environment/pickup_model_rotation.gd" id="2_umi4y"]
 [ext_resource type="PackedScene" uid="uid://21xt2sf0dsms" path="res://Assets/Models/Pickups/essence_star.glb" id="3_umi4y"]
+[ext_resource type="Script" uid="uid://cb8yauskpf5br" path="res://Scripts/Environment/pickup_base_positioning.gd" id="4_umi4y"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_eacf1"]
 
@@ -26,6 +27,10 @@ shape = SubResource("SphereShape3D_eacf1")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interact Range" unique_id=450334048]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 shape = SubResource("SphereShape3D_eacf1")
+
+[node name="Base" type="Node3D" parent="." unique_id=1169132667]
+script = ExtResource("4_umi4y")
+base_model = 1
 
 [connection signal="body_entered" from="Touch Range" to="." method="_on_touch_range_body_entered"]
 [connection signal="body_exited" from="Touch Range" to="." method="_on_touch_range_body_exited"]

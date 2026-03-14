@@ -8,6 +8,7 @@ extends Node3D
 @onready var touch_range: Area3D = $"Touch Range"
 @onready var interact_range: Area3D = $"Interact Range"
 @onready var model: Node3D = $Model
+@onready var base : Node3D = $Base
 
 # weapon data
 @export var weapon_id : String = '0'
@@ -40,6 +41,7 @@ func late_ready():
 		model.get_child(0).queue_free()  # remove default model
 	model.add_child(gun_model)
 	model.set_model()
+	base.snap_pickup_to_floor()
 
 func _process(delta: float) -> void:
 	if not single_use:

@@ -1,7 +1,7 @@
 extends Node3D
 
 # GAME INFORMATION
-const GAME_VERSION : String = '0.1.307'
+const GAME_VERSION : String = '0.1.314'
 const GAME_BUILD : String = '001'
 const GAME_STATE : String = 'Pre-Alpha'
 const GAME_PLAYTEST_NAME : String = '01-Naples'
