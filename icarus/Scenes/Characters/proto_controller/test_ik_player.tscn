@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://juf5ryufdte2"]
+
+[ext_resource type="PackedScene" uid="uid://cdnagfbgobrf3" path="res://Temp Visuals/Entities/test-ik-player.glb" id="1_2o1q1"]
+[ext_resource type="Script" uid="uid://bt87pvdnwlx0h" path="res://Scripts/Character/player_model_manager.gd" id="2_6q48x"]
+
+[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_2o1q1"]
+angle = 3.1415927
+
+[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_6q48x"]
+angle = 3.1415927
+
+[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_ovudt"]
+angle = 2.268928
+
+[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_p43tx"]
+angle = 3.1415927
+
+[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_njyoj"]
+angle = 4.610287
+
+[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_2318x"]
+angle = 2.268928
+
+[node name="test-ik-player" unique_id=908859433 node_paths=PackedStringArray("l_arm_target", "r_arm_target") instance=ExtResource("1_2o1q1")]
+script = ExtResource("2_6q48x")
+l_arm_target = NodePath("Arm Targets/L Arm Target")
+r_arm_target = NodePath("Arm Targets/R Arm Target")
+
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1639315453) index="0" unique_id=1643185665]
+bones/0/position = Vector3(-0.0006555138, 0.47286022, -81.28615)
+bones/7/rotation = Quaternion(-0.56598544, -0.42337328, 0.5676425, -0.42213455)
+bones/8/rotation = Quaternion(-0.14406028, 0.00054722413, 0.0013984314, 0.98956776)
+bones/9/position = Vector3(-4.227318e-07, 18.982025, 2.3462235e-06)
+bones/9/rotation = Quaternion(-8.6423924e-08, -0.00022656837, -1.2013561e-07, 1)
+bones/10/rotation = Quaternion(0.09325174, -0.0431736, -0.010445631, 0.99465126)
+bones/11/rotation = Quaternion(0.15940593, 0.061482027, 0.2351291, 0.95683026)
+bones/12/rotation = Quaternion(-3.5569525e-07, -0.00010400819, -3.1857385e-07, 1)
+bones/13/rotation = Quaternion(8.58267e-07, 9.681554e-05, -1.4265645e-07, 1)
+bones/15/rotation = Quaternion(-0.09271316, 0.00015138765, 0.014465531, 0.9955878)
+bones/16/position = Vector3(-4.9070917e-07, 3.3000038, 6.758004e-06)
+bones/17/position = Vector3(-9.539584e-07, 2.0000052, -1.8736167e-05)
+bones/19/rotation = Quaternion(-0.092698954, -0.00079090416, 0.014553209, 0.99558747)
+bones/20/rotation = Quaternion(-1.3970329e-06, 3.8192607e-05, -3.2192823e-08, 1)
+bones/21/position = Vector3(1.7125702e-06, 2.3000007, 5.7356665e-06)
+bones/21/rotation = Quaternion(7.9918856e-08, -4.595228e-05, -2.3921032e-07, 1)
+bones/23/rotation = Quaternion(-0.09266373, -0.0032411674, 0.014781276, 0.99558246)
+bones/24/rotation = Quaternion(-1.8383923e-07, -6.5003034e-05, -2.0172533e-07, 1)
+bones/25/rotation = Quaternion(-4.0910805e-07, 6.486831e-05, -2.7742422e-07, 1)
+bones/27/rotation = Quaternion(-0.09267374, -0.00252928, 0.014715566, 0.9955846)
+bones/28/rotation = Quaternion(4.1842974e-08, -1.1722984e-05, 5.0148094e-07, 1)
+bones/29/position = Vector3(3.375876e-07, 1.6999999, -3.29264e-06)
+bones/29/rotation = Quaternion(-1.2232823e-08, -2.9599282e-06, -5.5893e-07, 1)
+bones/30/position = Vector3(-1.5966199e-06, 1.6595422, -1.3976603e-05)
+bones/31/rotation = Quaternion(0.5659875, -0.4233705, 0.5676447, 0.42213157)
+bones/32/rotation = Quaternion(-0.14403644, -0.0005480405, -0.0013991209, 0.9895713)
+bones/33/rotation = Quaternion(4.4263717e-07, 0.00022709307, 2.7114902e-07, 1)
+bones/34/rotation = Quaternion(0.09353758, 0.042685248, 0.025687456, 0.9943686)
+bones/35/position = Vector3(1.4227506, 3.0862024, 1.2839931)
+bones/35/rotation = Quaternion(0.16139948, -0.055573817, -0.24799995, 0.95360255)
+bones/36/rotation = Quaternion(-5.2566986e-07, 0.000111774905, 2.4718767e-07, 1)
+bones/37/position = Vector3(2.1384261e-07, 2.6523902, -2.3181747e-06)
+bones/37/rotation = Quaternion(1.491343e-07, -0.00010305163, 3.478091e-07, 1)
+bones/39/position = Vector3(1.9107771, 7.4639034, -1.0130038)
+bones/39/rotation = Quaternion(-0.09232773, 0.0007296375, -0.029743439, 0.99528414)
+bones/40/rotation = Quaternion(-8.5154943e-07, -1.8965686e-07, -2.7516657e-07, 1)
+bones/41/position = Vector3(-4.8959834e-08, 2.0000155, 4.176709e-06)
+bones/41/rotation = Quaternion(9.5115456e-07, -5.380572e-07, -4.2033219e-07, 1)
+bones/42/position = Vector3(3.3080846e-07, 2.3342593, 2.724817e-06)
+bones/43/rotation = Quaternion(-0.09229561, 0.0018153514, -0.029843591, 0.99528265)
+bones/44/rotation = Quaternion(-2.4907948e-07, -3.8237344e-05, -6.898041e-08, 1)
+bones/45/rotation = Quaternion(-1.9029859e-08, 4.673369e-05, 2.8516516e-07, 1)
+bones/46/position = Vector3(3.0319765e-07, 2.75214, 3.9646393e-06)
+bones/47/rotation = Quaternion(-0.09220009, 0.0050058146, -0.030139439, 0.9952717)
+bones/48/position = Vector3(3.004103e-07, 3.3999987, -3.568035e-06)
+bones/48/rotation = Quaternion(-9.83852e-08, 6.5246495e-05, 1.1584928e-07, 1)
+bones/49/position = Vector3(1.0309802e-06, 1.9999462, -2.0106836e-06)
+bones/49/rotation = Quaternion(6.0386134e-07, -6.53123e-05, 2.0647826e-07, 1)
+bones/51/rotation = Quaternion(-0.09221348, 0.0045312806, -0.03009523, 0.99527407)
+bones/52/rotation = Quaternion(-2.6846791e-07, 1.1199847e-05, -5.069709e-07, 1)
+bones/53/position = Vector3(-8.968293e-07, 1.6999964, -3.2141324e-06)
+bones/53/rotation = Quaternion(1.2527147e-06, 3.8578214e-06, 1.1986437e-07, 1)
+bones/55/rotation = Quaternion(1.2225759e-07, 0.014684979, 0.9998922, 6.844852e-07)
+bones/56/rotation = Quaternion(-0.059518795, 1.3318083e-07, 8.4053875e-09, 0.99822724)
+bones/57/rotation = Quaternion(0.35860395, 0.013645538, -0.014068867, 0.933284)
+bones/60/rotation = Quaternion(3.1112624e-10, 0.01468163, 0.99989223, 6.819284e-07)
+bones/61/rotation = Quaternion(-0.059511285, 4.3783274e-08, 2.4444902e-10, 0.99822766)
+bones/62/rotation = Quaternion(0.35859966, -0.013644193, 0.014069638, 0.9332857)
+
+[node name="CCDIK3D" type="CCDIK3D" parent="Armature/Skeleton3D" index="1" unique_id=922284350]
+min_distance = 0.281
+angular_delta_limit = 0.6245660728261707
+deterministic = true
+setting_count = 2
+settings/0/target_node = NodePath("../../../Arm Targets/L Arm Target")
+settings/1/target_node = NodePath("../../../Arm Targets/R Arm Target")
+settings/0/root_bone_name = "mixamorig_LeftArm"
+settings/0/root_bone = 8
+settings/0/end_bone_name = "mixamorig_LeftHand"
+settings/0/end_bone = 10
+settings/0/extend_end_bone = false
+settings/0/joint_count = 3
+settings/1/root_bone_name = "mixamorig_RightArm"
+settings/1/root_bone = 32
+settings/1/end_bone_name = "mixamorig_RightHand"
+settings/1/end_bone = 34
+settings/1/extend_end_bone = false
+settings/1/joint_count = 3
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/limitation = SubResource("JointLimitationCone3D_2o1q1")
+settings/0/joints/0/limitation/right_axis = 0
+settings/0/joints/0/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/1/rotation_axis = 3
+settings/0/joints/1/limitation = SubResource("JointLimitationCone3D_6q48x")
+settings/0/joints/1/limitation/right_axis = 0
+settings/0/joints/1/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/2/rotation_axis = 3
+settings/0/joints/2/limitation = SubResource("JointLimitationCone3D_ovudt")
+settings/0/joints/2/limitation/right_axis = 0
+settings/0/joints/2/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/1/joints/0/rotation_axis = 3
+settings/1/joints/0/limitation = SubResource("JointLimitationCone3D_p43tx")
+settings/1/joints/0/limitation/right_axis = 0
+settings/1/joints/0/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/1/joints/1/rotation_axis = 3
+settings/1/joints/1/limitation = SubResource("JointLimitationCone3D_njyoj")
+settings/1/joints/1/limitation/right_axis = 0
+settings/1/joints/1/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/1/joints/2/rotation_axis = 3
+settings/1/joints/2/limitation = SubResource("JointLimitationCone3D_2318x")
+settings/1/joints/2/limitation/right_axis = 0
+settings/1/joints/2/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+
+[node name="Arm Targets" type="Node3D" parent="." index="2" unique_id=1000749885]
+
+[node name="L Arm Target" type="Marker3D" parent="Arm Targets" index="0" unique_id=6173135]
+transform = Transform3D(0.009923859, 0.0012316848, 0, 0, 0, -0.009999997, -0.0012316848, 0.009923859, 0, 0.14754063, 0.6837616, 0.011824846)
+
+[node name="R Arm Target" type="Marker3D" parent="Arm Targets" index="1" unique_id=352878487]
+transform = Transform3D(0.009923858, 0.0012316848, 0, 0, 0, -0.009999999, -0.0012316848, 0.009923858, 0, -0.025635332, 0.7944853, -0.12962629)

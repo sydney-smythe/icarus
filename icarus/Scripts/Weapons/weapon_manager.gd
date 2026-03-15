@@ -1,6 +1,7 @@
 extends Node3D
 
 # this script is a generic script used to handle inputs and base information such as ammo, reloading, and firing calls
+var player: CharacterBody3D
 
 @export var is_enabled = true
 @export_group("PRIMARY ACTION")
@@ -73,8 +74,11 @@ func _ready() -> void:
 	sec_reload_timer = sec_reload_time
 	sec_fire_delay_timer = 0
 	sec_current_ammo = sec_magazine_size
+	call_deferred('late_ready')
 	
-
+func late_ready():
+	if player_controlled:
+		player = PlayerManager.get_player()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

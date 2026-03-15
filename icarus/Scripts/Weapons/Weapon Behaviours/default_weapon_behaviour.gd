@@ -18,7 +18,7 @@ enum Attack_types {HITSCAN, PROJECTILE}
 @onready var audio_manager: Node3D = $"Audio Manager"
 var bullet_trail = 'uid://saod68jbabc7'
 var mode : String = 'Player' 
-@onready var exit_point = get_node('Animation Manager/Model/Exit Point')
+@onready var exit_point = get_node('Animation Manager/Pivot/Model/Exit Point')
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	call_deferred('late_ready')

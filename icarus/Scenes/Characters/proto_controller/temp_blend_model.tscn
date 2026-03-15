@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://dw6ekp4nbf3a7"]
 
 [ext_resource type="PackedScene" uid="uid://bmn8snfdov0tu" path="res://Temp Visuals/Entities/temp-blend-model.glb" id="1_pordk"]
+[ext_resource type="Script" uid="uid://bt87pvdnwlx0h" path="res://Scripts/Character/player_model_manager.gd" id="2_qnmob"]
 
 [node name="temp-blend-model" unique_id=758620597 instance=ExtResource("1_pordk")]
+script = ExtResource("2_qnmob")
 
 [node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(374538838) index="0" unique_id=1263551783]
 bones/0/position = Vector3(-0.037007898, 0.40311837, -88.378075)

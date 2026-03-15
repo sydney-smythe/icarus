@@ -13,6 +13,8 @@ var disabled = false
 
 var prim_fire_rate_mult : float = 1.0 # lower = faster fire rate
 var reload_mult : float = 1.0 # lower = faster reload
+#var active_model : Node3D
+@export var weapon_anchor : Marker3D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	data_manager = get_node("/root/Game Manager/Sub Managers/Data Manager/")
@@ -103,6 +105,7 @@ func swap_active_equipment(new_active_index : int, override_same_swap = false):
 				new_active.process_mode = Node.PROCESS_MODE_ALWAYS
 				new_active.get_node('Weapon Manager').play_equip_sfx()
 				active_equipment = new_active_index
+				#active_model = new_active.get_child(0).get_child(0).get_child(0).get_child(0)  # get the pivot node
 				print('[Equip Manager] Active equipment: ' + str(new_active_index))
 		else:
 			print('[Equip Manager] Error: equipment index is out of range.')
@@ -184,3 +187,7 @@ func attack():  # used for enemy AI
 	
 func get_max_range() -> float:  # used for enemy AI
 	return get_child(active_equipment).get_child(0).get_child(0).fire_range
+	
+#func rotate_active_equipment(new_basis, rot):
+	#active_model.transform.basis = new_basis
+	#active_model.rotate_x(rot)

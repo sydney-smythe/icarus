@@ -82,13 +82,48 @@ point_count = 3
 
 [node name="Player" type="CharacterBody3D" unique_id=140928765 node_paths=PackedStringArray("essence_blast") groups=["Ignore Weapon", "Is Forceable", "Weapon Targets"]]
 script = ExtResource("1_rlwtg")
+player_enabled = null
+can_move = null
+has_gravity = null
+can_jump = null
+can_crouch = null
 can_sprint = true
+can_freefly = null
 essence_blast = NodePath("Head/Camera3D/Essence Blast")
+look_speed = null
+base_speed = null
+jump_velocity_default = null
+jump_velocity_sprinting = null
+wall_jump_push_strength = null
+wall_jump_air_control = null
+wall_jump_momentum_time = null
+air_strafe_mobility = null
+wall_run_length = null
+wall_run_decay = null
+sprint_speed = null
+crouch_speed = null
+sliding_speed = null
+sliding_speed_loss = null
+freefly_speed = null
+gravity_modifier = null
+acceleration = null
+friction = null
+air_friction = null
+slide_friction = null
 input_left = "move_left"
 input_right = "move_right"
 input_forward = "move_forward"
 input_back = "move_backward"
 input_jump = "jump"
+input_sprint = null
+input_crouch = null
+input_freefly = null
+reg_head_position = null
+sprinting_fov_adjustment = null
+crouching_fov_adjustment = null
+max_essence = null
+essence = null
+overessence = null
 essence_grav_curve = SubResource("Curve_4cql4")
 essence_speed_curve = SubResource("Curve_7v1lc")
 essence_force_curve = SubResource("Curve_egnfr")
@@ -110,15 +145,8 @@ shape = SubResource("CapsuleShape3D_iof21")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("CapsuleShape3D_rlwtg")
 
-[node name="Equipment Manager" type="Node3D" parent="." unique_id=787023289 node_paths=PackedStringArray("head", "host", "weapon_anchor")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6756495, 0)
-script = ExtResource("3_j5cwe")
-head = NodePath("../Head")
-host = NodePath("..")
-weapon_anchor = NodePath("../Head/Camera3D/Weapon Anchor")
-
 [node name="Head" type="Node3D" parent="." unique_id=1202042018]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6756495, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=275272256]
 current = true
@@ -134,16 +162,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011688232, 0.68027925, -0.7
 shape = SubResource("BoxShape3D_4cql4")
 debug_color = Color(0.68150795, 0.43798593, 0.65781826, 0.41960785)
 
+[node name="Equipment Manager" type="Node3D" parent="Head/Camera3D" unique_id=788196802 node_paths=PackedStringArray("head", "host")]
+script = ExtResource("3_j5cwe")
+head = NodePath("../..")
+host = NodePath("../../..")
+
 [node name="Pixel Art PostProcessing" type="MeshInstance3D" parent="Head/Camera3D" unique_id=1270583205]
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_d7csw")
 
-[node name="Weapon Anchor" type="Marker3D" parent="Head/Camera3D" unique_id=2041001473]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23048806, -0.26007915, -0.008605316)
-
-[node name="TPS Pivot" type="Node3D" parent="Head" unique_id=1674322918]
-
-[node name="Third Person Camera" type="Camera3D" parent="Head/TPS Pivot" unique_id=1459619234]
+[node name="Third Person Camera" type="Camera3D" parent="Head" unique_id=1459619234]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1294015872]

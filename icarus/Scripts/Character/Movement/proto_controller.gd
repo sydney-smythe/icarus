@@ -102,7 +102,12 @@ var has_attacked_since_last_wall_run : bool = false
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var camera: Node3D = $Head/Camera3D
-@onready var equipment_manager = camera.get_node('Equipment Manager')
+@onready var tps_camera : Camera3D = $"Head/TPS Pivot/Third Person Camera"
+@onready var tps_pivot: Node3D = $"Head/TPS Pivot"
+var tps_camera_default_pos
+var tps_camera_default_rot
+var freelook : bool = false
+@onready var equipment_manager = get_node('Equipment Manager')
 @onready var standing_collider: CollisionShape3D = $"Standing Collider"
 @onready var crouching_collider: CollisionShape3D = $"Crouching Collider"
 @onready var ray_cast_3d: RayCast3D = $RayCast3D
@@ -113,10 +118,11 @@ var collider  # active collider
 
 @export_group("Camera Adjustments")
 # head position (used to move the camera while crouched / uncrouched)
-@export var reg_head_position : float = 1.7
+@export var reg_head_position : float
 var crouch_head_position : float = 1.1  # IF THIS IS CHANGED, ALSO MUST CHANGE THE CROUCHING COLLIDER HEIGHT TO MATCH!
 var head_node_position : float
 var camera_height_adjustment_duration : float = 0.12  # seconds
+var camera_mode = true # true = fps, false = tps
 # FOV adjustments
 @export var sprinting_fov_adjustment : float = 6.0  # degrees | sliding will use this FOV as well
 @export var crouching_fov_adjustment : float = -0.0  # degrees
@@ -152,9 +158,8 @@ var boon_grav_mult : float = 1.0
 @onready var ui_manager = get_node('/root/Game Manager/UI Manager/')
 
 func _ready() -> void:
-	
+	reg_head_position = head.position.y
 	PlayerManager.register_player(self)
-	
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
@@ -168,6 +173,9 @@ func _ready() -> void:
 	collider = standing_collider
 	crouching_collider.set_deferred("disabled", true)
 	wall_jump_timer = 0
+	
+	tps_camera_default_pos = tps_camera.position
+	tps_camera_default_rot = tps_camera.rotation
 	
 	if is_on_floor():
 		was_just_on_ground = true
@@ -190,6 +198,17 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	
+	# handle camera swap
+	if Input.is_action_just_pressed('toggle_camera_mode'):
+		toggle_cam_mode()
+	# handle third person free look
+	if Input.is_action_pressed('third_person_free_look') and not camera_mode:
+		freelook = true
+	else:
+		freelook = false
+		#tps_camera.position = tps_camera_default_pos
+		tps_camera.rotation = tps_camera_default_rot
+		
 	if can_freefly and Input.is_action_just_pressed(input_freefly):
 		if not freeflying:
 			enable_freefly()
@@ -197,16 +216,18 @@ func _physics_process(delta: float) -> void:
 			disable_freefly()
 	
 	mouse_captured = game_manager.mouse_captured
+	
 	if player_enabled:
-		#handle animations
-		if not is_moving:
-			model_animation_player.play("idle")
-		elif is_sprinting:
-			model_animation_player.play("run")
-			#audio_manager.play_movement_audio()
-		elif is_moving and not is_sprinting:
-			model_animation_player.play("walk")
-			#audio_manager.play_movement_audio()
+	# disabled player anims for now
+		##handle animations
+		#if not is_moving:
+			#model_animation_player.play("idle")
+		#elif is_sprinting:
+			#model_animation_player.play("run")
+			##audio_manager.play_movement_audio()
+		#elif is_moving and not is_sprinting:
+			#model_animation_player.play("walk")
+			##audio_manager.play_movement_audio()
 		
 		if is_on_floor() or not is_on_wall():
 			is_wall_running = false
@@ -522,7 +543,9 @@ func _physics_process(delta: float) -> void:
 		if not is_on_floor():
 			y_velocity_pre_impact = velocity.y
 			was_just_on_ground = false
-
+			
+	if freelook and not camera_mode:
+		tps_camera.look_at(head.global_position, Vector3.UP)
 
 ## Rotate us to look around.
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
@@ -532,9 +555,16 @@ func rotate_look(rot_input : Vector2):
 	look_rotation.x = clamp(look_rotation.x, deg_to_rad(-85), deg_to_rad(85))
 	look_rotation.y -= rot_input.x * look_speed
 	transform.basis = Basis()
-	rotate_y(look_rotation.y)
-	head.transform.basis = Basis()
-	head.rotate_x(look_rotation.x)
+	
+	if not freelook:
+		rotate_y(look_rotation.y)
+		head.transform.basis = Basis()
+		head.rotate_x(look_rotation.x)
+		#equipment_manager.rotate_active_equipment(Basis(), look_rotation.x)
+	else:
+		tps_pivot.transform.basis = Basis()
+		tps_pivot.rotate_y(look_rotation.y)
+		tps_pivot.rotate_x(look_rotation.x)
 
 
 func enable_freefly():
@@ -685,3 +715,13 @@ func toggle_weapons(mode : bool, keep_weapons_visible : bool = false):
 func update_essence_blast_status(cooldown : float):
 	if ui_manager.get_child(1).has_node('HUD'):
 		ui_manager.get_child(1).get_node('HUD').set_essence_blast_cooldown(cooldown)
+		
+		
+func toggle_cam_mode():
+	print('toggling cam')
+	if camera_mode:  # become third person
+		tps_camera.make_current()
+		camera_mode = false
+	else:  # become first person
+		camera.make_current()
+		camera_mode = true
