@@ -1,10 +1,10 @@
 extends Node3D
 
 # GAME INFORMATION
-const GAME_VERSION : String = '0.1.314'
-const GAME_BUILD : String = '001'
+const GAME_VERSION : String = '0.2.314'
+const GAME_BUILD : String = '002'
 const GAME_STATE : String = 'Pre-Alpha'
-const GAME_PLAYTEST_NAME : String = '01-Naples'
+const GAME_PLAYTEST_NAME : String = '02-Milan'
 
 @onready var player = %Player
 var pvp_manager = "uid://cemuhifmaw5q3"
