@@ -83,6 +83,8 @@ func late_ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	is_enabled = not equipment_manager.disabled
+	if not is_enabled:
+		weapon_behaviour.full_cooldown_timer = 0
 	if ai_prim_fire_timer > 0:
 		ai_prim_fire_timer -= delta
 		if equipment_manager.host.target_mode:

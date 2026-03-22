@@ -13,6 +13,15 @@
 [ext_resource type="AudioStream" uid="uid://3r85pvvkbumn" path="res://Temp Audio/equip.ogg" id="12_wlk5h"]
 [ext_resource type="AudioStream" uid="uid://b8cvag3pfv84c" path="res://Temp Audio/enemy-hit.ogg" id="13_22v5d"]
 
+[sub_resource type="Curve" id="Curve_wlk5h"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.4930748, 0.28595), 0.0, 0.0, 0, 0, Vector2(1, 0.7885431), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_22v5d"]
+_limits = [1.0, 2.5, 0.0, 1.0]
+_data = [Vector2(0, 1.4289252), 0.0, 0.0, 0, 0, Vector2(0.49584487, 1.640382), 0.0, 0.0, 0, 0, Vector2(1, 2.256365), 0.85344523, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="Animation" id="Animation_rb7mo"]
 length = 0.001
 tracks/0/type = "value"
@@ -69,6 +78,14 @@ prim_fire_delay = 0.8
 script = ExtResource("2_vx4gb")
 damage = 9
 projectile = ExtResource("3_bgcc2")
+max_bloom = 2.0
+shots_to_max_bloom = 6
+bloom_strength_curve = SubResource("Curve_wlk5h")
+shots_to_max_recoil = 6
+recoil_strength_curve = SubResource("Curve_22v5d")
+max_stored_recent_shots = 9
+shot_cooldown_time = 0.08
+full_cooldown_time = 3.0
 
 [node name="Animation Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=450035929]
 script = ExtResource("4_wlk5h")

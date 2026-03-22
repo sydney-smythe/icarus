@@ -57,6 +57,7 @@ var wall_run_min_speed : float = 3.8
 ## How fast do we freefly?
 @export var freefly_speed : float = 25.0
 @export var gravity_modifier : float = 2.0
+var head_tween : Tween
 
 ## Movement physics parameters
 @export_group("Movement Physics")
@@ -550,16 +551,32 @@ func _physics_process(delta: float) -> void:
 ## Rotate us to look around.
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
 ## Modifies look_rotation based on rot_input, then resets basis and rotates by look_rotation.
-func rotate_look(rot_input : Vector2):
-	look_rotation.x -= rot_input.y * look_speed
+func rotate_look(rot_input : Vector2, speed : float = look_speed, should_tween : bool = false, tween_speed : float = 0.02):
+	look_rotation.x -= rot_input.y * speed
 	look_rotation.x = clamp(look_rotation.x, deg_to_rad(-85), deg_to_rad(85))
-	look_rotation.y -= rot_input.x * look_speed
+	look_rotation.y -= rot_input.x * speed
 	transform.basis = Basis()
 	
 	if not freelook:
 		rotate_y(look_rotation.y)
-		head.transform.basis = Basis()
-		head.rotate_x(look_rotation.x)
+		
+		if not should_tween:
+			if head_tween != null and head_tween.is_running():
+				head_tween.kill()
+				head_tween = get_tree().create_tween()
+				head_tween.tween_property(head, "rotation:x", look_rotation.x, tween_speed)
+			else:
+				head.transform.basis = Basis()
+				head.rotate_x(look_rotation.x)
+			#if head_tween == null or not head_tween.is_running():
+				#head.transform.basis = Basis()
+				#head.rotate_x(look_rotation.x)
+		else:
+			if head_tween:
+				head_tween.kill()
+			head_tween = get_tree().create_tween()
+			head_tween.tween_property(head, "rotation:x", look_rotation.x, tween_speed)
+		
 		#equipment_manager.rotate_active_equipment(Basis(), look_rotation.x)
 	else:
 		tps_pivot.transform.basis = Basis()

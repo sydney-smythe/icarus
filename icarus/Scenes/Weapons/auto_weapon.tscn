@@ -12,6 +12,15 @@
 [ext_resource type="AudioStream" uid="uid://3r85pvvkbumn" path="res://Temp Audio/equip.ogg" id="12_fcnc1"]
 [ext_resource type="AudioStream" uid="uid://b8cvag3pfv84c" path="res://Temp Audio/enemy-hit.ogg" id="13_xw6ga"]
 
+[sub_resource type="Curve" id="Curve_v3c3d"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5706371, 0.48208386), 2.4624476, 2.4624476, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_fcnc1"]
+_limits = [0.7, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 1.1250827), 0.0, 0.0, 0, 0, Vector2(0.16066483, 1.4916079), 2.6987453, 2.6987453, 0, 0, Vector2(0.67036015, 2.1259785), 2.7939944, 2.7939944, 0, 0, Vector2(0.797784, 2.7251062), 2.4546406, 2.4546406, 0, 0, Vector2(1, 3), 0.0, 0.0, 0, 0]
+point_count = 5
+
 [sub_resource type="Animation" id="Animation_rb7mo"]
 length = 0.001
 
@@ -39,6 +48,13 @@ script = ExtResource("2_xvmx3")
 recoil_strength = 1.3
 damage = 3
 projectile = ExtResource("3_v3c3d")
+max_bloom = 3.0
+shots_to_max_bloom = 10
+bloom_strength_curve = SubResource("Curve_v3c3d")
+shots_to_max_recoil = 15
+recoil_strength_curve = SubResource("Curve_fcnc1")
+shot_cooldown_time = 0.1
+full_cooldown_time = 3.0
 
 [node name="Animation Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=450035929]
 script = ExtResource("4_fcnc1")
