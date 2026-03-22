@@ -18,7 +18,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Weapon Manager/Behaviour Manager/Animation Manager/Model/MeshInstance3D:visible")
+tracks/0/path = NodePath("Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model/MeshInstance3D:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -34,7 +34,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Weapon Manager/Behaviour Manager/Animation Manager/Model/MeshInstance3D:visible")
+tracks/0/path = NodePath("Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model/MeshInstance3D:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -70,24 +70,28 @@ projectile = ExtResource("3_78gpb")
 [node name="Animation Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=450035929]
 script = ExtResource("3_t12gy")
 model_scale = 0.2
-model_position_offest = Vector3(0.38, -0.2, -0.5)
-model_rotation_offest = Vector3(0, 90, 0)
+model_rotation_offset = Vector3(0, 90, 0)
 
-[node name="Model" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=485206775 instance=ExtResource("5_bwl48")]
+[node name="Pivot" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=1790806813]
 
-[node name="Exit Point" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=26088609]
+[node name="Model" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot" unique_id=485206775 instance=ExtResource("5_bwl48")]
+
+[node name="Exit Point" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model" unique_id=26088609]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.157403, 0.32809007, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=1571579351]
-root_node = NodePath("../../../../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model" unique_id=1571579351]
+root_node = NodePath("../../../../../..")
 libraries/ = SubResource("AnimationLibrary_6012l")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Model" unique_id=261724011]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model" unique_id=261724011]
 transform = Transform3D(1, -8.940697e-08, -8.7422784e-08, 8.742279e-08, 2.980232e-08, 1.0000001, -8.940697e-08, -1.0000001, 2.980233e-08, 1.6328932, 0.37948927, 0)
 visible = false
 mesh = SubResource("PlaneMesh_3w3ja")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_6012l")
+
+[node name="Grip Point" type="Marker3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model" unique_id=2063755765]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6431515, 0.00021135807, 0)
 
 [node name="Audio Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=729461471 node_paths=PackedStringArray("primary_fire_audio", "no_ammo_audio", "reload_audio", "equip_audio", "enemy_hit_audio")]
 script = ExtResource("8_6012l")

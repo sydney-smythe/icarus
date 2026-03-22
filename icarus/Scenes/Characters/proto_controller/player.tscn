@@ -110,18 +110,17 @@ shape = SubResource("CapsuleShape3D_iof21")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("CapsuleShape3D_rlwtg")
 
-[node name="Equipment Manager" type="Node3D" parent="." unique_id=787023289 node_paths=PackedStringArray("head", "host", "weapon_anchor")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6756495, 0)
-script = ExtResource("3_j5cwe")
-head = NodePath("../Head")
-host = NodePath("..")
-weapon_anchor = NodePath("../Head/Camera3D/Weapon Anchor")
-
 [node name="Head" type="Node3D" parent="." unique_id=1202042018]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6756495, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=275272256]
 current = true
+
+[node name="Equipment Manager" type="Node3D" parent="Head/Camera3D" unique_id=787023289 node_paths=PackedStringArray("head", "host", "weapon_anchor")]
+script = ExtResource("3_j5cwe")
+head = NodePath("../..")
+host = NodePath("../../..")
+weapon_anchor = NodePath("../Weapon Anchor")
 
 [node name="Essence Blast" type="Area3D" parent="Head/Camera3D" unique_id=1994323815 node_paths=PackedStringArray("audio_manager")]
 transform = Transform3D(1, 0, 0, 0, 2.9802322e-08, 1, 0, -1, 2.9802322e-08, 0, 0.025982857, -1.2880154)

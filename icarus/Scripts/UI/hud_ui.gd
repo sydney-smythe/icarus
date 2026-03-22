@@ -13,7 +13,7 @@ var blast_timer : float = 0.0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = PlayerManager.get_player()
-	equipment_manager = player.get_node('Equipment Manager')
+	equipment_manager = player.equipment_manager
 	boon_manager = player.get_node('Boon Manager')
 
 

@@ -1,30 +1,8 @@
 [gd_scene format=3 uid="uid://juf5ryufdte2"]
 
 [ext_resource type="PackedScene" uid="uid://cdnagfbgobrf3" path="res://Temp Visuals/Entities/test-ik-player.glb" id="1_2o1q1"]
-[ext_resource type="Script" uid="uid://bt87pvdnwlx0h" path="res://Scripts/Character/player_model_manager.gd" id="2_6q48x"]
 
-[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_2o1q1"]
-angle = 3.1415927
-
-[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_6q48x"]
-angle = 3.1415927
-
-[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_ovudt"]
-angle = 2.268928
-
-[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_p43tx"]
-angle = 3.1415927
-
-[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_njyoj"]
-angle = 4.610287
-
-[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_2318x"]
-angle = 2.268928
-
-[node name="test-ik-player" unique_id=908859433 node_paths=PackedStringArray("l_arm_target", "r_arm_target") instance=ExtResource("1_2o1q1")]
-script = ExtResource("2_6q48x")
-l_arm_target = NodePath("Arm Targets/L Arm Target")
-r_arm_target = NodePath("Arm Targets/R Arm Target")
+[node name="test-ik-player" unique_id=908859433 instance=ExtResource("1_2o1q1")]
 
 [node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1639315453) index="0" unique_id=1643185665]
 bones/0/position = Vector3(-0.0006555138, 0.47286022, -81.28615)
@@ -85,55 +63,3 @@ bones/57/rotation = Quaternion(0.35860395, 0.013645538, -0.014068867, 0.933284)
 bones/60/rotation = Quaternion(3.1112624e-10, 0.01468163, 0.99989223, 6.819284e-07)
 bones/61/rotation = Quaternion(-0.059511285, 4.3783274e-08, 2.4444902e-10, 0.99822766)
 bones/62/rotation = Quaternion(0.35859966, -0.013644193, 0.014069638, 0.9332857)
-
-[node name="CCDIK3D" type="CCDIK3D" parent="Armature/Skeleton3D" index="1" unique_id=922284350]
-min_distance = 0.281
-angular_delta_limit = 0.6245660728261707
-deterministic = true
-setting_count = 2
-settings/0/target_node = NodePath("../../../Arm Targets/L Arm Target")
-settings/1/target_node = NodePath("../../../Arm Targets/R Arm Target")
-settings/0/root_bone_name = "mixamorig_LeftArm"
-settings/0/root_bone = 8
-settings/0/end_bone_name = "mixamorig_LeftHand"
-settings/0/end_bone = 10
-settings/0/extend_end_bone = false
-settings/0/joint_count = 3
-settings/1/root_bone_name = "mixamorig_RightArm"
-settings/1/root_bone = 32
-settings/1/end_bone_name = "mixamorig_RightHand"
-settings/1/end_bone = 34
-settings/1/extend_end_bone = false
-settings/1/joint_count = 3
-settings/0/joints/0/rotation_axis = 3
-settings/0/joints/0/limitation = SubResource("JointLimitationCone3D_2o1q1")
-settings/0/joints/0/limitation/right_axis = 0
-settings/0/joints/0/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
-settings/0/joints/1/rotation_axis = 3
-settings/0/joints/1/limitation = SubResource("JointLimitationCone3D_6q48x")
-settings/0/joints/1/limitation/right_axis = 0
-settings/0/joints/1/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
-settings/0/joints/2/rotation_axis = 3
-settings/0/joints/2/limitation = SubResource("JointLimitationCone3D_ovudt")
-settings/0/joints/2/limitation/right_axis = 0
-settings/0/joints/2/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
-settings/1/joints/0/rotation_axis = 3
-settings/1/joints/0/limitation = SubResource("JointLimitationCone3D_p43tx")
-settings/1/joints/0/limitation/right_axis = 0
-settings/1/joints/0/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
-settings/1/joints/1/rotation_axis = 3
-settings/1/joints/1/limitation = SubResource("JointLimitationCone3D_njyoj")
-settings/1/joints/1/limitation/right_axis = 0
-settings/1/joints/1/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
-settings/1/joints/2/rotation_axis = 3
-settings/1/joints/2/limitation = SubResource("JointLimitationCone3D_2318x")
-settings/1/joints/2/limitation/right_axis = 0
-settings/1/joints/2/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
-
-[node name="Arm Targets" type="Node3D" parent="." index="2" unique_id=1000749885]
-
-[node name="L Arm Target" type="Marker3D" parent="Arm Targets" index="0" unique_id=6173135]
-transform = Transform3D(0.009923859, 0.0012316848, 0, 0, 0, -0.009999997, -0.0012316848, 0.009923859, 0, 0.14754063, 0.6837616, 0.011824846)
-
-[node name="R Arm Target" type="Marker3D" parent="Arm Targets" index="1" unique_id=352878487]
-transform = Transform3D(0.009923858, 0.0012316848, 0, 0, 0, -0.009999999, -0.0012316848, 0.009923858, 0, -0.025635332, 0.7944853, -0.12962629)

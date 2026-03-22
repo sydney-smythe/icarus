@@ -11,8 +11,8 @@ var player: CharacterBody3D
 @onready var animation_player = $Pivot/Model/AnimationPlayer
 
 @export_group("Hand Positioning")
-@export var l_hand_pos: Marker3D
-@export var r_hand_pos: Marker3D
+#@export var l_hand_pos: Marker3D
+#@export var r_hand_pos: Marker3D
 var track_hands = false
 
 # The anchor on the camera where the weapon grip should snap to
@@ -37,7 +37,7 @@ func late_ready():
 		player = PlayerManager.get_player()
 		if player:
 			weapon_anchor = player.camera.get_node('Weapon Anchor')
-			track_hands = true
+			#track_hands = true
 
 func _process(_delta: float) -> void:
 	if player_controlled and weapon_anchor and grip_point:
@@ -46,13 +46,13 @@ func _process(_delta: float) -> void:
 		global_position = weapon_anchor.global_position - grip_offset
 		global_rotation = weapon_anchor.global_rotation
 		
-	if track_hands:
-		update_player_hand_targets()
+	#if track_hands:
+		#update_player_hand_targets()
 
-func update_player_hand_targets():
+#func update_player_hand_targets():
 	#print('setting hand pos')
-	player.model.l_arm_target.global_position = l_hand_pos.global_position
-	player.model.r_arm_target.global_position = r_hand_pos.global_position
+	#player.model.l_arm_target.global_position = l_hand_pos.global_position
+	#player.model.r_arm_target.global_position = r_hand_pos.global_position
 
 func play_primary_fire():
 	if animation_player.current_animation == primary_animation:

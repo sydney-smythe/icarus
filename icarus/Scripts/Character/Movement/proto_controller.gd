@@ -107,7 +107,7 @@ var has_attacked_since_last_wall_run : bool = false
 var tps_camera_default_pos
 var tps_camera_default_rot
 var freelook : bool = false
-@onready var equipment_manager = get_node('Equipment Manager')
+@onready var equipment_manager = get_node('Head/Camera3D/Equipment Manager')
 @onready var standing_collider: CollisionShape3D = $"Standing Collider"
 @onready var crouching_collider: CollisionShape3D = $"Crouching Collider"
 @onready var ray_cast_3d: RayCast3D = $RayCast3D
