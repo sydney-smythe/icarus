@@ -20,13 +20,21 @@ var ui_bundle_climb : Array[String] = [debug_ui, crosshair, hud, pause_menu_ui, 
 @export var audio_manager : Node3D
 @export var ui_nodes : Control
 
+var active_node_list : Array[Control]  # the node actively being controlled. can be used to restrict key pressed affecting other nodes
+var queue_pop : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
-func load_ui(ui_path : String):
+func _process(delta: float) -> void:
+	if queue_pop:
+		call_deferred('delayed_pop')
+
+func load_ui(ui_path : String, child_index : int = -1):
 	var ui_instance = load(ui_path).instantiate()
 	ui_nodes.add_child(ui_instance)
+	if child_index != -1:
+		ui_nodes.move_child(ui_instance, child_index)
 
 func unload_ui():
 	print(str(ui_nodes))
@@ -90,3 +98,29 @@ func play_ui_back_sfx():
 	
 func play_ui_accept_sfx():
 	audio_manager.play_accept()
+
+func add_active_node(node : Control):
+	active_node_list.append(node)
+
+func pop_active_node():
+	queue_pop = true
+	
+func delayed_pop():
+	queue_pop = false
+	if active_node_list.size() > 0:
+		active_node_list.remove_at(-1)
+	
+func get_active_node():
+	return active_node_list[-1]
+
+func update_hud_weapons(inventory_array : Array):
+	print('--UI: ' + str(inventory_array))
+	# start of round gets called before hud loads so nothing happens, fix (just start of match probably, not start of every round?)
+	if ui_nodes.has_node('HUD'):
+		ui_nodes.get_node('HUD').update_weapon_info(inventory_array)
+		print('good :0')
+	print('bad!!!')
+	
+func update_hud_ammo(index : int, ammo : int):
+	if ui_nodes.has_node('HUD'):
+		ui_nodes.get_node('HUD').update_ammo(index, ammo)

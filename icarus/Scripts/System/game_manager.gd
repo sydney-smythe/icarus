@@ -67,3 +67,18 @@ func release_mouse():
 	
 func _unhandled_input(event: InputEvent) -> void:
 	subviewport.push_input(event)
+	
+func toggle_pause():
+	if is_paused:
+		unpause()
+	else:
+		pause()
+
+func pause():
+	is_paused = true
+	Input.action_release("primary_action")
+	release_mouse()
+	
+func unpause():
+	is_paused = false
+	capture_mouse()

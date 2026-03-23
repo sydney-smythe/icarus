@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://co0ic7tqq6g2q" path="res://Scripts/Environment/pickup_manager.gd" id="4_b1h3t"]
 [ext_resource type="PackedScene" uid="uid://c8x7hvb250pby" path="res://Scenes/Characters/Enemies/default_enemy.tscn" id="4_dhjn7"]
 [ext_resource type="Texture2D" uid="uid://bmpsadb57fuoa" path="res://Temp Visuals/kenney_prototype_textures/dark/texture_04.png" id="4_eumbo"]
+[ext_resource type="Texture2D" uid="uid://5s142e3j4rhg" path="res://Temp Visuals/kenney_prototype_textures/purple/texture_01.png" id="5_df67k"]
 [ext_resource type="PackedScene" uid="uid://dc5wvqfyol0ij" path="res://Scenes/Environment/win_pickup.tscn" id="8_rob5d"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sru4l"]
@@ -38,6 +39,11 @@ uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3nisk"]
 albedo_texture = ExtResource("3_df67k")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1h3t"]
+albedo_texture = ExtResource("5_df67k")
 uv1_scale = Vector3(0.5, 0.5, 0.5)
 uv1_triplanar = true
 
@@ -82,6 +88,11 @@ material = SubResource("StandardMaterial3D_1w34q")
 
 [node name="CSGBox3D20" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=979303973]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.243574, 15.398122, -1.770571)
+size = Vector3(21.525146, 1, 7.218994)
+material = SubResource("StandardMaterial3D_1w34q")
+
+[node name="CSGBox3D24" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=45728703]
+transform = Transform3D(0.8694087, 0, -0.49409363, 0, 1, 0, 0.49409363, 0, 0.8694087, 49.041424, 55.11644, 80.489655)
 size = Vector3(21.525146, 1, 7.218994)
 material = SubResource("StandardMaterial3D_1w34q")
 
@@ -143,6 +154,18 @@ material = SubResource("StandardMaterial3D_rob5d")
 [node name="CSGBox3D5" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1953197582]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.7902, 13.114959, -5.0334387)
 size = Vector3(33.001343, 25.22992, 1)
+material = SubResource("StandardMaterial3D_3nisk")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=985798832]
+transform = Transform3D(1.0365592, 0, -0.4853392, 0, 2.3758242, 0, 0.4853392, 0, 1.0365592, -46.789925, 2.9576259, 24.055445)
+radius = 4.9731445
+height = 5.0893555
+sides = 30
+material = SubResource("StandardMaterial3D_b1h3t")
+
+[node name="CSGBox3D23" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1885440368]
+transform = Transform3D(0.9056428, 0, -0.42404136, 0, 1, 0, 0.42404136, 0, 0.9056428, 12.470161, 29.082146, 67.7088)
+size = Vector3(88.4487, 57.16429, 1)
 material = SubResource("StandardMaterial3D_3nisk")
 
 [node name="CSGBox3D22" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1089829996]

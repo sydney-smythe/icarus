@@ -1,6 +1,6 @@
 extends Control
 
-@export var default_round_count : int = 5
+@export var default_round_count : int = 3
 @export var default_map_id : String = "0"
 @export var round_count_label : Label
 @export var stage_label : Label
@@ -31,23 +31,28 @@ func ui_update():
 
 func _on_less_rounds_button_up() -> void:
 	ui_manager.play_ui_accept_sfx()
-	if round_count > 3:
-		round_count -= 2
+	if round_count > 1:
+		round_count -= 1
 		ui_update()
 
 
 func _on_more_rounds_button_up() -> void:
 	ui_manager.play_ui_accept_sfx()
 	if round_count < 255:
-		round_count += 2
+		round_count += 1
 		ui_update()
 
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed('pause'):
+		back()
 
-func _on_back_button_up() -> void:
+func back():
 	ui_manager.play_ui_back_sfx()
 	ui_manager.load_ui(mode_selection_ui)
 	queue_free()
 
+func _on_back_button_up() -> void:
+	back()
 
 func _on_start_game_button_up() -> void:
 	ui_manager.play_ui_accept_sfx()

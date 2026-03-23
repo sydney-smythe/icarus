@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ctlflwke8od7j" path="res://Scripts/UI/gamemode_selection_ui.gd" id="1_atdmp"]
 
 [node name="Gamemode Selection UI" type="Control" unique_id=347372123]
+z_index = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,7 +55,7 @@ custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 50
-text = "CLIMB"
+text = "SUMMIT"
 expand_icon = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=885687861]
@@ -69,7 +70,7 @@ layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 50
-text = "PvP"
+text = "COMBAT"
 
 [node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1140630349]
 layout_mode = 1

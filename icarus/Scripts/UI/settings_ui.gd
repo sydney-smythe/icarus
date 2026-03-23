@@ -20,22 +20,32 @@ func toggle_visibility():
 		is_enabled = false
 	else:
 		self.show()
+		if self not in ui_manager.active_node_list:
+			ui_manager.add_active_node(self)
 		is_enabled = true
 		game_manager.release_mouse()
 
 func set_version_text():
 	version_text.text = 'Project ICARUS v.' + game_manager.GAME_VERSION + ' Build ' + game_manager.GAME_BUILD + ' Playtest ' + game_manager.GAME_PLAYTEST_NAME + ' (' + game_manager.GAME_STATE + ')\n\nDeveloped using the Godot Engine'
 
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed('pause') and is_enabled and ui_manager.get_active_node() == self:
+		back()
+
 func _on_back_button_button_up() -> void:
+	back()
+
+func back():
 	ui_manager.play_ui_back_sfx()
 	if tab == 'Settings':
 		toggle_visibility()
+		ui_manager.pop_active_node()
 	elif tab == 'About':
 		settings_screen.show()
 		about_screen.hide()
 		about_button.show()
 		tab = 'Settings'
-
+		
 
 func _on_about_button_button_up() -> void:
 	ui_manager.play_ui_accept_sfx()

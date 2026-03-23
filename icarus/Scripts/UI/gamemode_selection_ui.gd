@@ -10,6 +10,9 @@ var pvp_lobby_ui = "uid://uvne644wrm3k"
 func _ready() -> void:
 	pass # Replace with function body.
 
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("pause"):
+		return_to_main_menu()
 
 func _on_climb_button_up() -> void:
 	ui_manager.play_ui_accept_sfx()
@@ -21,8 +24,10 @@ func _on_pv_p_button_up() -> void:
 	ui_manager.load_ui(pvp_lobby_ui)
 	queue_free()
 
-
 func _on_back_button_up() -> void:
+	return_to_main_menu()
+
+func return_to_main_menu():
 	ui_manager.play_ui_back_sfx()
-	ui_manager.load_ui(main_menu_ui)
+	ui_manager.load_ui(main_menu_ui, 1)
 	queue_free()

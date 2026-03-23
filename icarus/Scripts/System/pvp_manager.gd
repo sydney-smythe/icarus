@@ -29,7 +29,7 @@ func _ready() -> void:  #initialize the PVP game variables
 	
 func late_ready():
 	@warning_ignore("integer_division")
-	rounds_to_win = rounds - int(rounds/2)
+	rounds_to_win = rounds
 	player = PlayerManager.get_player()
 	stage = stage_manager.get_child(0)
 	print('player: ' + str(player.name) + ' | stage: ' + str(stage.name))
@@ -79,6 +79,7 @@ func init_round():
 			player_node.disable_freefly()
 			player_node.toggle_weapons(false, true)
 			player_node.can_move = false
+			player_node.equipment_manager.update_hud_weapons()
 		else:
 			player_node.target_mode = false
 		player_node.round_reset(data_manager.stage_dict[stage_id][4])
@@ -140,10 +141,10 @@ func end_round():
 	if is_winner:
 		end_session()
 	else:
-		if current_round == rounds:
-			end_session()
-		else:
-			init_round()
+		#if current_round == rounds:
+			#end_session()
+		#else:
+		init_round()
 
 func kill_player(player_node : CharacterBody3D):
 	for player_id in player_dict:

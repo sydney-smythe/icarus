@@ -89,8 +89,8 @@ func _process(delta: float) -> void:
 		ai_prim_fire_timer -= delta
 		if equipment_manager.host.target_mode:
 			activate_primary()
-		
-	if check_fire:
+			
+	if check_fire and not game_manager.is_paused:
 		if Input.is_action_pressed('primary_action') and is_enabled:
 				activate_primary()
 	
@@ -106,6 +106,8 @@ func _process(delta: float) -> void:
 			#print('primary reload complete')
 			prim_is_reloading = false
 			prim_current_ammo = prim_magazine_size
+			if player_controlled:
+				equipment_manager.update_hud_ammo(prim_current_ammo)
 	
 	if sec_is_reloading:
 		if sec_reload_timer > 0:
@@ -172,7 +174,8 @@ func activate_primary():
 						primary_action()
 		else:
 			reload()
-		
+	if player_controlled:
+		equipment_manager.update_hud_ammo(prim_current_ammo)
 		
 func primary_action():
 	prim_fire_delay_timer = prim_fire_delay * equipment_manager.prim_fire_rate_mult

@@ -45,7 +45,7 @@ theme_override_constants/separation = 30
 [node name="PVP setup" type="Label" parent="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info" unique_id=1789156525]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
-text = "PvP Setup"
+text = "Combat Setup"
 horizontal_alignment = 1
 
 [node name="Round Info" type="HBoxContainer" parent="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info" unique_id=240458742]
@@ -54,7 +54,7 @@ layout_mode = 2
 [node name="Best of x" type="Label" parent="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info/Round Info" unique_id=1681773215]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
-text = "Rounds (best of)"
+text = "Rounds (first to)"
 
 [node name="Less rounds" type="Button" parent="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info/Round Info" unique_id=179006371]
 layout_mode = 2

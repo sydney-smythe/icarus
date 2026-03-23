@@ -13,12 +13,13 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed('pause') and game_manager.can_pause:
 		if not self.visible:
 			self.show()
-			game_manager.release_mouse()
-			game_manager.is_paused = true
-		else:
+			game_manager.toggle_pause()
+			if self not in ui_manager.active_node_list:
+				ui_manager.add_active_node(self)
+		elif ui_manager.get_active_node() == self:
 			self.hide()
-			game_manager.capture_mouse()
-			game_manager.is_paused = false
+			game_manager.toggle_pause()
+			ui_manager.pop_active_node()
 
 func _on_quit_button_button_up() -> void:
 	ui_manager.play_ui_back_sfx()

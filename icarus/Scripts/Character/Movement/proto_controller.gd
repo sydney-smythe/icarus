@@ -41,11 +41,13 @@ var y_velocity_pre_impact : float = 0
 # Wall run parameters
 @export var wall_run_length : float = 3.0  # seconds you can run on the wall for straight (before gravity regains full control of y)
 @export var wall_run_decay : float = 0.2  # higher = the quicker gravity regains control
+var wall_run_decay_mult : float = 1.0  # can be modified to increase how quickly the wall run ends (higher = ends faster)
 var wall_run_grav_mod : float = 0.0  # modifies how strong gravity will be this physics process call
 var wall_run_timer : float = 0.0  # when > 0, applies wall run protocol
 var is_wall_running : bool = false
 var current_wall_run_grav_mod : float  # is the agent that acts on gravity, the other one dictates this one's starting value
 var can_wall_run : bool = true
+var can_limited_wall_run : bool = true # can wall run, but only a wall that isnt at the same angle as the last wall
 var wall_run_normal : Vector3
 var wall_run_min_speed : float = 3.8
 ## How fast do we run?
@@ -138,7 +140,7 @@ var crouch_height
 
 var can_wall_jump = true
 var prev_wall_jump_side : Vector2  # for wall jumping
-var prev_wall_run_jump_side : Vector2
+var prev_wall_run_side : Vector2
 
 var forcer_vector : Vector3 = Vector3(0,0,0)
 
@@ -182,7 +184,7 @@ func _ready() -> void:
 		was_just_on_ground = true
 
 func _unhandled_input(event: InputEvent) -> void:
-	if player_enabled:
+	if player_enabled and not game_manager.is_paused:
 		# Mouse capturing
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			game_manager.capture_mouse()
@@ -230,8 +232,9 @@ func _physics_process(delta: float) -> void:
 			#model_animation_player.play("walk")
 			##audio_manager.play_movement_audio()
 		
-		if is_on_floor() or not is_on_wall():
+		if (is_on_floor() or not is_on_wall()) and is_wall_running:
 			is_wall_running = false
+			#print('ended wall run 2')
 		
 		if not is_wall_running:
 			wall_run_timer = 0.0
@@ -242,9 +245,12 @@ func _physics_process(delta: float) -> void:
 		if not can_wall_run and is_on_floor():
 			can_wall_run = true
 			
+		if not can_limited_wall_run and is_on_floor():
+			can_limited_wall_run = true
 		
 		if has_attacked_since_last_wall_run:
 			can_wall_run = true
+			can_limited_wall_run = true
 			can_wall_jump = true
 			has_attacked_since_last_wall_run = false
 		# reset FOV if not crouching or sprinting
@@ -287,6 +293,7 @@ func _physics_process(delta: float) -> void:
 		if is_wall_running:
 			if wall_run_timer <= 0:
 				is_wall_running = false
+				#print('ended wall run 3')
 				current_wall_run_grav_mod = wall_run_grav_mod
 				
 		# Apply gravity to velocity
@@ -300,7 +307,8 @@ func _physics_process(delta: float) -> void:
 			
 			var wall_collision_normal = get_slide_collision(1).get_normal()
 			var wall_side_vector = Vector2(wall_collision_normal.x, wall_collision_normal.z)
-			if can_wall_run or prev_wall_run_jump_side != wall_side_vector:
+			#print(str(wall_side_vector))
+			if not is_wall_running and (can_wall_run or (can_limited_wall_run and prev_wall_run_side != wall_side_vector)):
 				# check to make sure the player is somewhat orthogonal to the wall
 				var wall_normal = get_wall_normal()
 				var forward_dir = -global_transform.basis.z
@@ -310,9 +318,11 @@ func _physics_process(delta: float) -> void:
 					current_wall_run_grav_mod = wall_run_grav_mod
 					velocity.y = 0
 					can_wall_run = false
+					can_limited_wall_run = false
 					is_wall_running = true
-					prev_wall_run_jump_side = wall_side_vector
-					wall_run_normal = Vector3(-wall_collision_normal.x, wall_collision_normal.y, -wall_collision_normal.z)
+					#print('started wall run')
+					prev_wall_run_side = wall_side_vector
+					wall_run_normal = Vector3(-wall_collision_normal.x, 0, -wall_collision_normal.z)
 				
 
 		# Apply jumping
@@ -344,6 +354,7 @@ func _physics_process(delta: float) -> void:
 						
 						prev_wall_jump_side = wall_side_vector
 						can_wall_jump = false
+						can_limited_wall_run = true
 						
 						if 'jump' not in active_actions:
 							active_actions.append('jump')
@@ -525,12 +536,14 @@ func _physics_process(delta: float) -> void:
 		if wall_run_timer > 0:
 			apply_force(1, wall_run_normal, false, 0.0, true)
 			wall_run_timer -= delta
-			current_wall_run_grav_mod += wall_run_decay * delta
+			current_wall_run_grav_mod += wall_run_decay * wall_run_decay_mult * delta
+			#print(str(current_wall_run_grav_mod))
 		
 		# Use velocity to actually move
 		if is_wall_running:
 			if abs(velocity.x) + abs(velocity.z) < wall_run_min_speed:
 				is_wall_running = false
+				#print('ended wall run')
 		
 		# Apply external forces
 		velocity += forcer_vector
@@ -654,6 +667,7 @@ func swap_collider(now_crouching : bool):
 		standing_collider.set_deferred("disabled", false)
 		
 func apply_force(strength : float, direction : Vector3, sustained : bool = false, duration : float = 0.0, override_unforceable : bool = false):
+	#print('force dir: ' + str(direction))
 	if (not unforceable and not freeflying) or override_unforceable:
 		if sustained:
 			var force_object = preload("res://Scenes/Physics/forcer.tscn").instantiate()

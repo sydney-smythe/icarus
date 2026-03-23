@@ -5,9 +5,10 @@ extends Node3D
 @export var inventory_size : int = 2
 var default_equipment : String = "0"  # for now, default equipment is the Default Weapon. Later, will probably be fists.
 var inventory
-var inventory_array : Array[Array] = []  # contains a sub-array for each equipped item: [String: Item Name, Bool: Can be Equipped?]
+var inventory_array : Array[Array] = []  # contains a sub-array for each equipped item: [String: Item Name, Bool: Can be Equipped?, Node: Reference to the weapon node]
 var active_equipment : int = -1  # index of child nodes
 var data_manager
+var ui_manager
 @export var player_controlled = true
 var disabled = false
 
@@ -18,6 +19,7 @@ var reload_mult : float = 1.0 # lower = faster reload
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	data_manager = get_node("/root/Game Manager/Sub Managers/Data Manager/")
+	ui_manager = get_node("/root/Game Manager/UI Manager/")
 	#host = get_parent().get_parent().get_parent()
 	#head = get_parent().get_parent()
 	for i in range(0,inventory_size):  # for now, create empty child nodes as temp item placeholders 
@@ -27,11 +29,11 @@ func _ready() -> void:
 		get_child(i).hide()
 		get_child(i).process_mode = Node.PROCESS_MODE_DISABLED
 		#print("Created empty inventory slot")
-		inventory_array.append([("EMPTY SLOT " + str(i)), false])
+		inventory_array.append([("EMPTY SLOT " + str(i)), false, null])
 	#print(str(inventory_array))
 	
 	call_deferred('late_ready')  # used to add the default equipment, but waits til after the data manager is ready.
-	
+	update_hud_weapons()
 	
 func late_ready():
 	# add the default equipment to slot 0
@@ -132,7 +134,8 @@ func add_equipment(equipment_index : int, equipment_id : String, can_equip : boo
 		print('[Equip Manager]: Child with this name already exists. Renaming new node.')
 		name_already_exists = true
 		equip_name = equip_name + ' ' + str(equipment_index)
-		
+	
+	var new_equipment_node = null
 	if not equipment_index > inventory_size - 1:
 		if inventory_array[equipment_index] == null:  # if nothing is equipped (should never be the case though)
 			var equipment_scene : String = data_manager.weapon_dict[equipment_id][0]
@@ -141,6 +144,7 @@ func add_equipment(equipment_index : int, equipment_id : String, can_equip : boo
 			add_child(new_equipment)
 			if name_already_exists:
 				new_equipment.name = equip_name
+			new_equipment_node = new_equipment
 		else:
 			var old_equip = get_child(equipment_index)
 			old_equip.free()
@@ -151,16 +155,17 @@ func add_equipment(equipment_index : int, equipment_id : String, can_equip : boo
 			move_child(new_equipment, equipment_index)
 			if name_already_exists:
 				new_equipment.name = equip_name
-		inventory_array[equipment_index] = [data_manager.weapon_dict[equipment_id][1], can_equip]
+			new_equipment_node = new_equipment
+		inventory_array[equipment_index] = [data_manager.weapon_dict[equipment_id][1], can_equip, new_equipment_node]
 		get_child(equipment_index).hide()
 		get_child(equipment_index).process_mode = Node.PROCESS_MODE_DISABLED
 		if is_auto_active and can_equip:
 			swap_active_equipment(equipment_index, true)
 		elif is_auto_active and not can_equip:
 			print('[Equip Manager] Warning: new equipment should not be automatically activated and not equippable!')
+		update_hud_weapons()
 	else:
 		print('[Equip Manager] Error: equipment index is out of range.')
-	# TODO: align the weapon with the camera (might be done in the weapon behaviour script though
 	
 func remove_equipment(equipment_index : int):
 	if not equipment_index > inventory_size - 1:
@@ -173,7 +178,8 @@ func remove_equipment(equipment_index : int):
 			empty_child.name = "EMPTY SLOT " + str(equipment_index)
 			add_child(empty_child)
 			#print("Created empty inventory slot.")
-			inventory_array[equipment_index] = [("Slot" + str(equipment_index)), false]
+			inventory_array[equipment_index] = [("Slot" + str(equipment_index)), false, null]
+		update_hud_weapons()
 	else:
 		print('[Equip Manager] Error: equipment index is out of range.')
 
@@ -188,6 +194,13 @@ func attack():  # used for enemy AI
 func get_max_range() -> float:  # used for enemy AI
 	return get_child(active_equipment).get_child(0).get_child(0).fire_range
 	
+func update_hud_ammo(ammo : int):
+	if player_controlled:
+		ui_manager.update_hud_ammo(active_equipment, ammo)
+	
+func update_hud_weapons():
+	if player_controlled:
+		ui_manager.update_hud_weapons(inventory_array)
 #func rotate_active_equipment(new_basis, rot):
 	#active_model.transform.basis = new_basis
 	#active_model.rotate_x(rot)

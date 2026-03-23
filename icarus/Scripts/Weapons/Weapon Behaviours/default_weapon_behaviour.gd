@@ -57,13 +57,13 @@ func _process(delta: float) -> void:
 		if shot_cooldown_timer > 0:
 			shot_cooldown_timer -= delta
 			if shot_cooldown_timer <= 0:
-				print('-1 recent shot [remaining: ' + str(recent_shots) + ']')
+				#print('-1 recent shot [remaining: ' + str(recent_shots) + ']')
 				shot_cooldown_timer = shot_cooldown_time
 				recent_shots -= 1
 	if full_cooldown_timer > 0:
 		full_cooldown_timer -= delta
 		if full_cooldown_timer <= 0:
-			print('reset recent')
+			#print('reset recent')
 			recent_shots = 0
 	
 func primary_fire():
