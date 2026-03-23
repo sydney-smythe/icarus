@@ -200,6 +200,7 @@ func update_hud_ammo(ammo : int):
 	
 func update_hud_weapons():
 	if player_controlled:
+		print(active_equipment)
 		ui_manager.update_hud_weapons(inventory_array)
 #func rotate_active_equipment(new_basis, rot):
 	#active_model.transform.basis = new_basis

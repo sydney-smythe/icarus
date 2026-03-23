@@ -174,8 +174,7 @@ func activate_primary():
 						primary_action()
 		else:
 			reload()
-	if player_controlled:
-		equipment_manager.update_hud_ammo(prim_current_ammo)
+	
 		
 func primary_action():
 	prim_fire_delay_timer = prim_fire_delay * equipment_manager.prim_fire_rate_mult
@@ -190,9 +189,13 @@ func primary_action():
 				weapon_behaviour.play_no_ammo_sfx()
 				break
 				#print('out of ammo, not firing')
+			if player_controlled:
+				equipment_manager.update_hud_ammo(prim_current_ammo)
 	else:
 		weapon_behaviour.primary_fire()
 		prim_current_ammo -= 1
+		if player_controlled:
+			equipment_manager.update_hud_ammo(prim_current_ammo)
 		#if prim_current_ammo <= 0:
 			#print('out of primary ammo')
 	

@@ -17,7 +17,8 @@ func _ready() -> void:
 	player = PlayerManager.get_player()
 	equipment_manager = player.equipment_manager
 	boon_manager = player.get_node('Boon Manager')
-
+	print('ca;;;')
+	player.equipment_manager.update_hud_weapons()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -53,19 +54,22 @@ func set_essence_blast_cooldown(cooldown : float):
 	blast_timer = cooldown
 	
 func update_weapon_info(inventory_array : Array):  # updates the name and ammo of the weapon at this index (in the future, the image as well)
+	print(str(inventory_array))
 	# weapon one
 	if inventory_array[0][2] != null:
 		weapon_one_name.text = inventory_array[0][0]
 		update_ammo(0, inventory_array[0][2].get_child(0).prim_current_ammo)
 	else:
+		#print('empty 1')
 		weapon_one_name.text = 'EMPTY'
 		update_ammo(0, -1)
 	if inventory_array[1][2] != null:
 		weapon_two_name.text = inventory_array[1][0]
 		update_ammo(1, inventory_array[1][2].get_child(0).prim_current_ammo)
 	else:
-		weapon_one_name.text = 'EMPTY'
-		update_ammo(0, -1)
+		#print('empty 2')
+		weapon_two_name.text = 'EMPTY'
+		update_ammo(1, -1)
 	#update_ammo(index, ammo)
 
 func update_ammo(index : int, ammo : int):  # updates the ammo counter of the desired weapon

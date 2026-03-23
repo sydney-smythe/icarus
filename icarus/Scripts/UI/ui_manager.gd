@@ -114,12 +114,12 @@ func get_active_node():
 	return active_node_list[-1]
 
 func update_hud_weapons(inventory_array : Array):
-	print('--UI: ' + str(inventory_array))
+	#print('--UI: ' + str(inventory_array))
 	# start of round gets called before hud loads so nothing happens, fix (just start of match probably, not start of every round?)
 	if ui_nodes.has_node('HUD'):
 		ui_nodes.get_node('HUD').update_weapon_info(inventory_array)
-		print('good :0')
-	print('bad!!!')
+		#print('good :0')
+	#print('bad!!!')
 	
 func update_hud_ammo(index : int, ammo : int):
 	if ui_nodes.has_node('HUD'):
