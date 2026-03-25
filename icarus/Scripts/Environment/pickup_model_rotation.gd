@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 	if model_set:
 		rotate_object_local(Vector3(0, 1, 0), rad_horiz_rot_speed * delta)
 	
-	time += delta
+	time += delta  # this scares me tbh
 	# Moves up and down over the original position
 	model.position.y = (sin(time * frequency) * vertical_amplitude) + vertical_amplitude
 

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cqb2oidf1iin6" path="res://Scripts/Character/Movement/proto_controller.gd" id="1_rlwtg"]
 [ext_resource type="PackedScene" uid="uid://juf5ryufdte2" path="res://Scenes/Characters/proto_controller/test_ik_player.tscn" id="2_y8owm"]
 [ext_resource type="Script" uid="uid://c53lghcmyip3c" path="res://Scripts/Equipment/equipment_manager.gd" id="3_j5cwe"]
+[ext_resource type="Script" uid="uid://7hioah0rp66r" path="res://Scripts/Character/player_camera.gd" id="3_kg7e4"]
 [ext_resource type="Script" uid="uid://c4k1rxxxmqinn" path="res://Scripts/Character/essence_blast.gd" id="4_7v1lc"]
 [ext_resource type="Script" uid="uid://7sure81t4del" path="res://Scripts/Character/player_audio_manager.gd" id="5_4cql4"]
 [ext_resource type="Shader" uid="uid://cvlxvlac4rbbf" path="res://Shaders/pixel_outline.gdshader" id="5_egnfr"]
@@ -115,6 +116,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6756495, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=275272256]
 current = true
+script = ExtResource("3_kg7e4")
 
 [node name="Equipment Manager" type="Node3D" parent="Head/Camera3D" unique_id=787023289 node_paths=PackedStringArray("head", "host", "weapon_anchor")]
 script = ExtResource("3_j5cwe")

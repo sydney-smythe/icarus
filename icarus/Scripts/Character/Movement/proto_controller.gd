@@ -4,6 +4,10 @@
 # Happy prototyping!
 
 extends CharacterBody3D
+
+enum PLAYER_STATES {idle, walk, run, crouch, crouch_walk, slide, wall_run, in_air}
+var player_state : PLAYER_STATES = PLAYER_STATES.idle
+
 @onready var game_manager = get_node('/root/Game Manager/')
 @export var player_enabled : bool = true
 ## Can we move around?
@@ -200,6 +204,24 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 
 func _physics_process(delta: float) -> void:
+	# handle player state
+	if not is_on_floor() and not is_wall_running:
+		player_state = PLAYER_STATES.in_air
+	elif is_crouching and not is_moving:
+		player_state = PLAYER_STATES.crouch
+	elif is_crouching and is_moving and not is_sliding:
+		player_state = PLAYER_STATES.crouch_walk
+	elif is_sliding:
+		player_state = PLAYER_STATES.slide
+	elif is_wall_running:
+		player_state = PLAYER_STATES.wall_run
+	elif is_sprinting:
+		player_state = PLAYER_STATES.run
+	elif is_moving:
+		player_state = PLAYER_STATES.walk
+	else:
+		player_state = PLAYER_STATES.idle
+	#print(str(PLAYER_STATES.find_key(player_state)))
 	
 	# handle camera swap
 	if Input.is_action_just_pressed('toggle_camera_mode'):
