@@ -31,3 +31,9 @@ func return_to_main_menu():
 	ui_manager.play_ui_back_sfx()
 	ui_manager.load_ui(main_menu_ui, 1)
 	queue_free()
+
+
+func _on_firing_range_button_up() -> void:
+	ui_manager.play_ui_accept_sfx()
+	stage_manager.load_stage("2")
+	game_manager.init_climb_mode("2")

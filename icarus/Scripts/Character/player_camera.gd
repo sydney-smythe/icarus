@@ -19,7 +19,7 @@ var time : float = 0.0
 var head_bob_amount : float = 0.0
 var head_bob_frequency = 0.0
 var bob_freq_mult = 18
-var bob_amount_mult = 0.11
+var bob_amount_mult = 0.05
 var default_height : float
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -7,24 +7,44 @@
 		"DEFAULT WEAPON ID (or 'null' otherwise)"],
 		
 	"-1": 
-		["uid://bpdkut2aq0xfl", 
-		"Main Menu", 
-		[0,0,0], 
-		"MAIN MENU", 
-		"null"],
+		[
+			"uid://bpdkut2aq0xfl", 
+			"Main Menu", 
+			[0,0,0], 
+			"MAIN MENU", 
+			"null"
+		],
 		
 	"0": 
-		["uid://dd3w624uqyeoi", 
-		"Demo Map 01", 
-		[0,0,0], 
-		"PVP", 
-		"2"],
+		[
+			"uid://dd3w624uqyeoi", 
+			"Demo Map 01", 
+			[0,0,0], 
+			"PVP", 
+			"2"
+		],
 	"1":
 		[
 			"uid://bbau3iqjko5ix",
 			"Climb Map 01",
 			[0,0,0],
 			"CLIMB",
+			"2"
+		],
+	"2":
+		[
+			"uid://ctmqg0fcna6us",
+			"Testing Map",
+			[0,0,0],
+			"CLIMB",
+			"2"
+		],
+	"3":
+		[
+			"uid://ctbgy5uw1cgcl",
+			"Demo Map 02",
+			[0,0,0],
+			"PVP",
 			"2"
 		]
 }

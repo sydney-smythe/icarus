@@ -46,13 +46,31 @@ layout_mode = 2
 theme_override_constants/separation = 30
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=209578689]
+custom_minimum_size = Vector2(131.37, 0)
 layout_mode = 2
-theme_override_constants/margin_left = 60
-theme_override_constants/margin_right = 30
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 20
 
-[node name="Climb" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=228091901]
+[node name="Firing Range" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=228091901]
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 50
+text = "FIRING
+RANGE"
+expand_icon = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=148689360]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="Climb" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer3" unique_id=301722233]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 50
 text = "SUMMIT"
@@ -61,8 +79,8 @@ expand_icon = true
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=885687861]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_right = 60
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 40
 
 [node name="PvP" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2" unique_id=2070168992]
 custom_minimum_size = Vector2(300, 300)
@@ -92,6 +110,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Back"
 
-[connection signal="button_up" from="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/Climb" to="." method="_on_climb_button_up"]
+[connection signal="button_up" from="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/Firing Range" to="." method="_on_firing_range_button_up"]
+[connection signal="button_up" from="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer3/Climb" to="." method="_on_climb_button_up"]
 [connection signal="button_up" from="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/PvP" to="." method="_on_pv_p_button_up"]
 [connection signal="button_up" from="MarginContainer2/PanelContainer/Back" to="." method="_on_back_button_up"]
