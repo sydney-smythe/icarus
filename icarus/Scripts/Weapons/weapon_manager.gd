@@ -2,7 +2,7 @@ extends Node3D
 
 # this script is a generic script used to handle inputs and base information such as ammo, reloading, and firing calls
 var player: CharacterBody3D
-
+var arm_anim_manager : Node3D
 @export var is_enabled = true
 @export_group("PRIMARY ACTION")
 enum Prim_fire_type {
@@ -77,6 +77,7 @@ func _ready() -> void:
 	call_deferred('late_ready')
 	
 func late_ready():
+	arm_anim_manager = equipment_manager.get_node('Arm Anim Manager')
 	if player_controlled:
 		player = PlayerManager.get_player()
 
@@ -134,7 +135,7 @@ func _process(delta: float) -> void:
 					secondary_action()
 
 func _input(_event: InputEvent) -> void:
-	if player_controlled and not game_manager.is_paused and is_enabled:
+	if player_controlled and not game_manager.is_paused and is_enabled and not animation_manager.active_anim:
 		if prim_fire_type == Prim_fire_type.AUTO:
 			if Input.is_action_pressed('primary_action'):
 				check_fire = true
@@ -149,6 +150,8 @@ func _input(_event: InputEvent) -> void:
 			reload()
 		
 func reload():
+	arm_anim_manager.play_reload()
+	animation_manager.play_reload()
 	weapon_behaviour.play_reload_sfx()
 	prim_is_reloading = true
 	#print('starting reload')
@@ -178,6 +181,7 @@ func activate_primary():
 		
 func primary_action():
 	prim_fire_delay_timer = prim_fire_delay * equipment_manager.prim_fire_rate_mult
+	arm_anim_manager.play_fire()
 	if prim_fire_type == Prim_fire_type.BURST:
 		for i in range(0,prim_burst_size):
 			if prim_current_ammo > 0:

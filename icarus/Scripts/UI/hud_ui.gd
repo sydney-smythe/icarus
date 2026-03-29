@@ -1,8 +1,8 @@
 extends Control
 
 @export var essence: Label
-@export var weapon_one_name : Label
-@export var weapon_two_name : Label
+@export var active_weapon_name : Label
+var weapon_names : Array[String] = ['EMPTY', 'EMPTY']
 @export var weapon_one_ammo : Label
 @export var weapon_two_ammo : Label
 @export var boon_names: Label
@@ -12,6 +12,7 @@ extends Control
 var equipment_manager
 var boon_manager
 var blast_timer : float = 0.0
+var active_equipment_index = -1
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = PlayerManager.get_player()
@@ -53,24 +54,26 @@ func _process(delta: float) -> void:
 func set_essence_blast_cooldown(cooldown : float):
 	blast_timer = cooldown
 	
-func update_weapon_info(inventory_array : Array):  # updates the name and ammo of the weapon at this index (in the future, the image as well)
+func update_weapon_info(active_index : int, inventory_array : Array):  # updates the name and ammo of the weapon at this index (in the future, the image as well)
 	print(str(inventory_array))
 	# weapon one
 	if inventory_array[0][2] != null:
-		weapon_one_name.text = inventory_array[0][0]
+		weapon_names[0] = inventory_array[0][0]
 		update_ammo(0, inventory_array[0][2].get_child(0).prim_current_ammo)
 	else:
 		#print('empty 1')
-		weapon_one_name.text = 'EMPTY'
+		weapon_names[0] = 'EMPTY'
 		update_ammo(0, -1)
 	if inventory_array[1][2] != null:
-		weapon_two_name.text = inventory_array[1][0]
+		weapon_names[1] = inventory_array[1][0]
 		update_ammo(1, inventory_array[1][2].get_child(0).prim_current_ammo)
 	else:
 		#print('empty 2')
-		weapon_two_name.text = 'EMPTY'
+		weapon_names[1] = 'EMPTY'
 		update_ammo(1, -1)
 	#update_ammo(index, ammo)
+	if active_equipment_index != active_index:
+		set_active_weapon_ui(active_index)
 
 func update_ammo(index : int, ammo : int):  # updates the ammo counter of the desired weapon
 	var ammo_text = str(ammo)
@@ -81,3 +84,9 @@ func update_ammo(index : int, ammo : int):  # updates the ammo counter of the de
 		weapon_one_ammo.text = ammo_text
 	else:
 		weapon_two_ammo.text = ammo_text
+	if active_equipment_index != index:
+		set_active_weapon_ui(index)
+
+func set_active_weapon_ui(active_index : int):
+	active_equipment_index = active_index
+	active_weapon_name.text = weapon_names[active_index]

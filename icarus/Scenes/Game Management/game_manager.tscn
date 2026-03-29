@@ -19,8 +19,6 @@ script = ExtResource("8_4am2k")
 [node name="Data Manager" type="Node3D" parent="Sub Managers" unique_id=1796835999]
 script = ExtResource("1_n8t8x")
 
-[node name="UI Manager" parent="." unique_id=598893974 instance=ExtResource("4_ob72n")]
-
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1787664650]
 texture_filter = 1
 anchors_preset = 15
@@ -50,3 +48,5 @@ bus = &"Music"
 
 [node name="Player" parent="SubViewportContainer/SubViewport" unique_id=140928765 instance=ExtResource("2_xwcdb")]
 unique_name_in_owner = true
+
+[node name="UI Manager" parent="SubViewportContainer/SubViewport" unique_id=598893974 instance=ExtResource("4_ob72n")]

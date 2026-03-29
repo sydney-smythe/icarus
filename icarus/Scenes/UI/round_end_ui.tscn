@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://by2of4wml06rx"]
 
 [ext_resource type="Script" uid="uid://cwlbvveuwl0ck" path="res://Scripts/UI/round_end_ui.gd" id="1_2a3wl"]
+[ext_resource type="Theme" uid="uid://cart7s8v7t8gq" path="res://Assets/UI/UI Themes/main_ui.tres" id="1_u0huu"]
 
 [node name="Round End UI" type="Control" unique_id=1853082140 node_paths=PackedStringArray("player_names", "player_scores", "winner_labels")]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_u0huu")
 script = ExtResource("1_2a3wl")
 player_names = [NodePath("MarginContainer/HBoxContainer/Player 1 Info/Player 1 Name"), NodePath("MarginContainer/HBoxContainer/Player 2 Info/Player 2 Name")]
 player_scores = [NodePath("MarginContainer/HBoxContainer/Player 1 Info/Player 1 Score"), NodePath("MarginContainer/HBoxContainer/Player 2 Info/Player 2 Score")]

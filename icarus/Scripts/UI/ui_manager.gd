@@ -113,14 +113,14 @@ func delayed_pop():
 func get_active_node():
 	return active_node_list[-1]
 
-func update_hud_weapons(inventory_array : Array):
+func update_hud_weapons(active_index : int, inventory_array : Array):
 	#print('--UI: ' + str(inventory_array))
 	# start of round gets called before hud loads so nothing happens, fix (just start of match probably, not start of every round?)
 	if ui_nodes.has_node('HUD'):
-		ui_nodes.get_node('HUD').update_weapon_info(inventory_array)
+		ui_nodes.get_node('HUD').update_weapon_info(active_index, inventory_array)
 		#print('good :0')
 	#print('bad!!!')
 	
-func update_hud_ammo(index : int, ammo : int):
+func update_hud_ammo(active_index : int, ammo : int):
 	if ui_nodes.has_node('HUD'):
-		ui_nodes.get_node('HUD').update_ammo(index, ammo)
+		ui_nodes.get_node('HUD').update_ammo(active_index, ammo)

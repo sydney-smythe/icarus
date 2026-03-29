@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://d2rrdcquv1ekb"]
 
+[ext_resource type="Theme" uid="uid://cart7s8v7t8gq" path="res://Assets/UI/UI Themes/main_ui.tres" id="1_4x3xg"]
 [ext_resource type="Script" uid="uid://cf4o5uv5k7t4" path="res://Scripts/UI/pause_menu_ui.gd" id="1_tocsm"]
 
 [node name="Pause Menu UI" type="Control" unique_id=1633266529 node_paths=PackedStringArray("quit_button")]
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_4x3xg")
 script = ExtResource("1_tocsm")
 quit_button = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/Quit Button")
 

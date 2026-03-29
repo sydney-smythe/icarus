@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c740upcymk5ps"]
 
 [ext_resource type="Script" uid="uid://cpcmcnk8nrcgr" path="res://Scripts/UI/debug_ui.gd" id="1_87ksd"]
+[ext_resource type="Theme" uid="uid://cart7s8v7t8gq" path="res://Assets/UI/UI Themes/main_ui.tres" id="1_u5qh1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87ksd"]
 content_margin_left = 0.0
@@ -23,6 +24,7 @@ grow_vertical = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 mouse_filter = 2
+theme = ExtResource("1_u5qh1")
 script = ExtResource("1_87ksd")
 version_text = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Game Info/Version Information")
 fps_count = NodePath("Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Engine Info/FPS Count")
@@ -76,12 +78,14 @@ theme_override_constants/separation = 9
 [node name="Debug Label" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Game Info" unique_id=986141160]
 layout_mode = 2
 size_flags_vertical = 1
+theme_override_font_sizes/font_size = 22
 text = "DEBUG MENU    (F2 to close)"
 horizontal_alignment = 1
 
 [node name="Version Information" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Game Info" unique_id=177819635]
 layout_mode = 2
 size_flags_vertical = 1
+theme_override_font_sizes/font_size = 22
 text = "Project ICARUS    Build 001   v.0.1.224
 Playtest 01-Naples"
 horizontal_alignment = 1
@@ -93,6 +97,7 @@ theme_override_constants/separation = 9
 [node name="FPS Count" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Engine Info" unique_id=2070430885]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4491495, 0.770701, 0.7246074, 1)
+theme_override_font_sizes/font_size = 22
 text = "FPS:"
 
 [node name="State Info" type="VBoxContainer" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer" unique_id=178717969]
@@ -102,6 +107,7 @@ theme_override_constants/separation = 9
 [node name="Current Level" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/State Info" unique_id=1694899832]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7539762, 0.70520955, 0.5260158, 1)
+theme_override_font_sizes/font_size = 22
 text = "Current Stage:"
 
 [node name="Player Info" type="VBoxContainer" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer" unique_id=1755549854]
@@ -112,21 +118,25 @@ theme_override_constants/separation = 9
 visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.69242996, 0.6779741, 0.9622832, 1)
+theme_override_font_sizes/font_size = 22
 text = "Active Actions: "
 
 [node name="Move Speed" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=563917559]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8769369, 0.53171027, 0.48197937, 1)
+theme_override_font_sizes/font_size = 22
 text = "Move Speed:"
 
 [node name="Velocity Vector" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=407619289]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8769369, 0.53171027, 0.48197937, 1)
+theme_override_font_sizes/font_size = 22
 text = "Velocity:"
 
 [node name="Camera Rotation" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Player Info" unique_id=947222022]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8769369, 0.53171027, 0.48197937, 1)
+theme_override_font_sizes/font_size = 22
 text = "Cam:"
 
 [node name="Essence Info" type="VBoxContainer" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer" unique_id=1879539497]
@@ -136,21 +146,25 @@ theme_override_constants/separation = 9
 [node name="Essence" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=1467225229]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
+theme_override_font_sizes/font_size = 22
 text = "Essence: "
 
 [node name="Grav Mult" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=70729807]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
+theme_override_font_sizes/font_size = 22
 text = "Essence Grav Mult: "
 
 [node name="Force Mult" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=1745510883]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
+theme_override_font_sizes/font_size = 22
 text = "Essence Force Mult: "
 
 [node name="Speed Mult" type="Label" parent="Debug Panel/PanelContainer/MarginContainer/VBoxContainer/Essence Info" unique_id=267056210]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.63957685, 0.58836955, 0.90712816, 1)
+theme_override_font_sizes/font_size = 22
 text = "Essence Speed Mult:"
 
 [node name="F2 Tooltip" type="MarginContainer" parent="." unique_id=2077056910]
@@ -183,5 +197,6 @@ theme_override_constants/margin_bottom = 15
 [node name="Debug Label" type="Label" parent="F2 Tooltip/PanelContainer/MarginContainer" unique_id=1520330554]
 layout_mode = 2
 size_flags_vertical = 1
+theme_override_font_sizes/font_size = 22
 text = "[F2] DEBUG"
 horizontal_alignment = 1

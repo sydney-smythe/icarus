@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dbivtfqygygj2"]
+
+[ext_resource type="PackedScene" uid="uid://ng4xl716o7fp" path="res://Assets/Models/Weapons/rig_pistol.glb" id="1_gxxui"]
+
+[node name="rig_pistol" unique_id=2119897782 instance=ExtResource("1_gxxui")]
+
+[node name="Skeleton3D" parent="Gun_Rig" parent_id_path=PackedInt32Array(999656732) index="0" unique_id=923455583]
+bones/0/position = Vector3(-0.2152622, -0.15511325, -0.052370664)
+bones/0/rotation = Quaternion(0, 0.7061448, 0.70806754, 0)
+bones/1/position = Vector3(-1.4901161e-08, 0.05111317, 0.031195834)
+bones/2/position = Vector3(-1.1894444e-08, -0.013736706, -0.048657183)
+bones/2/rotation = Quaternion(-0.8096722, -8.6519555e-07, 1.1936374e-06, 0.5868824)

@@ -1,0 +1,33 @@
+[gd_resource type="Theme" format=3 uid="uid://cart7s8v7t8gq"]
+
+[ext_resource type="FontFile" uid="uid://bc02x54l8wyxo" path="res://Assets/UI/Fonts/InstrumentSerif-Regular.ttf" id="1_1huv2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ukb0y"]
+bg_color = Color(0.45, 0.43342498, 0.3735, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1huv2"]
+bg_color = Color(0.21, 0.20166999, 0.17429999, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyw5b"]
+bg_color = Color(0.2901961, 0.2784314, 0.23921569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_clrpj"]
+bg_color = Color(0.21176471, 0.2, 0.17254902, 1)
+
+[resource]
+Button/colors/font_color = Color(1, 0.93333334, 0.8666667, 1)
+Button/fonts/font = ExtResource("1_1huv2")
+Button/styles/normal = SubResource("StyleBoxFlat_ukb0y")
+Label/colors/font_color = Color(1, 0.93333334, 0.8666667, 1)
+Label/fonts/font = ExtResource("1_1huv2")
+LineEdit/fonts/font = ExtResource("1_1huv2")
+OptionButton/fonts/font = ExtResource("1_1huv2")
+Panel/styles/panel = SubResource("StyleBoxFlat_1huv2")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_pyw5b")
+PopupMenu/fonts/font = ExtResource("1_1huv2")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_clrpj")

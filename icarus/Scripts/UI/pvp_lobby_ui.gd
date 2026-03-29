@@ -14,7 +14,7 @@ var round_count  # the number of rounds to pass to game_manager when play is pre
 var stage_info = []
 var stage_id : String  # the stage to pass to game_manager when play is pressed
 var player_count = 2 # for now, hardcoded at 2
-
+@export var stage_button : OptionButton
 #player_data array stores (for each player: PLAYER ID: [PLAYER NAME, IS_HUMAN_PLAYER]
 var players_dict : Dictionary = {}
 # Called when the node enters the scene tree for the first time.
@@ -68,6 +68,7 @@ func init_game():
 	players_dict[1][1] = false  # hardcode the enemy as an NPC
 	
 	# load the map
+	stage_id = str(stage_button.get_item_id(stage_button.selected))
 	await stage_manager.load_stage(stage_id)
 	print('finished loading the stage')
 	

@@ -119,7 +119,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6756495, 0)
 current = true
 script = ExtResource("3_kg7e4")
 
-[node name="Equipment Manager" parent="Head/Camera3D" unique_id=905148176 instance=ExtResource("5_hh724")]
+[node name="Equipment Manager" parent="Head/Camera3D" unique_id=1301306570 instance=ExtResource("5_hh724")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Essence Blast" type="Area3D" parent="Head/Camera3D" unique_id=1994323815 node_paths=PackedStringArray("audio_manager")]

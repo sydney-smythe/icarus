@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://hl5qyawevdr"]
 
+[ext_resource type="Theme" uid="uid://cart7s8v7t8gq" path="res://Assets/UI/UI Themes/main_ui.tres" id="1_ny26j"]
 [ext_resource type="Script" uid="uid://cc7s8iwfg2chd" path="res://Scripts/UI/hud_ui.gd" id="1_sprlj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wkk6c"]
@@ -14,7 +15,7 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 5
 
-[node name="HUD" type="Control" unique_id=1064581951 node_paths=PackedStringArray("essence", "weapon_one_name", "weapon_two_name", "weapon_one_ammo", "weapon_two_ammo", "boon_names", "boon_times", "essence_blast_counter")]
+[node name="HUD" type="Control" unique_id=1064581951 node_paths=PackedStringArray("essence", "active_weapon_name", "weapon_one_ammo", "weapon_two_ammo", "boon_names", "boon_times", "essence_blast_counter")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,12 +23,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_ny26j")
 script = ExtResource("1_sprlj")
 essence = NodePath("Essence Info/VBoxContainer/PanelContainer/MarginContainer/Essence")
-weapon_one_name = NodePath("Equipment Info/HBoxContainer/Weapon One/MarginContainer/VBoxContainer/Weapon Name")
-weapon_two_name = NodePath("Equipment Info/HBoxContainer/Weapon Two/MarginContainer/VBoxContainer/Weapon Name")
-weapon_one_ammo = NodePath("Equipment Info/HBoxContainer/Weapon One/MarginContainer/VBoxContainer/Ammo")
-weapon_two_ammo = NodePath("Equipment Info/HBoxContainer/Weapon Two/MarginContainer/VBoxContainer/Ammo")
+active_weapon_name = NodePath("Equipment Info/HBoxContainer/VBoxContainer/Panel/MarginContainer/Active Weapon")
+weapon_one_ammo = NodePath("Equipment Info/HBoxContainer/VBoxContainer/HBoxContainer/Weapon One/MarginContainer/VBoxContainer/Ammo")
+weapon_two_ammo = NodePath("Equipment Info/HBoxContainer/VBoxContainer/HBoxContainer/Weapon Two/MarginContainer/VBoxContainer/Ammo")
 boon_names = NodePath("Essence Info/VBoxContainer/Boon Info/PanelContainer/MarginContainer/HBoxContainer/Boon Names")
 boon_times = NodePath("Essence Info/VBoxContainer/Boon Info/PanelContainer/MarginContainer/HBoxContainer/Boon Times")
 essence_blast_counter = NodePath("Equipment Info/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Essence Blast Counter")
@@ -134,56 +135,80 @@ text = "F"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Weapon One" type="PanelContainer" parent="Equipment Info/HBoxContainer" unique_id=1379209196]
+[node name="VBoxContainer" type="VBoxContainer" parent="Equipment Info/HBoxContainer" unique_id=783898148]
 layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Equipment Info/HBoxContainer/VBoxContainer" unique_id=1320325326]
+layout_mode = 2
+
+[node name="Weapon One" type="PanelContainer" parent="Equipment Info/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1379209196]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_wkk6c")
 
-[node name="MarginContainer" type="MarginContainer" parent="Equipment Info/HBoxContainer/Weapon One" unique_id=737134872]
+[node name="MarginContainer" type="MarginContainer" parent="Equipment Info/HBoxContainer/VBoxContainer/HBoxContainer/Weapon One" unique_id=737134872]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Equipment Info/HBoxContainer/Weapon One/MarginContainer" unique_id=1701498858]
+[node name="VBoxContainer" type="VBoxContainer" parent="Equipment Info/HBoxContainer/VBoxContainer/HBoxContainer/Weapon One/MarginContainer" unique_id=1701498858]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Weapon Name" type="Label" parent="Equipment Info/HBoxContainer/Weapon One/MarginContainer/VBoxContainer" unique_id=1656099423]
+[node name="Ammo" type="Label" parent="Equipment Info/HBoxContainer/VBoxContainer/HBoxContainer/Weapon One/MarginContainer/VBoxContainer" unique_id=365787431]
 layout_mode = 2
-theme_override_font_sizes/font_size = 31
-text = "Weapon Name"
-horizontal_alignment = 1
-
-[node name="Ammo" type="Label" parent="Equipment Info/HBoxContainer/Weapon One/MarginContainer/VBoxContainer" unique_id=365787431]
-layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 theme_override_font_sizes/font_size = 60
 text = "30"
 horizontal_alignment = 2
 
-[node name="Weapon Two" type="PanelContainer" parent="Equipment Info/HBoxContainer" unique_id=216767659]
+[node name="Weapon Two" type="PanelContainer" parent="Equipment Info/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=216767659]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_wkk6c")
 
-[node name="MarginContainer" type="MarginContainer" parent="Equipment Info/HBoxContainer/Weapon Two" unique_id=766760238]
+[node name="MarginContainer" type="MarginContainer" parent="Equipment Info/HBoxContainer/VBoxContainer/HBoxContainer/Weapon Two" unique_id=766760238]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Equipment Info/HBoxContainer/Weapon Two/MarginContainer" unique_id=186199927]
+[node name="VBoxContainer" type="VBoxContainer" parent="Equipment Info/HBoxContainer/VBoxContainer/HBoxContainer/Weapon Two/MarginContainer" unique_id=186199927]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Weapon Name" type="Label" parent="Equipment Info/HBoxContainer/Weapon Two/MarginContainer/VBoxContainer" unique_id=1801957921]
+[node name="Ammo" type="Label" parent="Equipment Info/HBoxContainer/VBoxContainer/HBoxContainer/Weapon Two/MarginContainer/VBoxContainer" unique_id=1411884755]
 layout_mode = 2
-theme_override_font_sizes/font_size = 31
-text = "Weapon Name"
-horizontal_alignment = 1
-
-[node name="Ammo" type="Label" parent="Equipment Info/HBoxContainer/Weapon Two/MarginContainer/VBoxContainer" unique_id=1411884755]
-layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 theme_override_font_sizes/font_size = 60
 text = "30"
 horizontal_alignment = 2
+
+[node name="Panel" type="Panel" parent="Equipment Info/HBoxContainer/VBoxContainer" unique_id=39611546]
+custom_minimum_size = Vector2(400, 55)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Equipment Info/HBoxContainer/VBoxContainer/Panel" unique_id=1126795220]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 3
+
+[node name="Active Weapon" type="Label" parent="Equipment Info/HBoxContainer/VBoxContainer/Panel/MarginContainer" unique_id=248062343]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Active Weapon"

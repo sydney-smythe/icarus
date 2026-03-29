@@ -14,7 +14,7 @@ extends Node3D
 @onready var data_manager = get_node("/root/Game Manager/Sub Managers/Data Manager/")
 @onready var model: Node3D = $Model
 @onready var base : Node3D = $Base
-@export var model_scale : float = 0.5
+var model_scale : float
 var boon_manager
 
 var camera
@@ -32,6 +32,7 @@ func late_ready():
 	camera = player.get_node('Head').get_node('Camera3D')
 	boon_manager = player.get_node('Boon Manager')
 	var boon_model = load(data_manager.boon_dict[boon_id][2]).instantiate()
+	model_scale = data_manager.boon_dict[boon_id][3]
 	boon_model.scale = Vector3(model_scale,model_scale,model_scale)
 	if model.get_child_count() > 0:
 		model.get_child(0).queue_free()  # remove default model

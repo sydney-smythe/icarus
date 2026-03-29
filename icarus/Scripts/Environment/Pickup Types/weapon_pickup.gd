@@ -14,7 +14,7 @@ extends Node3D
 @export var weapon_id : String = '0'
 @onready var data_manager = get_node("/root/Game Manager/Sub Managers/Data Manager/")
 @onready var ui_manager = get_node('/root/Game Manager/UI Manager/')
-@export var model_scale : float = 0.4
+var model_scale : float
 var equipment_manager
 
 var camera
@@ -36,6 +36,7 @@ func late_ready():
 	equipment_manager = player.get_node('Head').get_node('Camera3D').get_node('Equipment Manager')
 	var gun_model = load(data_manager.weapon_dict[weapon_id][3]).instantiate()
 	weapon_name = data_manager.weapon_dict[weapon_id][1]
+	model_scale = data_manager.weapon_dict[weapon_id][4]
 	gun_model.scale = Vector3(model_scale,model_scale,model_scale)
 	if model.get_child_count() > 0:
 		model.get_child(0).queue_free()  # remove default model

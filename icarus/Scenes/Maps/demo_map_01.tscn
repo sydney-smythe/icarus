@@ -182,14 +182,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0159903, 1.002, -14.372992
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9884152, 2.902987, 0)
 single_use = true
 boon_id = "1"
-model_scale = 8.0
 
 [node name="Boon Pickup3" parent="Pickup Manager" unique_id=1619740227 instance=ExtResource("4_y3yqq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.221283, 3.8933692, 12.103729)
 single_use = true
 boon_id = "2"
 boon_length = 100.0
-model_scale = 0.07
 
 [node name="Essence Pickup" parent="Pickup Manager" unique_id=1975173551 instance=ExtResource("5_8w2q5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9663, 1, 14.334053)
@@ -200,7 +198,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.531805, 3.8550937, -0.0183
 [node name="Weapon Pickup 2" parent="Pickup Manager" unique_id=480260339 instance=ExtResource("6_3kujw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.728937, 3.8550937, -10.710287)
 weapon_id = "1"
-model_scale = 0.2
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1986163049]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20354116, 0, 0.4448012)

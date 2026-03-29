@@ -17,6 +17,7 @@ var track_hands = false
 
 # The anchor on the camera where the weapon grip should snap to
 var weapon_anchor: Marker3D
+var active_anim : bool = false
 # The grip point on the weapon model itself
 @onready var grip_point: Marker3D = $"Pivot/Model/Grip Point"  # adjust path
 
@@ -40,7 +41,10 @@ func late_ready():
 			#track_hands = true
 
 func _process(_delta: float) -> void:
-	pass
+	if animation_player.is_playing():
+		active_anim = true
+	else:
+		active_anim = false
 	#if player_controlled and weapon_anchor and grip_point:
 		## Align the weapon so its grip point matches the camera anchor
 		#var grip_offset = grip_point.global_position - global_position
@@ -55,6 +59,7 @@ func _process(_delta: float) -> void:
 	#player.model.r_arm_target.global_position = r_hand_pos.global_position
 
 func play_primary_fire():
-	if animation_player.current_animation == primary_animation:
-		animation_player.stop(true)
-	animation_player.play(primary_animation)
+	pass
+
+func play_reload():
+	animation_player.play("GUN_reload")

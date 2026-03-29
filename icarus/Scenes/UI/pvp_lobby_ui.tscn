@@ -1,17 +1,28 @@
 [gd_scene format=3 uid="uid://uvne644wrm3k"]
 
+[ext_resource type="Theme" uid="uid://cart7s8v7t8gq" path="res://Assets/UI/UI Themes/main_ui.tres" id="1_020b2"]
 [ext_resource type="Script" uid="uid://bx5m8fs3v05yn" path="res://Scripts/UI/pvp_lobby_ui.gd" id="1_nlsis"]
 
-[node name="PVP Lobby UI" type="Control" unique_id=398769881 node_paths=PackedStringArray("round_count_label", "stage_label")]
+[node name="PVP Lobby UI" type="Control" unique_id=398769881 node_paths=PackedStringArray("round_count_label", "stage_label", "stage_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_020b2")
 script = ExtResource("1_nlsis")
 round_count_label = NodePath("Lobby Info Box/PanelContainer/MarginContainer/Lobby Info/Round Info/Round count")
 stage_label = NodePath("Lobby Info Box/PanelContainer/MarginContainer/Lobby Info/Stage Info/Stage name")
+stage_button = NodePath("Lobby Info Box/PanelContainer/MarginContainer/Lobby Info/Stage Info/Stage Select")
+
+[node name="Panel" type="Panel" parent="." unique_id=2008249495]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Lobby Info Box" type="MarginContainer" parent="." unique_id=139722982]
 layout_mode = 1
@@ -44,7 +55,7 @@ theme_override_constants/separation = 30
 
 [node name="PVP setup" type="Label" parent="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info" unique_id=1789156525]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 60
 text = "Combat Setup"
 horizontal_alignment = 1
 
@@ -64,7 +75,7 @@ text = "<"
 
 [node name="Round count" type="Label" parent="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info/Round Info" unique_id=2064998935]
 layout_mode = 2
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 40
 text = " 5 "
 
 [node name="More rounds" type="Button" parent="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info/Round Info" unique_id=111558648]
@@ -79,20 +90,34 @@ layout_mode = 2
 [node name="Stage" type="Label" parent="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info/Stage Info" unique_id=872907028]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
-text = "Stage (stage selection coming soon)"
+text = "Stage"
 
 [node name="Stage name" type="Label" parent="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info/Stage Info" unique_id=430479421]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 35
 text = "Stage"
+
+[node name="Stage Select" type="OptionButton" parent="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info/Stage Info" unique_id=690946677]
+custom_minimum_size = Vector2(230, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 40
+alignment = 1
+selected = 0
+item_count = 2
+popup/item_0/text = "Demo Map 01"
+popup/item_0/id = 0
+popup/item_1/text = "Demo Map 02"
+popup/item_1/id = 3
 
 [node name="Back" type="Button" parent="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info" unique_id=1381795567]
 custom_minimum_size = Vector2(150, 75)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 10
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 40
 text = "Back"
 
 [node name="Player Info Box" type="MarginContainer" parent="." unique_id=1295570831]
@@ -131,7 +156,7 @@ theme_override_constants/separation = 30
 
 [node name="PVP setup" type="Label" parent="Player Info Box/PanelContainer/MarginContainer/Players Info" unique_id=1646105109]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 60
 text = "Lobby"
 horizontal_alignment = 1
 
@@ -186,7 +211,7 @@ theme_override_constants/margin_bottom = 75
 [node name="Start Game" type="Button" parent="MarginContainer" unique_id=1267821712]
 custom_minimum_size = Vector2(210, 75)
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 40
 text = "Start Game"
 
 [connection signal="button_up" from="Lobby Info Box/PanelContainer/MarginContainer/Lobby Info/Round Info/Less rounds" to="." method="_on_less_rounds_button_up"]

@@ -1,18 +1,7 @@
 [gd_scene format=3 uid="uid://dhto1yiiq25hm"]
 
 [ext_resource type="Script" uid="uid://d3bntc3auygaf" path="res://Scripts/UI/settings_ui.gd" id="1_7cjk5"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7cjk5"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.9490196)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
+[ext_resource type="Theme" uid="uid://cart7s8v7t8gq" path="res://Assets/UI/UI Themes/main_ui.tres" id="1_71y1p"]
 
 [node name="Settings UI" type="Control" unique_id=986785694 node_paths=PackedStringArray("settings_screen", "about_screen", "about_button", "back_button", "version_text")]
 layout_mode = 3
@@ -21,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_71y1p")
 script = ExtResource("1_7cjk5")
 settings_screen = NodePath("MarginContainer/Panel/MarginContainer/Settings and Controls")
 about_screen = NodePath("MarginContainer/Panel/MarginContainer/About")
@@ -42,7 +32,6 @@ theme_override_constants/margin_bottom = 100
 
 [node name="Panel" type="Panel" parent="MarginContainer" unique_id=60528401]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_7cjk5")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=2057166778]
 layout_mode = 1
@@ -80,6 +69,7 @@ horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Settings" unique_id=291550807]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "
 
 Settings coming soon"
@@ -98,7 +88,7 @@ horizontal_alignment = 1
 
 [node name="Movement Title" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Controls" unique_id=987300413]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.74353737, 0.62489074, 0.8991623, 1)
+theme_override_colors/font_color = Color(1, 0.966, 0.83, 1)
 theme_override_font_sizes/font_size = 22
 text = "
 -Movement-"
@@ -114,7 +104,7 @@ horizontal_alignment = 1
 
 [node name="Combat Title" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Controls" unique_id=1278567852]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.74353737, 0.62489074, 0.8991623, 1)
+theme_override_colors/font_color = Color(1, 0.9647059, 0.83137256, 1)
 theme_override_font_sizes/font_size = 22
 text = "-Combat-"
 horizontal_alignment = 1
@@ -130,7 +120,7 @@ horizontal_alignment = 1
 
 [node name="General Title" type="Label" parent="MarginContainer/Panel/MarginContainer/Settings and Controls/HBoxContainer/Controls" unique_id=1324642266]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.74353737, 0.62489074, 0.8991623, 1)
+theme_override_colors/font_color = Color(1, 0.9647059, 0.83137256, 1)
 theme_override_font_sizes/font_size = 22
 text = "-General-"
 horizontal_alignment = 1

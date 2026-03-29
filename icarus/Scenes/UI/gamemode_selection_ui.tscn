@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bjfhci57hkl6l"]
 
 [ext_resource type="Script" uid="uid://ctlflwke8od7j" path="res://Scripts/UI/gamemode_selection_ui.gd" id="1_atdmp"]
+[ext_resource type="Theme" uid="uid://cart7s8v7t8gq" path="res://Assets/UI/UI Themes/main_ui.tres" id="1_pr71f"]
 
 [node name="Gamemode Selection UI" type="Control" unique_id=347372123]
 z_index = 2
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_pr71f")
 script = ExtResource("1_atdmp")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1515579288]

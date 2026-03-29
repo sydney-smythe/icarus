@@ -1,18 +1,10 @@
 [gd_scene format=3 uid="uid://t5kh5t0i2mfv"]
 
 [ext_resource type="Script" uid="uid://ci4f0ewxbkhgc" path="res://Scripts/UI/scoreboard_ui.gd" id="1_aqfdr"]
+[ext_resource type="Theme" uid="uid://cart7s8v7t8gq" path="res://Assets/UI/UI Themes/main_ui.tres" id="1_ipkrc"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8f1xp"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0.1, 0.1, 0.1, 0.6)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 15
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipkrc"]
+bg_color = Color(0.21, 0.20166999, 0.17429999, 0.7058824)
 
 [node name="Scoreboard UI" type="Control" unique_id=1200190357 node_paths=PackedStringArray("player_info", "best_of_label")]
 layout_mode = 3
@@ -21,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_ipkrc")
 script = ExtResource("1_aqfdr")
 player_info = [NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/Player 1 Info"), NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/Player 2 Info")]
 best_of_label = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/Best of")
@@ -46,7 +39,7 @@ theme_override_constants/margin_bottom = 50
 [node name="Panel" type="Panel" parent="MarginContainer" unique_id=532634831]
 custom_minimum_size = Vector2(800, 400)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_8f1xp")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ipkrc")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=754301594]
 layout_mode = 1
