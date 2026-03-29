@@ -60,7 +60,7 @@ var animation_manager
 
 var check_fire : bool = false
 @onready var game_manager = get_node('/root/Game Manager/')
-@onready var equipment_manager = get_parent().get_parent()
+@onready var equipment_manager = get_parent().get_parent().get_parent().get_parent().get_parent().get_parent()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

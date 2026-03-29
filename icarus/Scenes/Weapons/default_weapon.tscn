@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://b12ei004bv6pu" path="res://Scripts/Weapons/Weapon Behaviours/default_weapon_behaviour.gd" id="2_nwkwr"]
 [ext_resource type="PackedScene" uid="uid://bgf45ahtixemx" path="res://Scenes/Weapon Projectiles/default_projectile.tscn" id="3_78gpb"]
 [ext_resource type="Script" uid="uid://covx4saijl6gl" path="res://Scripts/Weapons/weapon_animation_manager.gd" id="3_t12gy"]
-[ext_resource type="PackedScene" uid="uid://dgaa0a0gdgqaa" path="res://Assets/Models/Weapons/default_gun.glb" id="5_bwl48"]
+[ext_resource type="PackedScene" uid="uid://ng4xl716o7fp" path="res://Assets/Models/Weapons/rig_pistol.glb" id="5_o0pr5"]
 [ext_resource type="Texture2D" uid="uid://dnot7ux5nip7u" path="res://Temp Visuals/Items/pngtree-simple-muzzle-flash-vector-png-png-image_5797978.png" id="6_rb7mo"]
 [ext_resource type="AudioStream" uid="uid://e5qyd78jg8ae" path="res://Temp Audio/369528__johandeecke__short-gunshot.wav" id="8_3w3ja"]
 [ext_resource type="Script" uid="uid://conko2sjj7" path="res://Scripts/Weapons/weapon_audio_manager.gd" id="8_6012l"]
@@ -21,43 +21,6 @@ point_count = 4
 _limits = [0.4, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 0.4), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
 point_count = 2
-
-[sub_resource type="Animation" id="Animation_rb7mo"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model/MeshInstance3D:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_3w3ja"]
-resource_name = "temp-fire"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model/MeshInstance3D:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.099999994),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_6012l"]
-_data = {
-&"RESET": SubResource("Animation_rb7mo"),
-&"temp-fire": SubResource("Animation_3w3ja")
-}
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_3w3ja"]
 
@@ -85,29 +48,24 @@ full_cooldown_time = 1.8
 
 [node name="Animation Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=450035929]
 script = ExtResource("3_t12gy")
-model_scale = 0.2
-model_rotation_offset = Vector3(0, 90, 0)
 
 [node name="Pivot" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager" unique_id=1790806813]
 
-[node name="Model" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot" unique_id=485206775 instance=ExtResource("5_bwl48")]
-
-[node name="Exit Point" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model" unique_id=26088609]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.157403, 0.32809007, 0)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model" unique_id=1571579351]
-root_node = NodePath("../../../../../..")
-libraries/ = SubResource("AnimationLibrary_6012l")
+[node name="Model" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot" unique_id=1058319680 instance=ExtResource("5_o0pr5")]
+transform = Transform3D(-3.9121693e-07, -8.95, -3.9121693e-07, 0, -3.9121693e-07, 8.95, -8.95, 3.9121693e-07, 1.7100635e-14, -0.247, 1.122, -0.267)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model" unique_id=261724011]
-transform = Transform3D(1, -8.940697e-08, -8.7422784e-08, 8.742279e-08, 2.980232e-08, 1.0000001, -8.940697e-08, -1.0000001, 2.980233e-08, 1.6328932, 0.37948927, 0)
+transform = Transform3D(-9.318285e-07, -7.000001, 2.0861634e-07, 6.1195954e-07, 2.0861624e-07, 7.000001, -7, 9.318285e-07, 6.119595e-07, -1.6720005, 3.688425, -13.227252)
 visible = false
 mesh = SubResource("PlaneMesh_3w3ja")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_6012l")
 
+[node name="Exit Point" type="Node3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model" unique_id=26088609]
+transform = Transform3D(-3.0597982e-07, 0, 7.0000024, 0, 7.0000024, 0, -7.0000024, 0, -3.0597982e-07, -0.0004954636, 0.06701507, 0.11623209)
+
 [node name="Grip Point" type="Marker3D" parent="Weapon Manager/Behaviour Manager/Animation Manager/Pivot/Model" unique_id=2063755765]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6431515, 0.00021135807, 0)
+transform = Transform3D(-3.0597982e-07, 0, 7.0000024, 0, 7.0000024, 0, -7.0000024, 0, -3.0597982e-07, -0.20955168, -0.19778636, -0.063447684)
 
 [node name="Audio Manager" type="Node3D" parent="Weapon Manager/Behaviour Manager" unique_id=729461471 node_paths=PackedStringArray("primary_fire_audio", "no_ammo_audio", "reload_audio", "equip_audio", "enemy_hit_audio")]
 script = ExtResource("8_6012l")

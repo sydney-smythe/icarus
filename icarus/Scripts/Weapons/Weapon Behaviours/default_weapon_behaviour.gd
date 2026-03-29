@@ -43,8 +43,14 @@ func _ready() -> void:
 	shot_cooldown_timer = shot_cooldown_time
 
 func late_ready():
-	equipment_manager = get_parent().get_parent().get_parent()
-	host = equipment_manager.host
+	equipment_manager = get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent()
+	if equipment_manager != null:
+		host = equipment_manager.host
+	else:
+		print('asdasdasdasdasdasdasd')
+		equipment_manager = get_parent().get_parent()
+		host = equipment_manager.host
+	print(str(host))
 	if not host.is_in_group('Enemies'):
 		head = equipment_manager.head
 		camera = head.get_child(0)

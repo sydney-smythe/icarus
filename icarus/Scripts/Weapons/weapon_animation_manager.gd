@@ -21,15 +21,15 @@ var weapon_anchor: Marker3D
 @onready var grip_point: Marker3D = $"Pivot/Model/Grip Point"  # adjust path
 
 @export_group("Model Positioning")
-@export var model_scale: float = 1.0
-@export var model_rotation_offset: Vector3 = Vector3(0, 0, 0)
+#@export var model_scale: float = 1.0
+#@export var model_rotation_offset: Vector3 = Vector3(0, 0, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	model = get_child(0).get_child(0)
-	model.scale = Vector3(model_scale,model_scale,model_scale)
-	model.rotation_degrees = model_rotation_offset
-	call_deferred('late_ready')
+	#model.scale = Vector3(model_scale,model_scale,model_scale)
+	#model.rotation_degrees = model_rotation_offset
+	#call_deferred('late_ready')
 
 func late_ready():
 	player_controlled = weapon_manager.player_controlled
@@ -40,14 +40,14 @@ func late_ready():
 			#track_hands = true
 
 func _process(_delta: float) -> void:
-	if player_controlled and weapon_anchor and grip_point:
-		# Align the weapon so its grip point matches the camera anchor
-		var grip_offset = grip_point.global_position - global_position
-		global_position = weapon_anchor.global_position - grip_offset
-		global_rotation = weapon_anchor.global_rotation
+	pass
+	#if player_controlled and weapon_anchor and grip_point:
+		## Align the weapon so its grip point matches the camera anchor
+		#var grip_offset = grip_point.global_position - global_position
+		#global_position = weapon_anchor.global_position - grip_offset
+		#global_rotation = weapon_anchor.global_rotation
 		
-	#if track_hands:
-		#update_player_hand_targets()
+	
 
 #func update_player_hand_targets():
 	#print('setting hand pos')

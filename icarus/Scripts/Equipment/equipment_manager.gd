@@ -11,28 +11,32 @@ var data_manager
 var ui_manager
 @export var player_controlled = true
 var disabled = false
-
+var attachment_point : Node3D
 var prim_fire_rate_mult : float = 1.0 # lower = faster fire rate
 var reload_mult : float = 1.0 # lower = faster reload
 #var active_model : Node3D
 @export var weapon_anchor : Marker3D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#if player_controlled:
+	attachment_point = get_node("Arms_Rig/Skeleton3D/BoneAttachment3D/Attachment Point")
+	#else:
+		#attachment_point = self
 	data_manager = get_node("/root/Game Manager/Sub Managers/Data Manager/")
 	ui_manager = get_node("/root/Game Manager/UI Manager/")
-	#host = get_parent().get_parent().get_parent()
-	#head = get_parent().get_parent()
+	host = get_parent().get_parent().get_parent()
+	head = get_parent().get_parent()
 	for i in range(0,inventory_size):  # for now, create empty child nodes as temp item placeholders 
 		var temp_child = Node3D.new()
 		temp_child.name = "EMPTY SLOT " + str(i)
-		add_child(temp_child)
-		get_child(i).hide()
-		get_child(i).process_mode = Node.PROCESS_MODE_DISABLED
+		attachment_point.add_child(temp_child)
+		attachment_point.get_child(i).hide()
+		attachment_point.get_child(i).process_mode = Node.PROCESS_MODE_DISABLED
 		#print("Created empty inventory slot")
 		inventory_array.append([("EMPTY SLOT " + str(i)), false, null])
 	#print(str(inventory_array))
 	
-	call_deferred('late_ready')  # used to add the default equipment, but waits til after the data manager is ready.
+	#call_deferred('late_ready')  # used to add the default equipment, but waits til after the data manager is ready.
 	update_hud_weapons()
 	
 func late_ready():
@@ -83,13 +87,13 @@ func _process(_delta: float) -> void:
 					break
 
 func disable_equipment():
-	var current_active = get_child(active_equipment)
+	var current_active = attachment_point.get_child(active_equipment)
 	#disabled = true
 	current_active.hide()
 	current_active.process_mode = Node.PROCESS_MODE_DISABLED
 
 func enable_equipment():
-	var current_active = get_child(active_equipment)
+	var current_active = attachment_point.get_child(active_equipment)
 	#disabled = false
 	current_active.show()
 	current_active.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -99,8 +103,8 @@ func swap_active_equipment(new_active_index : int, override_same_swap = false):
 	if not new_active_index == active_equipment or override_same_swap:
 		if not new_active_index > inventory_size - 1:
 			if not inventory_array[new_active_index][1] == false:  # only works if you can swap to the new index
-				var current_active = get_child(active_equipment)
-				var new_active = get_child(new_active_index)
+				var current_active = attachment_point.get_child(active_equipment)
+				var new_active = attachment_point.get_child(new_active_index)
 				current_active.hide()
 				current_active.process_mode = Node.PROCESS_MODE_DISABLED
 				new_active.show()
@@ -141,24 +145,25 @@ func add_equipment(equipment_index : int, equipment_id : String, can_equip : boo
 			var equipment_scene : String = data_manager.weapon_dict[equipment_id][0]
 			var new_equipment = load(equipment_scene).instantiate()
 			new_equipment.player_controlled = player_controlled
-			add_child(new_equipment)
+			attachment_point.add_child(new_equipment)
 			if name_already_exists:
 				new_equipment.name = equip_name
 			new_equipment_node = new_equipment
 		else:
-			var old_equip = get_child(equipment_index)
+			var old_equip = attachment_point.get_child(equipment_index)
 			old_equip.free()
 			var equipment_scene : String = data_manager.weapon_dict[equipment_id][0]
 			var new_equipment = load(equipment_scene).instantiate()
-			add_child(new_equipment)
+			print(str(attachment_point))
+			attachment_point.add_child(new_equipment)
 			new_equipment.get_child(0).player_controlled = player_controlled
-			move_child(new_equipment, equipment_index)
+			attachment_point.move_child(new_equipment, equipment_index)
 			if name_already_exists:
 				new_equipment.name = equip_name
 			new_equipment_node = new_equipment
 		inventory_array[equipment_index] = [data_manager.weapon_dict[equipment_id][1], can_equip, new_equipment_node]
-		get_child(equipment_index).hide()
-		get_child(equipment_index).process_mode = Node.PROCESS_MODE_DISABLED
+		attachment_point.get_child(equipment_index).hide()
+		attachment_point.get_child(equipment_index).process_mode = Node.PROCESS_MODE_DISABLED
 		if is_auto_active and can_equip:
 			swap_active_equipment(equipment_index, true)
 		elif is_auto_active and not can_equip:
@@ -172,11 +177,11 @@ func remove_equipment(equipment_index : int):
 		if inventory_array[equipment_index] == null:  # if nothing is equipped (should never be the case though)
 			pass
 		else:
-			var old_child = get_child(equipment_index)
+			var old_child = attachment_point.get_child(equipment_index)
 			old_child.free()
 			var empty_child = Node3D.new()
 			empty_child.name = "EMPTY SLOT " + str(equipment_index)
-			add_child(empty_child)
+			attachment_point.add_child(empty_child)
 			#print("Created empty inventory slot.")
 			inventory_array[equipment_index] = [("Slot" + str(equipment_index)), false, null]
 		update_hud_weapons()
@@ -189,10 +194,10 @@ func clear_inventory():
 
 func attack():  # used for enemy AI
 	# triggers activate_primary() in the active equipments weapon_manager script
-	get_child(active_equipment).get_child(0).ai_activate_primary()
+	attachment_point.get_child(active_equipment).get_child(0).ai_activate_primary()
 	
 func get_max_range() -> float:  # used for enemy AI
-	return get_child(active_equipment).get_child(0).get_child(0).fire_range
+	return attachment_point.get_child(active_equipment).get_child(0).get_child(0).fire_range
 	
 func update_hud_ammo(ammo : int):
 	if player_controlled:
