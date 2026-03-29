@@ -24,7 +24,7 @@ func _ready() -> void:
 	#else:
 		#attachment_point = self
 	data_manager = get_node("/root/Game Manager/Sub Managers/Data Manager/")
-	ui_manager = get_node("/root/Game Manager/SubViewportContainer/SubViewport/UI Manager/")
+	ui_manager = get_node("/root/Game Manager/UI Manager/")
 	host = get_parent().get_parent().get_parent()
 	head = get_parent().get_parent()
 	for i in range(0,inventory_size):  # for now, create empty child nodes as temp item placeholders 

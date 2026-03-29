@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@onready var data_manager: Node3D = $"../Sub Managers/Data Manager"
+@onready var data_manager: Node3D = get_node('/root/Game Manager/Sub Managers/Data Manager/')
 
 var debug_ui = 'uid://c740upcymk5ps'
 var crosshair = 'uid://dw1b0eqcs74nf'

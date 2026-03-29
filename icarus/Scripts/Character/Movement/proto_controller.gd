@@ -162,7 +162,7 @@ var forcer_vector : Vector3 = Vector3(0,0,0)
 var unforceable = false
 var boon_grav_mult : float = 1.0
 
-@onready var ui_manager = get_node('/root/Game Manager/UI Manager/')
+@onready var ui_manager = get_node("/root/Game Manager/UI Manager/")
 
 func _ready() -> void:
 	reg_head_position = head.position.y
